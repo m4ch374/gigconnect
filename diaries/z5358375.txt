@@ -1,0 +1,7 @@
+Gabriel Toh (z5358375)
+
+Week 1
+We formed and named our group. I volunteered as Scrum Master. We discussed our project preferences and skills/experience. We also brainstormed the possible tech stack we could use for the project. We planned to start the proposal in the next week.
+
+Week 2
+We decided to do P23 and started work on the proposal. I researched and wrote the background section for the proposal. We had further discussions on the tech stack and assigned frontend/backend roles. We planned to finish the rest of the proposal before next tutorial, so we could get feedback from the tutor.
