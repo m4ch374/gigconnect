@@ -1,0 +1,11 @@
+Amith Jacob Kovoor (z5361183)
+
+Week 1
+    - Brainstorimg of tech stack and meeting times (also held first meeting outside of classtime).
+    - Got started on User Stories of the Project proposal
+Week 2
+    - Changed Team Meetings dates to Mon, Weds, Fri.
+    - Almost finished off User Stories also tabulated it all to include "Proposed Functionality" for each.
+    - Initial basic draft design of web app's Home Page, on Google Draw. 
+Week 3
+    - 
