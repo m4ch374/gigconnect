@@ -1,0 +1,16 @@
+Jason Lim (z5359171)
+
+Week 1
+Selected group mates and submitted our preferences for what project aligned with our interests
+and skills. As a group, we discussed what tech stack would be applicable to the project of 
+interest. 
+
+Week 2
+Made a Jira account and joined the Jira team. Also accessed the team's GitHub repository and attended 
+the meeting with the client. The project selected was Project 23. I finished my portion of the user 
+stories and I was allocated to work on the Professional User storyboard.
+
+Week 3
+Designed the Professional User storyboard using Excalidraw. We discussed the novel functionalities
+and agreed on which User Stories should be assigned to the first sprint. Discussed how the admin would
+be able to verify professionals. 
