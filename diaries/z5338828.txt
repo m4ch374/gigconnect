@@ -1,0 +1,14 @@
+Henry Wan - z5338828
+
+WEEK 1
+* Formed and Joined group in Moodle
+* Appointed Gabriel as Scrum master
+* Decided project preferences
+* Started work on the proposal
+
+WEEK 2
+* Allocated project 23 as our group project
+* More progress has been made on the proposal 
+* Decided the features to be implemented in the first sprint
+* Decided the tech stack for our project
+* Started setting up the repo
