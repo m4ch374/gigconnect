@@ -8,4 +8,7 @@ Week 2
     - Almost finished off User Stories also tabulated it all to include "Proposed Functionality" for each.
     - Initial basic draft design of web app's Home Page, on Google Draw. 
 Week 3
-    - 
+    - Drafted Sprint 1's user stories/functionalities to complete
+    - started learning the backend tech stack (typescript + prisma)
+    - restructured System Architecture Design
+    - project proposal submitted

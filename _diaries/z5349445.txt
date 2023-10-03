@@ -9,3 +9,7 @@ WEEK 2
 Our group was allocated to project 23, and we had a meeting with the client on Thursday where all the team leaders of teams doing project 23 asked questions about features of the product.
 Joined the Github Classroom for the course and got access to the team's repository.
 Began writing user stories for the proposal document, and helped transfer user stories to Jira.
+
+WEEK 3
+Our main foucs this week was to fialise the project proposal for submission. I helped to make the storyboards for the administrator and company users.
+After the proposal was submitted, I begin considering what API routes we would need for user stories in the first sprint while waiting for Henry to set up the repository.

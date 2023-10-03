@@ -12,3 +12,8 @@ WEEK 2
 * Decided the features to be implemented in the first sprint
 * Decided the tech stack for our project
 * Started setting up the repo
+
+WEEK 3
+* Finalizing the project proposal 
+* Setting up the repo for development
+* Added eslint and pre-commit for better and more consistent code quality across each member
