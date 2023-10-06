@@ -10,8 +10,49 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+model Admin {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+}
+
+model Company {
+  id          Int     @id @default(autoincrement())
+  email       String  @unique
+  password    String
+  verified    Boolean @default(false)
+  name        String
+  address     String?
+  description String?
+  abn         String
+  acn         String?
+}
+
+model Professional {
+  id          Int          @id @default(autoincrement())
+  email       String       @unique
+  password    String
+  verified    Boolean      @default(false)
+  firstName   String
+  lastName    String
+  description String?
+  skills      String[]
+  socialLinks SocialLink[]
+  certLinks   CertLink[]
+}
+
+model SocialLink {
+  id             Int          @id @default(autoincrement())
+  name           String
+  url            String
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  professionalId Int
+}
+
+model CertLink {
+  id             Int          @id @default(autoincrement())
+  name           String
+  url            String
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  professionalId Int
 }
