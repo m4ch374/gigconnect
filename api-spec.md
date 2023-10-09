@@ -13,37 +13,44 @@ type request = {
     password: string
 }
 // RESPONSE 403 if invalid credentials.
+type response403 = {
+    message: string
+}
 // RESPONSE 200 if successful login.
-type response = {
-    // Insert additional items here as required by session/token system for a logged in user.
+type response200 = {
+    loginToken: string,
     userType: "admin" | "company" | "professional"
 }
 
 // ROUTE = /api/logout, METHOD = POST
-// REQUEST - sent as a stringified JSON object in the request body
+// REQUEST - send login token in header, request as stringified JSON in body
 type request = {
-    // Insert items here as required by session/token system for a logged in user.
+    
 }
 // RESPONSE 400 if part of the request is invalid, even if not logged in.
+type response400 = {
+    message: string
+}
 // RESPONSE 200 otherwise.
-type response = {
+type response200 = {
     success: boolean
 }
-
 
 // ROUTE = /api/company/create, METHOD = POST
 // REQUEST - sent as a stringified JSON object in the request body
 type request = {
     email: string, // Client and server should verify that this is an email. Server should verify that there are no duplicates for any type of user.
-    companyName: string, // Client and server should verify that this is not an empty string. Server should verify that there are no duplicates.
-    identifierType: "abn" | "acn", // Radio buttons on client page, server should verify that it is one of these two values only.
-    identifierNum: string, // Client and server should verify the format of this based on the value of identifierType
+    companyName: string, // Client and server should verify that this is not an empty string.
+    abn: string, // Client and server should verify that this is the valid format of an ABN.
     password: string // Client and server should verify any password security requirements
 }
 // RESPONSE 400 if part of the request is invalid.
+type response400 = {
+    message: string
+}
 // RESPONSE 200 on success.
-type response = {
-    // Insert additional items here as required by session/token system for a logged in user.
+type response200 = {
+    loginToken: string,
     userType: "company" // shouldn't be anything else for this route
 }
 
@@ -53,40 +60,54 @@ type request = {
     email: string, // Client and server should verify that this is an email. Server should verify that there are no duplicates for any type of user.
     firstName: string, // Client and server should verify that this is not an empty string.
     lastName: string, // Client and server should verify that this is not an empty string.
-    password: string // Client and server should verify any password security requirements
+    password: string // Client and server should verify any password security requirements.
 }
 // RESPONSE 400 if part of the request is invalid.
+type response400 = {
+    message: string
+}
 // RESPONSE 200 on success.
-type response = {
-    // Insert additional items here as required by session/token system for a logged in user.
+type response200 = {
+    loginToken: string,
     userType: "professional" // shouldn't be anything else for this route
 }
 
 // ROUTE = /api/company/profiledata, METHOD = GET
-// REQUEST - items are sent as query params
+// REQUEST - send login token in header, request as query params
 type request = {
-    // Insert items here as required by session/token system for a logged in user.
+
 }
 // RESPONSE 403 if not logged in or not a company user, response object should not contain any information.
+type response403 = {
+    message: string
+}
 // RESPONSE 200 if logged in as a company user.
-type response = {
+type response200 = {
     companyName: string,
-    companyDescription: string // Empty string on initial account creation
-    externalWebsites: externalLink[] // Empty array on initial account creation
+    abn: string,
+    companyDescription: string, // Empty string on initial account creation
+    externalWebsites: externalLink[], // Empty array on initial account creation
+    verified: boolean
     // Insert additional items stored for a company profile here.
 }
 
 // ROUTE = /api/company/profiledata/update, METHOD = POST
-// REQUEST - sent as a stringified JSON object in the request body
+// REQUEST - send login token in header, request as stringified JSON in body
 type request = {
-    // Insert additional items here as required by session/token system for a logged in user.
-    companyName: string, // Client and server should verify that this is not an empty string. Server should verify that there are no duplicates.
-    companyDescription: string // Can be an empty string,
+    companyName: string, // Client and server should verify that this is not an empty string. 
+    abn: string, // Client and server should verify that this is the valid format of an ABN.
+    companyDescription: string, // Can be an empty string,
     externalWebsites: externalLink[] // Can be an empty array. Client and server should verify that any array elements are of the correct type.
     // Insert additional items stored for a company profile here.
 }
-// RESPONSE 403 if not logged in or not a company user, response object can be {success: false}
+// RESPONSE 403 if not logged in or not a company user
+type response403 = {
+    message: string
+}
 // RESPONSE 400 if part of the request is invalid, even if not logged in.
+type response400 = {
+    message: string
+}
 // RESPONSE 200 if logged in as a company user and request is valid.
 type response = {
     success: boolean // Indicates if profile data was successfully updated.
@@ -94,51 +115,96 @@ type response = {
 
 
 // ROUTE = /api/professional/profiledata, METHOD = GET
-// REQUEST - items are sent as query params
+// REQUEST - send login token in header, request as query params
 type request = {
-    // Insert items here as required by session/token system for a logged in user.
+
 }
 // RESPONSE 403 if not logged in or not a professional user, response object should not contain any information.
 // RESPONSE 200 if logged in as a professional user.
 type response = {
     firstName: string,
     lastName: string,
-    description: string // Empty string on initial account creation.
-    skills: string[] // Empty array on initial account creation.
-    externalWebsites: externalLink[] // Empty array on initial account creation.
+    description: string, // Empty string on initial account creation.
+    skills: string[], // Empty array on initial account creation.
+    qualifications: externalLink[], // Empty array on initial account creation
+    externalWebsites: externalLink[], // Empty array on initial account creation.
     // Insert additional items stored for a professional profile here.
+    verified: boolean
 }
 
 // ROUTE = /api/professional/profiledata/update, METHOD = POST
-// REQUEST - sent as a stringified JSON object in the request body
+// REQUEST - send login token in header, request as stringified JSON in body
 type request = {
-    // Insert additional items here as required by session/token system for a logged in user.
     firstName: string, // Client and server should verify that this is not an empty string.
     lastName: string, // Client and server should verify that this is not an empty string.
-    description: string // Can be an empty string.
-    skills: string[] // Can be an empty array. Client and server should verify that any array elements are not empty strings.
+    description: string, // Can be an empty string.
+    skills: string[], // Can be an empty array. Client and server should verify that any array elements are not empty strings.
+    qualifications: externalLink[] // Can be an empty array. Client and server should verify that any array elements are of the correct type.
     externalWebsites: externalLink[] // Can be an empty array. Client and server should verify that any array elements are of the correct type.
     // Insert additional items stored for a professional profile here.
 }
-// RESPONSE 403 if not logged in or not a professional user. Response object can be {success: false}.
+// RESPONSE 403 if not logged in or not a professional user.
+type response403 = {
+    message: string
+}
 // RESPONSE 400 if part of the request is invalid, even if not logged in.
+type response400 = {
+    message: string
+}
 // RESPONSE 200 if logged in as a professional user and request is valid.
-type response = {
+type response200 = {
     success: boolean // Indicates if profile data was successfully updated.
 }
 
-// ROUTE = /api/admin/setverified, METHOD = POST
-// REQUEST - sent as a stringified JSON object in the request body
+// ROUTE = /api/admin/dashboard, METHOD = GET
+// REQUEST - send login token in header, request as query params
 type request = {
-    // Insert additional items here as required by session/token system for a logged in user.
+
+}
+// RESPONSE 403 if not logged in or not an admin user. Response object can be {success: false}.
+type response403 = {
+    message: string
+}
+// RESPONSE 400 if part of the request is invalid, even if not logged in.
+type response400 = {
+    message: string
+}
+// RESPONSE 200 if logged in as an admin user and request is valid.
+type response200 = {
+    companyUsers: [
+        {
+            userId: string,
+            companyName: string,
+            verified: boolean,
+        }
+    ],
+    professionalUsers: [
+        {
+            userId: string,
+            firstName: string,
+            lastName: string,
+            verified: boolean,
+        }
+    ]
+}
+
+// ROUTE = /api/admin/setverified, METHOD = POST
+// REQUEST - send login token in header, request as stringified JSON in body
+type request = {
     userId: string // User ID of the user to have their verified status set
     userType: "company" | "professional",
     verified: boolean // Toggle of whether to set or remove verified status
 }
 // RESPONSE 403 if not logged in or not an admin user. Response object can be {success: false}.
+type response403 = {
+    message: string
+}
 // RESPONSE 400 if part of the request is invalid, even if not logged in.
+type responase400 = {
+    message: string
+}
 // RESPONSE 200 if logged in as an admin user and request is valid.
-type response {
+type response = {
     success: boolean
 }
 ```
