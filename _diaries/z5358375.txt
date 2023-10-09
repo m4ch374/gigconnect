@@ -20,3 +20,11 @@ of the proposal. We got feedback from the tutor and then submitted our
 proposal after making some changes. We planned to finalise our API
 and database schema in the next few days, so that we could start
 coding in week 4.
+
+Week 4
+We began implementing the user stories for Sprint 1. We discussed the
+design of our database schema and what data we needed to store. Then
+I wrote the schema using Prisma and got feedback from the other team
+members. I also began implementing the code for login/logout on the
+backend. Next week we will finish off the user stories and do some
+manual testing, in preparation for Demo A.

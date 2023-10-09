@@ -1,15 +1,29 @@
 Max Yuen - z5349445
 
 WEEK 1
-Formed group with 4 other people. Entered our team in Moodle and joined the Jira site for our team.
-Decided on project preferences - our first perference was project 23, followed by 18, then 16 and 17.
-Agreed to meet online on Tuesday evenings. Began discussing the tech stack that we will use based on existing skills and knowledge of team members.
+- Formed group with 4 other people. Entered our team in Moodle and joined the 
+  Jira site for our team.
+- Decided on project preferences - our first perference was project 23, 
+  followed by 18, then 16 and 17.
+- Agreed to meet online on Tuesday evenings. Began discussing the tech stack 
+  that we will use based on existing skills and knowledge of team members.
 
 WEEK 2
-Our group was allocated to project 23, and we had a meeting with the client on Thursday where all the team leaders of teams doing project 23 asked questions about features of the product.
-Joined the Github Classroom for the course and got access to the team's repository.
-Began writing user stories for the proposal document, and helped transfer user stories to Jira.
+- Our group was allocated to project 23, and we had a meeting with the client 
+  on Thursday where all the team leaders of teams doing project 23 asked 
+  questions about features of the product.
+- Joined the Github Classroom for the course and got access to the team's 
+  repository.
+- Began writing user stories for the proposal document, and helped transfer 
+  user stories to Jira.
 
 WEEK 3
-Our main foucs this week was to fialise the project proposal for submission. I helped to make the storyboards for the administrator and company users.
-After the proposal was submitted, I begin considering what API routes we would need for user stories in the first sprint while waiting for Henry to set up the repository.
+- Our main foucs this week was to fialise the project proposal for submission. 
+  I helped to make the storyboards for the administrator and company users.
+- After the proposal was submitted, I begin considering what API routes we 
+  would need for user stories in the first sprint while waiting for Henry to 
+  set up the repository.
+
+WEEK 4
+- Drafter API specification for functionality to be delivered in Sprint 1.
+- Started work on pages for logging in and creating users.

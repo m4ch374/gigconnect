@@ -7,10 +7,12 @@ interest.
 
 Week 2
 Made a Jira account and joined the Jira team. Also accessed the team's GitHub repository and attended 
-the meeting with the client. The project selected was Project 23. I finished my portion of the user 
-stories and I was allocated to work on the Professional User storyboard.
+the meeting with the client. The project selected was Project 23. I finished my portion of the user stories and was allocated to work on the Professional User storyboard.
 
 Week 3
 Designed the Professional User storyboard using Excalidraw. We discussed the novel functionalities
 and agreed on which User Stories should be assigned to the first sprint. Discussed how the admin would
 be able to verify professionals. 
+
+Week 4
+Discussed the database schema and decided the relevant attributes and types for company, professional, and admin users and links. From there we delegated  Gabriel to implement the Prisma code. I have been tasked to be part of the backend team for this project.

@@ -12,3 +12,6 @@ Week 3
     - started learning the backend tech stack (typescript + prisma)
     - restructured System Architecture Design
     - project proposal submitted
+Week 4
+    - started backend dev, approved api implem stub code
+    - brainstormed backend db design

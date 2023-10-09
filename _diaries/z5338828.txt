@@ -17,3 +17,7 @@ WEEK 3
 * Finalizing the project proposal 
 * Setting up the repo for development
 * Added eslint and pre-commit for better and more consistent code quality across each member
+
+WEEK 4
+* Sterted development on the frontend 
+* Added some infrastructure code for the frontend to encapsulate fetching behaviour and logic 
