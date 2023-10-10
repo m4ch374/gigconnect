@@ -1,4 +1,6 @@
-const profCreate = (
+import { ExternalLink } from "./helper"
+
+const professionalCreate = (
   email: string,
   password: string,
   firstName: string,
@@ -7,18 +9,28 @@ const profCreate = (
   console.log(email, password, firstName, lastName)
 }
 
-const profData = () => {
-  console.log("profData")
+const professionalData = (userId: string) => {
+  console.log(userId)
 }
 
-const profUpdate = (
+const professionalUpdate = (
+  userId: string,
   firstName: string,
   lastName: string,
   description: string,
   skills: string[],
-  externalWebsites: object[],
+  qualifications: ExternalLink[],
+  externalWebsites: ExternalLink[],
 ) => {
-  console.log(firstName, lastName, description, skills, externalWebsites)
+  console.log(
+    userId,
+    firstName,
+    lastName,
+    description,
+    skills,
+    qualifications,
+    externalWebsites,
+  )
 }
 
-export { profCreate, profData, profUpdate }
+export { professionalCreate, professionalData, professionalUpdate }

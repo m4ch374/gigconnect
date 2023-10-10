@@ -25,7 +25,6 @@ model Company {
   address     String?
   description String?
   abn         String
-  acn         String?
 }
 
 model Professional {

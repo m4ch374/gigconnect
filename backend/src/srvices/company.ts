@@ -1,22 +1,26 @@
+import { ExternalLink } from "./helper"
+
 const companyCreate = (
   email: string,
   password: string,
-  name: string,
+  companyName: string,
   abn: string,
 ) => {
-  console.log(email, password, name, abn)
+  console.log(email, password, companyName, abn)
 }
 
-const companyData = () => {
-  console.log("companyData")
+const companyData = (userId: string) => {
+  console.log(userId)
 }
 
 const companyUpdate = (
-  name: string,
-  description: string,
-  externalWebsites: object[],
+  userId: string,
+  companyName: string,
+  abn: string,
+  companyDescription: string,
+  externalWebsites: ExternalLink[],
 ) => {
-  console.log(name, description, externalWebsites)
+  console.log(userId, companyName, abn, companyDescription, externalWebsites)
 }
 
 export { companyCreate, companyData, companyUpdate }

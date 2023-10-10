@@ -1,3 +1,7 @@
+const adminDashboard = () => {
+  console.log("adminDashboard")
+}
+
 const adminSetVerified = (
   userId: string,
   userType: string,
@@ -6,4 +10,4 @@ const adminSetVerified = (
   console.log(userId, userType, verified)
 }
 
-export default adminSetVerified
+export { adminDashboard, adminSetVerified }
