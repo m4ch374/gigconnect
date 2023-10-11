@@ -1,8 +1,22 @@
+import HTTPError from "http-errors"
+import * as jwt from "jsonwebtoken"
 import { randomBytes, scrypt, timingSafeEqual } from "crypto"
+
+enum UserType {
+  Any = "any",
+  Admin = "admin",
+  Company = "company",
+  Professional = "professional",
+}
 
 interface ExternalLink {
   websiteName: string
   websiteLink: string
+}
+
+interface tokenPayload {
+  userId: string
+  userType: UserType
 }
 
 const hashKeyLen = 32
@@ -33,4 +47,37 @@ const verifyPassword = (password: string, hash: string): Promise<boolean> =>
     })
   })
 
-export { ExternalLink, hashPassword, verifyPassword }
+/**
+ * Return a valid JWT token as a string, encoding the userId and userType as the
+ * payload.
+ */
+const createToken = (userId: string, userType: UserType) => {
+  if (process.env.JWT_SECRET === undefined) {
+    throw HTTPError(500, "Failed to create token because secret is missing.")
+  }
+  return jwt.sign({ userId, userType }, process.env.JWT_SECRET)
+}
+
+/**
+ * Return the payload object literal if the token is valid,
+ * otherwise throw error.
+ */
+const verifyToken = (token: string) => {
+  if (process.env.JWT_SECRET === undefined) {
+    throw HTTPError(500, "Failed to verify token because secret is missing.")
+  }
+  try {
+    return jwt.verify(token, process.env.JWT_SECRET) as tokenPayload
+  } catch {
+    throw HTTPError(401, "Invalid token.")
+  }
+}
+
+export {
+  UserType,
+  ExternalLink,
+  hashPassword,
+  verifyPassword,
+  createToken,
+  verifyToken,
+}

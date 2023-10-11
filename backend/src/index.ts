@@ -1,8 +1,9 @@
 import "dotenv/config"
 import express, { Express, NextFunction, Request, Response } from "express"
 import cors from "cors"
+import HTTPError from "http-errors"
 import { returnError, returnHi, returnPassword } from "srvices/hello"
-import { ExternalLink } from "srvices/helper"
+import { ExternalLink, UserType, verifyToken } from "srvices/helper"
 import { authLogin, authLogout } from "srvices/auth"
 import { companyCreate, companyData, companyUpdate } from "srvices/company"
 import {
@@ -28,6 +29,29 @@ const port = process.env.PORT
 const app: Express = express()
 
 app.use(cors())
+
+// Helper functions
+
+/**
+ * Return userId as string if the user's token is valid and matches the
+ * expected userType, otherwise throw error.
+ */
+const checkAuth = (req: Request, userType: UserType) => {
+  const header = req.headers.authorization
+  if (header === undefined || !header.startsWith("Bearer ")) {
+    throw HTTPError(
+      401,
+      "Authorization header is missing or incorrectly formatted.",
+    )
+  }
+
+  const payload = verifyToken(header.substring(7))
+  if (userType !== UserType.Any && userType !== payload.userType) {
+    throw HTTPError(403, "Incorrect permissions to access this route.")
+  }
+
+  return payload.userId
+}
 
 // Debug routes
 
@@ -57,7 +81,8 @@ app.post(
   },
 )
 
-app.post("/api/logout", (_, res) => {
+app.post("/api/logout", (req, res) => {
+  checkAuth(req, UserType.Any)
   res.json(authLogout())
 })
 
@@ -77,8 +102,9 @@ app.post(
   },
 )
 
-app.get("/api/company/profiledata", (_, res) => {
-  res.json(companyData("1"))
+app.get("/api/company/profiledata", (req, res) => {
+  const userId = checkAuth(req, UserType.Company)
+  res.json(companyData(userId))
 })
 
 app.post(
@@ -92,10 +118,11 @@ app.post(
     }>,
     res,
   ) => {
+    const userId = checkAuth(req as Request, UserType.Company)
     const { companyName, abn, companyDescription, externalWebsites } = req.body
     res.json(
       companyUpdate(
-        "1",
+        userId,
         companyName,
         abn,
         companyDescription,
@@ -121,8 +148,9 @@ app.post(
   },
 )
 
-app.get("/api/professional/profiledata", (_, res) => {
-  res.json(professionalData("1"))
+app.get("/api/professional/profiledata", (req, res) => {
+  const userId = checkAuth(req, UserType.Professional)
+  res.json(professionalData(userId))
 })
 
 app.post(
@@ -138,6 +166,7 @@ app.post(
     }>,
     res,
   ) => {
+    const userId = checkAuth(req as Request, UserType.Professional)
     const {
       firstName,
       lastName,
@@ -148,7 +177,7 @@ app.post(
     } = req.body
     res.json(
       professionalUpdate(
-        "1",
+        userId,
         firstName,
         lastName,
         description,
@@ -160,7 +189,8 @@ app.post(
   },
 )
 
-app.get("/api/admin/dashboard", (_, res) => {
+app.get("/api/admin/dashboard", (req, res) => {
+  checkAuth(req, UserType.Admin)
   res.json(adminDashboard())
 })
 
@@ -174,6 +204,7 @@ app.post(
     }>,
     res,
   ) => {
+    checkAuth(req as Request, UserType.Admin)
     const { userId, userType, verified } = req.body
     res.json(adminSetVerified(userId, userType, verified))
   },
