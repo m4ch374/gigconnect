@@ -5,7 +5,7 @@ import { TCreateComp } from "services/types"
 
 const CreateCompany: React.FC = () => {
   const emailRegex = new RegExp("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")
-  const abnRegex = new RegExp("^[0-9]{11}%")
+  const abnRegex = new RegExp("^[0-9]{11}$")
 
   const navigate = useNavigate()
 
