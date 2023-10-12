@@ -51,7 +51,7 @@ const CreateCompany: React.FC = () => {
       }
 
       if (resp.userType === "company") {
-        localStorage.setItem("token", resp.token)
+        localStorage.setItem("token", resp.loginToken)
         navigate("/company-myprofile")
         return
       }
@@ -75,7 +75,7 @@ const CreateCompany: React.FC = () => {
           onChange={e =>
             setFormData({ ...formData, email: e.currentTarget.value })
           }
-          className="block w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
         />
         <label htmlFor="form-company-name" className="block pt-4 pb-2">
           Company name
@@ -86,7 +86,7 @@ const CreateCompany: React.FC = () => {
           onChange={e =>
             setFormData({ ...formData, companyName: e.currentTarget.value })
           }
-          className="block w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
         />
         <label htmlFor="form-abn" className="block pt-4 pb-2">
           ABN
@@ -97,7 +97,7 @@ const CreateCompany: React.FC = () => {
           onChange={e =>
             setFormData({ ...formData, abn: e.currentTarget.value })
           }
-          className="block w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
         />
         <label htmlFor="form-pass" className="block pt-4 pb-2">
           Password
@@ -108,7 +108,7 @@ const CreateCompany: React.FC = () => {
           onChange={e =>
             setFormData({ ...formData, password: e.currentTarget.value })
           }
-          className="block w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
         />
         <label htmlFor="form-confirm-pass" className="block pt-4 pb-2">
           Confirm password
@@ -117,11 +117,11 @@ const CreateCompany: React.FC = () => {
           type="password"
           id="form-confirm-pass"
           onChange={e => updateConfirmPass(e.currentTarget.value)}
-          className="block w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
         />
         <button
           type="submit"
-          className="block w-full my-2 p-2 bg-cyan-400 hover:bg-cyan-300 text-center rounded-md drop-shadow-md"
+          className="text-black w-full my-2 p-2 bg-cyan-400 hover:bg-cyan-300 text-center rounded-md drop-shadow-md"
         >
           Create account
         </button>

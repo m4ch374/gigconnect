@@ -7,6 +7,7 @@ import CreateProfessional from "pages/CreateProfessional"
 import ProtectedRoutes from "components/ProtectedRoutes"
 import CompanyMyProfile from "pages/CompanyMyProfile"
 import ProfessionalMyProfile from "pages/ProfessionalMyProfile"
+import AdminDashboard from "pages/AdminDashboard"
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const App: React.FC = () => {
           path="/professional-myprofile"
           element={<ProfessionalMyProfile />}
         />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
       </Route>
     </Routes>
   )

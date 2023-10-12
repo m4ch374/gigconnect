@@ -48,8 +48,8 @@ const CreateProfessional: React.FC = () => {
         return
       }
 
-      if (resp.userType === "company") {
-        localStorage.setItem("token", resp.token)
+      if (resp.userType === "professional") {
+        localStorage.setItem("token", resp.loginToken)
         navigate("/professional-myprofile")
         return
       }
@@ -73,7 +73,7 @@ const CreateProfessional: React.FC = () => {
           onChange={e =>
             setFormData({ ...formData, email: e.currentTarget.value })
           }
-          className="block w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
         />
         <label htmlFor="form-first-name" className="block pt-4 pb-2">
           First name
@@ -84,7 +84,7 @@ const CreateProfessional: React.FC = () => {
           onChange={e =>
             setFormData({ ...formData, firstName: e.currentTarget.value })
           }
-          className="block w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
         />
         <label htmlFor="form-last-name" className="block pt-4 pb-2">
           Last name
@@ -95,7 +95,7 @@ const CreateProfessional: React.FC = () => {
           onChange={e =>
             setFormData({ ...formData, lastName: e.currentTarget.value })
           }
-          className="block w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
         />
         <label htmlFor="form-pass" className="block pt-4 pb-2">
           Password
@@ -106,7 +106,7 @@ const CreateProfessional: React.FC = () => {
           onChange={e =>
             setFormData({ ...formData, password: e.currentTarget.value })
           }
-          className="block w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
         />
         <label htmlFor="form-confirm-pass" className="block pt-4 pb-2">
           Confirm password
@@ -115,11 +115,11 @@ const CreateProfessional: React.FC = () => {
           type="password"
           id="form-confirm-pass"
           onChange={e => updateConfirmPass(e.currentTarget.value)}
-          className="block w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
         />
         <button
           type="submit"
-          className="block w-full my-2 p-2 bg-cyan-400 hover:bg-cyan-300 text-center rounded-md drop-shadow-md"
+          className="text-black w-full my-2 p-2 bg-cyan-400 hover:bg-cyan-300 text-center rounded-md drop-shadow-md"
         >
           Create account
         </button>

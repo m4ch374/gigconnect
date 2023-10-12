@@ -14,16 +14,17 @@ const Login: React.FC = () => {
     ;(async () => {
       const resp = await login({ email, password: pass })
 
+      console.log(resp)
+
       if (typeof resp === "undefined") {
         updateError("Email or password incorrect.")
         return
       }
 
-      localStorage.setItem("token", resp.token)
+      localStorage.setItem("token", resp.loginToken)
       switch (resp.userType) {
         case "admin":
-          // Update with page navigation
-          alert("Admin user login success!")
+          navigate("/admin-dashboard")
           break
         case "company":
           navigate("/company-myprofile")
@@ -48,7 +49,7 @@ const Login: React.FC = () => {
           type="text"
           id="login-email"
           onChange={e => updateEmail(e.currentTarget.value)}
-          className="block w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
         />
         <label htmlFor="login-pass" className="block pt-4 pb-2">
           Password
@@ -57,11 +58,11 @@ const Login: React.FC = () => {
           type="password"
           id="login-pass"
           onChange={e => updatePass(e.currentTarget.value)}
-          className="block w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
         />
         <button
           type="submit"
-          className="block w-full mt-8 p-2 bg-cyan-400 hover:bg-cyan-300 text-center rounded-md drop-shadow-md"
+          className="text-black w-full mt-8 p-2 bg-cyan-400 hover:bg-cyan-300 text-center rounded-md drop-shadow-md"
         >
           Login
         </button>
@@ -71,13 +72,18 @@ const Login: React.FC = () => {
           </div>
         )}
       </form>
-      <p>Don`&apos;`t have an account yet?</p>
-      <Link to="/create-professional" className="text-cyan-600 hover:underline">
-        Create professional account
-      </Link>
-      <Link to="/create-company" className="text-cyan-600 hover:underline">
-        Create company account
-      </Link>
+      <div className="mt-4 text-sm">
+        <h6>Don&apos;t have an account yet?</h6>
+        <Link
+          to="/create-professional"
+          className="text-cyan-600 hover:underline block"
+        >
+          Create professional account
+        </Link>
+        <Link to="/create-company" className="text-cyan-600 hover:underline">
+          Create company account
+        </Link>
+      </div>
     </div>
   )
 }

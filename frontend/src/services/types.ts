@@ -22,7 +22,7 @@ type LoginReq = {
 }
 
 type LoginRes = {
-  token: string
+  loginToken: string
   userType: TUser
 }
 
@@ -40,7 +40,7 @@ type CreateProReq = {
 }
 
 type CreateProRes = {
-  token: string
+  loginToken: string
   userType: TUser
 }
 
@@ -58,11 +58,61 @@ type CreateCompReq = {
 }
 
 type CreateCompRes = {
-  token: string
+  loginToken: string
   userType: TUser
 }
 
 export type TCreateComp = TEndpoint<CreateCompReq, CreateCompRes>
+// ===================================================
+
+// ===================================================
+// /api/logout
+// ===================================================
+export type TLogout = TEndpoint<void, { success: boolean }>
+// ===================================================
+
+// ###################################################
+// Admin related endponts
+// ###################################################
+
+// ===================================================
+// /api/admin/dashboard
+// ===================================================
+type TCompanyUser = {
+  userId: string
+  companyName: string
+  verified: boolean
+}
+
+type TProfessionalUser = {
+  userId: string
+  firstName: string
+  lastName: string
+  verified: boolean
+}
+
+type GetAdminRes = {
+  companyUsers: TCompanyUser[]
+  professionalUsers: TProfessionalUser[]
+}
+
+export type TGetAdmin = TEndpoint<void, GetAdminRes>
+// ===================================================
+
+// ===================================================
+// /api/admin/setverified
+// ===================================================
+type SetVerifyReq = {
+  userId: string
+  userType: TUser
+  verified: boolean
+}
+
+type SetVerifyRes = {
+  success: boolean
+}
+
+export type TSetVerify = TEndpoint<SetVerifyReq, SetVerifyRes>
 // ===================================================
 
 // ===================================================
