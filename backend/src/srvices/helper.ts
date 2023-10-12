@@ -3,6 +3,9 @@ import * as jwt from "jsonwebtoken"
 import { randomBytes, scrypt, timingSafeEqual } from "crypto"
 import { PrismaClient } from "@prisma/client"
 
+const prisma = new PrismaClient()
+const hashKeyLen = 32
+
 enum UserType {
   Any = "any",
   Admin = "admin",
@@ -19,10 +22,6 @@ interface tokenPayload {
   userId: string
   userType: UserType
 }
-
-const hashKeyLen = 32
-
-const prisma = new PrismaClient()
 
 /** Return a promise that resolves with the hashed password as a string. */
 const hashPassword = (password: string): Promise<string> =>
@@ -76,6 +75,51 @@ const verifyToken = (token: string) => {
   }
 }
 
+/**
+ * Checks whether given email already exists within the Professional table entries in the DB
+ */
+async function checkProfeshEmailExists(email: string) {
+  // Read from DB via Prisma query
+  const profesh = await prisma.professional.findUnique({
+    where: {
+      email,
+    },
+  })
+  // await prisma.$disconnect()
+  if (profesh) {
+    // profesh is assigned an entry which contains said email
+    return true
+  }
+  return false
+}
+
+/**
+ * Returns professional user id, given email
+ */
+const getProfeshUserID = async (email: string) => {
+  const user = await prisma.professional.findUnique({
+    where: { email },
+  })
+  if (user === null) {
+    throw HTTPError(403, "No professional user that matches given email")
+  }
+  return user.id
+}
+
+/**
+ * Returns the whole professional user entry (including Related nodes), given id
+ */
+const getProfeshUserEntry = async (uID: number) => {
+  const user = await prisma.professional.findUnique({
+    where: { id: uID },
+    include: { socialLinks: true, certLinks: true },
+  })
+  if (user === null) {
+    throw HTTPError(403, "No professional user that matches given ID")
+  }
+  return user
+}
+
 export {
   UserType,
   ExternalLink,
@@ -84,4 +128,7 @@ export {
   verifyPassword,
   createToken,
   verifyToken,
+  checkProfeshEmailExists,
+  getProfeshUserID,
+  getProfeshUserEntry,
 }

@@ -156,15 +156,20 @@ app.post(
       lastName: string
     }>,
     res,
+    next,
   ) => {
     const { email, password, firstName, lastName } = req.body
-    res.json(professionalCreate(email, password, firstName, lastName))
+    professionalCreate(email, password, firstName, lastName)
+      .then(result => res.json(result))
+      .catch(next)
   },
 )
 
-app.get("/api/professional/profiledata", (req, res) => {
+app.get("/api/professional/profiledata", (req, res, next) => {
   const userId = checkAuth(req, UserType.Professional)
-  res.json(professionalData(userId))
+  professionalData(userId)
+    .then(result => res.json(result))
+    .catch(next)
 })
 
 app.post(
@@ -179,6 +184,7 @@ app.post(
       externalWebsites: ExternalLink[]
     }>,
     res,
+    next,
   ) => {
     const userId = checkAuth(req as Request, UserType.Professional)
     const {
@@ -189,17 +195,17 @@ app.post(
       qualifications,
       externalWebsites,
     } = req.body
-    res.json(
-      professionalUpdate(
-        userId,
-        firstName,
-        lastName,
-        description,
-        skills,
-        qualifications,
-        externalWebsites,
-      ),
+    professionalUpdate(
+      userId,
+      firstName,
+      lastName,
+      description,
+      skills,
+      qualifications,
+      externalWebsites,
     )
+      .then(result => res.json(result))
+      .catch(next)
   },
 )
 
