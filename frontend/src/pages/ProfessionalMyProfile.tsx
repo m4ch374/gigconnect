@@ -20,9 +20,12 @@ const ProfessionalMyProfile: React.FC = () => {
   const [fetchError, updateFetchError] = useState(false)
   const [profileData, updateFrofileData] = useState<ProfessionalProfileData>()
 
-  fetch("/api/professional/profile", {
+  fetch("http://localhost:8080/api/professional/profile", {
     method: "GET",
-    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Accept: "application/json",
+    },
   })
     .then(res => {
       updateLoading(false)

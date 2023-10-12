@@ -1,15 +1,16 @@
 import React, { useState } from "react"
 
-type ExternalLink = {
-  websiteName: string
-  websiteLink: string
-}
+// Not included in sprint 1 due to issues on the backend
+// type ExternalLink = {
+//   websiteName: string
+//   websiteLink: string
+// }
 
 type CompanyProfileData = {
   companyName: string
   abn: string
   companyDescription: string
-  externalWebsites: ExternalLink[]
+  // externalWebsites: ExternalLink[]  Not included in sprint 1 due to issues on the backend
   verified: boolean
 }
 
@@ -18,9 +19,12 @@ const CompanyMyProfile: React.FC = () => {
   const [fetchError, updateFetchError] = useState(false)
   const [profileData, updateFrofileData] = useState<CompanyProfileData>()
 
-  fetch("/api/company/profile", {
+  fetch("http://localhost:8080/api/company/profile", {
     method: "GET",
-    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Accept: "application/json",
+    },
   })
     .then(res => {
       updateLoading(false)
@@ -66,6 +70,9 @@ const CompanyMyProfile: React.FC = () => {
               <p className="pt-2 text-justify">
                 {profileData?.companyDescription}
               </p>
+              {/* 
+              Not included in sprint 1 due to issues on the backend
+              
               <h3 className="text-lg font-bold pt-4 pb-2">External Websites</h3>
               {profileData?.externalWebsites ? (
                 profileData.externalWebsites.map((i, k) => (
@@ -80,6 +87,8 @@ const CompanyMyProfile: React.FC = () => {
               ) : (
                 <></>
               )}
+
+              */}
             </>
           )}
         </>
