@@ -203,9 +203,11 @@ app.post(
   },
 )
 
-app.get("/api/admin/dashboard", (req, res) => {
+app.get("/api/admin/dashboard", (req, res, next) => {
   checkAuth(req, UserType.Admin)
-  res.json(adminDashboard())
+  adminDashboard()
+    .then(result => res.json(result))
+    .catch(next)
 })
 
 app.post(
@@ -217,10 +219,13 @@ app.post(
       verified: boolean
     }>,
     res,
+    next,
   ) => {
     checkAuth(req as Request, UserType.Admin)
     const { userId, userType, verified } = req.body
-    res.json(adminSetVerified(userId, userType, verified))
+    adminSetVerified(userId, userType, verified)
+      .then(result => res.json(result))
+      .catch(next)
   },
 )
 
