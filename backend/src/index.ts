@@ -2,7 +2,12 @@ import "dotenv/config"
 import express, { Express, NextFunction, Request, Response } from "express"
 import cors from "cors"
 import HTTPError from "http-errors"
-import { returnError, returnHi, returnPassword } from "srvices/hello"
+import {
+  returnDummy,
+  returnError,
+  returnHi,
+  returnPassword,
+} from "srvices/hello"
 import { ExternalLink, UserType, verifyToken } from "srvices/helper"
 import { authLogin, authLogout } from "srvices/auth"
 import { companyCreate, companyData, companyUpdate } from "srvices/company"
@@ -28,6 +33,7 @@ const port = process.env.PORT
 
 const app: Express = express()
 
+app.use(express.json())
 app.use(cors())
 
 // Helper functions
@@ -71,13 +77,21 @@ app.get("/password", (_, res, next) => {
     .catch(next)
 })
 
+app.get("/dummy", (_, res, next) => {
+  returnDummy()
+    .then(result => res.json(result))
+    .catch(next)
+})
+
 // API routes
 
 app.post(
   "/api/login",
-  (req: ReqBody<{ email: string; password: string }>, res) => {
+  (req: ReqBody<{ email: string; password: string }>, res, next) => {
     const { email, password } = req.body
-    res.json(authLogin(email, password))
+    authLogin(email, password)
+      .then(result => res.json(result))
+      .catch(next)
   },
 )
 

@@ -1,5 +1,5 @@
 import HTTPError from "http-errors"
-import { hashPassword, verifyPassword } from "./helper"
+import { hashPassword, prisma, verifyPassword } from "./helper"
 
 const returnHi = () => "Hi"
 
@@ -28,4 +28,33 @@ const returnPassword = async () => {
   }
 }
 
-export { returnHi, returnError, returnPassword }
+const returnDummy = async () => {
+  await prisma.admin.create({
+    data: {
+      email: "admin@example.com",
+      password: await hashPassword("admin"),
+    },
+  })
+
+  await prisma.company.create({
+    data: {
+      email: "company@example.com",
+      password: await hashPassword("company"),
+      name: "Hello Company",
+      abn: "51824753556",
+    },
+  })
+
+  await prisma.professional.create({
+    data: {
+      email: "professional@example.com",
+      password: await hashPassword("professional"),
+      firstName: "Hello",
+      lastName: "Professional",
+    },
+  })
+
+  return { success: true }
+}
+
+export { returnHi, returnError, returnPassword, returnDummy }

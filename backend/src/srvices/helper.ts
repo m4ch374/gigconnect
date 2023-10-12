@@ -1,6 +1,7 @@
 import HTTPError from "http-errors"
 import * as jwt from "jsonwebtoken"
 import { randomBytes, scrypt, timingSafeEqual } from "crypto"
+import { PrismaClient } from "@prisma/client"
 
 enum UserType {
   Any = "any",
@@ -20,6 +21,8 @@ interface tokenPayload {
 }
 
 const hashKeyLen = 32
+
+const prisma = new PrismaClient()
 
 /** Return a promise that resolves with the hashed password as a string. */
 const hashPassword = (password: string): Promise<string> =>
@@ -76,6 +79,7 @@ const verifyToken = (token: string) => {
 export {
   UserType,
   ExternalLink,
+  prisma,
   hashPassword,
   verifyPassword,
   createToken,
