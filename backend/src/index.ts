@@ -110,15 +110,20 @@ app.post(
       abn: string
     }>,
     res,
+    next,
   ) => {
     const { email, password, companyName, abn } = req.body
-    res.json(companyCreate(email, password, companyName, abn))
+    companyCreate(email, password, companyName, abn)
+      .then(result => res.json(result))
+      .catch(next)
   },
 )
 
-app.get("/api/company/profiledata", (req, res) => {
+app.get("/api/company/profiledata", (req, res, next) => {
   const userId = checkAuth(req, UserType.Company)
-  res.json(companyData(userId))
+  companyData(userId)
+    .then(result => res.json(result))
+    .catch(next)
 })
 
 app.post(
@@ -128,21 +133,15 @@ app.post(
       companyName: string
       abn: string
       companyDescription: string
-      externalWebsites: ExternalLink[]
     }>,
     res,
+    next,
   ) => {
     const userId = checkAuth(req as Request, UserType.Company)
-    const { companyName, abn, companyDescription, externalWebsites } = req.body
-    res.json(
-      companyUpdate(
-        userId,
-        companyName,
-        abn,
-        companyDescription,
-        externalWebsites,
-      ),
-    )
+    const { companyName, abn, companyDescription } = req.body
+    companyUpdate(userId, companyName, abn, companyDescription)
+      .then(result => res.json(result))
+      .catch(next)
   },
 )
 

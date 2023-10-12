@@ -76,6 +76,24 @@ const verifyToken = (token: string) => {
 }
 
 /**
+ * Checks whether given email already exists within the Company table entries in the DB
+ */
+async function checkCompanyEmailExists(email: string) {
+  // Read from DB via Prisma query
+  const CompanyEmail = await prisma.company.findUnique({
+    where: {
+      email,
+    },
+  })
+  // await prisma.$disconnect()
+  if (CompanyEmail) {
+    // CompanyEmail is assigned an entry which contains said email
+    return true
+  }
+  return false
+}
+
+/**
  * Checks whether given email already exists within the Professional table entries in the DB
  */
 async function checkProfeshEmailExists(email: string) {
@@ -91,6 +109,31 @@ async function checkProfeshEmailExists(email: string) {
     return true
   }
   return false
+}
+
+/**
+ * Returns company user entry, given email
+ */
+const getCompanyUserID = async (email: string) => {
+  const user = await prisma.company.findUnique({
+    where: { email },
+  })
+
+  return user?.id
+}
+
+/**
+ * Returns company user id, given email
+ */
+const getCompanyUserEntry = async (uID: number) => {
+  // if can't find a record with that id then return null
+  const user = await prisma.company.findUnique({
+    where: { id: uID },
+  })
+  if (user === null) {
+    throw HTTPError(403, "No user that matches that ID")
+  }
+  return user
 }
 
 /**
@@ -128,6 +171,9 @@ export {
   verifyPassword,
   createToken,
   verifyToken,
+  checkCompanyEmailExists,
+  getCompanyUserID,
+  getCompanyUserEntry,
   checkProfeshEmailExists,
   getProfeshUserID,
   getProfeshUserEntry,
