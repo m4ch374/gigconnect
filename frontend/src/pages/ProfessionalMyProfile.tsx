@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
 type ExternalLink = {
   websiteName: string
@@ -20,28 +20,30 @@ const ProfessionalMyProfile: React.FC = () => {
   const [fetchError, updateFetchError] = useState(false)
   const [profileData, updateFrofileData] = useState<ProfessionalProfileData>()
 
-  fetch("http://localhost:8080/api/professional/profile", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      Accept: "application/json",
-    },
-  })
-    .then(res => {
-      updateLoading(false)
-      res
-        .json()
-        .then(j => {
-          updateFrofileData(j as ProfessionalProfileData)
-        })
-        .catch(() => {
-          updateFetchError(true)
-        })
+  useEffect(() => {
+    fetch("http://localhost:8080/api/professional/profiledata", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Accept: "application/json",
+      },
     })
-    .catch(() => {
-      updateLoading(false)
-      updateFetchError(true)
-    })
+      .then(res => {
+        updateLoading(false)
+        res
+          .json()
+          .then(j => {
+            updateFrofileData(j as ProfessionalProfileData)
+          })
+          .catch(() => {
+            updateFetchError(true)
+          })
+      })
+      .catch(() => {
+        updateLoading(false)
+        updateFetchError(true)
+      })
+  }, [])
 
   return (
     <div className=" w-11/12 sm:w-[600px] mx-auto">
@@ -63,20 +65,16 @@ const ProfessionalMyProfile: React.FC = () => {
               <h2 className="text-xl sm:text-2xl font-bold pt-4">
                 {`${profileData?.firstName} ${profileData?.lastName}`}
               </h2>
-              {profileData?.verified ? (
+              {profileData?.verified && (
                 <div className="text-cyan-700 font-bold">Verified</div>
-              ) : (
-                <></>
               )}
               <p className="pt-2 text-justify">{profileData?.description}</p>
               <h3 className="text-lg font-bold pt-4 pb-2">Skills</h3>
-              {profileData?.skills ? (
+              {profileData?.skills && (
                 <p className="pt-2">{profileData.skills.join(", ")}</p>
-              ) : (
-                <></>
               )}
               <h3 className="text-lg font-bold pt-4 pb-2">Qualifications</h3>
-              {profileData?.qualifications ? (
+              {profileData?.qualifications &&
                 profileData.qualifications.map((i, k) => (
                   <a
                     href={i.websiteLink}
@@ -85,12 +83,9 @@ const ProfessionalMyProfile: React.FC = () => {
                   >
                     {i.websiteName}
                   </a>
-                ))
-              ) : (
-                <></>
-              )}
+                ))}
               <h3 className="text-lg font-bold pt-4 pb-2">External Websites</h3>
-              {profileData?.externalWebsites ? (
+              {profileData?.externalWebsites &&
                 profileData.externalWebsites.map((i, k) => (
                   <a
                     href={i.websiteLink}
@@ -99,10 +94,7 @@ const ProfessionalMyProfile: React.FC = () => {
                   >
                     {i.websiteName}
                   </a>
-                ))
-              ) : (
-                <></>
-              )}
+                ))}
             </>
           )}
         </>

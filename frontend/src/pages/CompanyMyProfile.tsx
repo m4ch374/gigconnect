@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 
-// Not included in sprint 1 due to issues on the backend
+// This is not part of sprint 1 anymore due to db issues
 // type ExternalLink = {
 //   websiteName: string
 //   websiteLink: string
@@ -10,7 +10,7 @@ type CompanyProfileData = {
   companyName: string
   abn: string
   companyDescription: string
-  // externalWebsites: ExternalLink[]  Not included in sprint 1 due to issues on the backend
+  // externalWebsites: ExternalLink[] - this is not part of sprint 1 anymore due to backend issues
   verified: boolean
 }
 
@@ -19,28 +19,30 @@ const CompanyMyProfile: React.FC = () => {
   const [fetchError, updateFetchError] = useState(false)
   const [profileData, updateFrofileData] = useState<CompanyProfileData>()
 
-  fetch("http://localhost:8080/api/company/profile", {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      Accept: "application/json",
-    },
-  })
-    .then(res => {
-      updateLoading(false)
-      res
-        .json()
-        .then(j => {
-          updateFrofileData(j as CompanyProfileData)
-        })
-        .catch(() => {
-          updateFetchError(true)
-        })
+  useEffect(() => {
+    fetch("http://localhost:8080/api/company/profiledata", {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Accept: "application/json",
+      },
     })
-    .catch(() => {
-      updateLoading(false)
-      updateFetchError(true)
-    })
+      .then(res => {
+        updateLoading(false)
+        res
+          .json()
+          .then(j => {
+            updateFrofileData(j as CompanyProfileData)
+          })
+          .catch(() => {
+            updateFetchError(true)
+          })
+      })
+      .catch(() => {
+        updateLoading(false)
+        updateFetchError(true)
+      })
+  }, [])
 
   return (
     <div className=" w-11/12 sm:w-[600px] mx-auto">
@@ -62,17 +64,15 @@ const CompanyMyProfile: React.FC = () => {
               <h2 className="text-xl sm:text-2xl font-bold pt-4">
                 {profileData?.companyName}
               </h2>
-              {profileData?.verified ? (
+              {profileData?.verified && (
                 <div className="text-cyan-700 font-bold">Verified</div>
-              ) : (
-                <></>
               )}
               <p className="pt-2 text-justify">
                 {profileData?.companyDescription}
               </p>
-              {/* 
-              Not included in sprint 1 due to issues on the backend
-              
+              {/*
+              The following is no longer part of sprint 1 due to issues on the backend
+
               <h3 className="text-lg font-bold pt-4 pb-2">External Websites</h3>
               {profileData?.externalWebsites ? (
                 profileData.externalWebsites.map((i, k) => (
