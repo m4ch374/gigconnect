@@ -15,3 +15,7 @@ Week 3
 Week 4
     - started backend dev, approved api implem stub code
     - brainstormed backend db design
+Week 5
+    - finished development on Professional-related functionalities
+    - tested Professional-related functionalities
+    - submitted and demo-ed project for Sprint A

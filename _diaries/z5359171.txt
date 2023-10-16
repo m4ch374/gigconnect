@@ -16,3 +16,6 @@ be able to verify professionals.
 
 Week 4
 Discussed the database schema and decided the relevant attributes and types for company, professional, and admin users and links. From there we delegated  Gabriel to implement the Prisma code. I have been tasked to be part of the backend team for this project.
+
+Week 5
+I was tasked with the company functions implementation which I did the company create account function, company profile data function, and company update function. I also did the manual testing for these functions and did error handling.

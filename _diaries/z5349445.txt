@@ -25,5 +25,13 @@ WEEK 3
   set up the repository.
 
 WEEK 4
-- Drafter API specification for functionality to be delivered in Sprint 1.
+- Drafted API specification for functionality to be delivered in Sprint 1.
 - Started work on pages for logging in and creating users.
+
+WEEK 5
+- Created pages for logging in and creating users. 
+- Created user profile pages for viewing the profile of the currently logged
+  in user.
+- Held our week 5 demonstration at the lab and held our retrospective meeting
+  immediately afterwards.
+- Allocated user stores to be covered in sprint 2

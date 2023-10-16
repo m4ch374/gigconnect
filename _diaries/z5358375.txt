@@ -28,3 +28,11 @@ I wrote the schema using Prisma and got feedback from the other team
 members. I also began implementing the code for login/logout on the
 backend. Next week we will finish off the user stories and do some
 manual testing, in preparation for Demo A.
+
+Week 5
+We finished implementing the user stories for Sprint 1. I wrote code
+on the backend to handle login/logout and the admin features. I also
+wrote some helper functions for auth tokens and password hashing.
+I got code review from the other team members and helped to review
+other member's code too. Next week we will begin planning and working
+on Sprint 2 user stories, while incorporating feedback from Demo A.

@@ -21,3 +21,7 @@ WEEK 3
 WEEK 4
 * Sterted development on the frontend 
 * Added some infrastructure code for the frontend to encapsulate fetching behaviour and logic 
+
+WEEK 5
+* Coded Admin page
+* Made the dmeo 
