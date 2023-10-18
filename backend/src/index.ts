@@ -133,13 +133,20 @@ app.post(
       companyName: string
       abn: string
       companyDescription: string
+      externalWebsites: ExternalLink[]
     }>,
     res,
     next,
   ) => {
     const userId = checkAuth(req as Request, UserType.Company)
-    const { companyName, abn, companyDescription } = req.body
-    companyUpdate(userId, companyName, abn, companyDescription)
+    const { companyName, abn, companyDescription, externalWebsites } = req.body
+    companyUpdate(
+      userId,
+      companyName,
+      abn,
+      companyDescription,
+      externalWebsites,
+    )
       .then(result => res.json(result))
       .catch(next)
   },

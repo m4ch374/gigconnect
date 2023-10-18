@@ -38,10 +38,10 @@ const professionalCreate = async (
   }
   // Check password validity
   if (password === email || password === firstName || password === lastName) {
-    throw HTTPError(400, "Passoword cannot match other properties")
+    throw HTTPError(400, "Password cannot match other properties")
   }
   if (password.length < 8) {
-    throw HTTPError(400, "Passoword is too short")
+    throw HTTPError(400, "Password must be at least 8 characters")
   }
   // #########################
   // #### CREATE DB ENTRY ####
@@ -99,7 +99,10 @@ const professionalUpdate = async (
 ) => {
   // Check name lengths
   if (firstName.length === 0 || lastName.length === 0) {
-    throw HTTPError(400, "Name is too short")
+    throw HTTPError(
+      400,
+      "First name and last name must be at least one character",
+    )
   }
 
   // Update rest of the Professional entry attributes

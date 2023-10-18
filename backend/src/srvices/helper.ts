@@ -129,6 +129,7 @@ const getCompanyUserEntry = async (uID: number) => {
   // if can't find a record with that id then return null
   const user = await prisma.company.findUnique({
     where: { id: uID },
+    include: { companyLinks: true },
   })
   if (user === null) {
     throw HTTPError(403, "No user that matches that ID")

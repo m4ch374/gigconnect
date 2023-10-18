@@ -1,5 +1,6 @@
 import HTTPError from "http-errors"
 import {
+  ExternalLink,
   prisma,
   createToken,
   UserType,
@@ -36,15 +37,19 @@ const companyCreate = async (
     throw HTTPError(400, "Password cannot match other properties")
   }
   if (password.length < 8) {
-    throw HTTPError(400, "Password is too short")
+    throw HTTPError(400, "Password must be at least 8 characters")
   }
 
+  // Check if company abn is only numbers
+  if (!/^[0-9]{11}$/.test(abn)) {
+    throw HTTPError(400, "ABN must only contain numbers")
+  }
   if (abn.length !== 11) {
-    throw HTTPError(400, "Invalid abn")
+    throw HTTPError(400, "ABN must be exactly 11 digits")
   }
 
   if (companyName.length === 0) {
-    throw HTTPError(400, "Name is too short")
+    throw HTTPError(400, "Company name must be at least one character")
   }
   // #######################
   // ####  WRITE TO DB #####
@@ -60,6 +65,9 @@ const companyCreate = async (
       abn,
     },
   })
+  // #######################
+  // #### RETURN DICT ######
+  // #######################
   return {
     loginToken: createToken(companyUser.id.toString(), UserType.Company),
     userType: UserType.Company,
@@ -67,12 +75,19 @@ const companyCreate = async (
 }
 
 const companyData = async (userId: string) => {
+  // #######################
+  // ####  WRITE TO DB #####
+  // #######################
   const companyUser = await getCompanyUserEntry(Number(userId))
   console.log(userId)
+  // #######################
+  // #### RETURN DICT ######
+  // #######################
   return {
     companyName: companyUser.name,
     abn: companyUser.abn,
     companyDescription: companyUser.description,
+    externalWebsites: companyUser.companyLinks,
     verified: companyUser.verified,
   }
 }
@@ -82,17 +97,26 @@ const companyUpdate = async (
   companyName: string,
   abn: string,
   companyDescription: string,
+  externalWebsites: ExternalLink[],
 ) => {
   // Check name lengths
+  // #######################
+  // ###  TEST CASES    ####
+  // #######################
   if (companyName.length === 0) {
-    throw HTTPError(400, "Name is too short")
+    throw HTTPError(400, "Company name must be at least one character")
   }
-
+  // Check if company abn is only numbers
+  if (!/^[0-9]+$/.test(abn)) {
+    throw HTTPError(400, "ABN must only contain numbers")
+  }
   // Check if company abn is 11 characters
   if (abn.length !== 11) {
-    throw HTTPError(400, "Invalid abn")
+    throw HTTPError(400, "ABN must be exactly 11 digits")
   }
-
+  // #######################
+  // ####  WRITE TO DB #####
+  // #######################
   // Update rest of the Company entry attributes
   await prisma.company.update({
     where: { id: Number(userId) },
@@ -102,6 +126,21 @@ const companyUpdate = async (
       description: companyDescription,
     },
   })
+  // Update Company Link user's entries with externalwebsites[]
+  await prisma.companyLink.deleteMany({
+    where: { companyId: Number(userId) },
+  })
+  await Promise.all(
+    externalWebsites.map(async currQual => {
+      await prisma.companyLink.create({
+        data: {
+          name: currQual.websiteName,
+          url: currQual.websiteLink,
+          companyId: Number(userId),
+        },
+      })
+    }),
+  )
   // #######################
   // #### RETURN DICT ######
   // #######################
