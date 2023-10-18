@@ -10,6 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ProjectStatus {
+  OPEN
+  INPROGRESS
+  CLOSED
+}
+
 model Admin {
   id       Int    @id @default(autoincrement())
   email    String @unique
@@ -17,14 +23,15 @@ model Admin {
 }
 
 model Company {
-  id          Int     @id @default(autoincrement())
-  email       String  @unique
+  id          Int       @id @default(autoincrement())
+  email       String    @unique
   password    String
-  verified    Boolean @default(false)
+  verified    Boolean   @default(false)
   name        String
   address     String?
   description String?
   abn         String
+  projects    Project[]
 }
 
 model Professional {
@@ -38,6 +45,8 @@ model Professional {
   skills      String[]
   socialLinks SocialLink[]
   certLinks   CertLink[]
+  projects    Project[]
+  requests    Request[]
 }
 
 model SocialLink {
@@ -54,4 +63,30 @@ model CertLink {
   url            String
   professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
   professionalId Int
+}
+
+model Project {
+  id                 Int            @id @default(autoincrement())
+  title              String
+  publicDescription  String?
+  privateDescription String?
+  creationDate       DateTime       @default(now())
+  tags               String[]
+  inPerson           Boolean
+  location           String? // Set this if inPerson is true
+  status             ProjectStatus  @default(OPEN)
+  company            Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId          Int
+  professionals      Professional[]
+  requests           Request[]
+}
+
+model Request {
+  id             Int          @id @default(autoincrement())
+  message        String
+  creationDate   DateTime     @default(now())
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  professionalId Int
+  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId      Int
 }
