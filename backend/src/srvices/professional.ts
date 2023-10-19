@@ -7,6 +7,7 @@ import {
   hashPassword,
   checkProfeshEmailExists,
   getProfeshUserEntry,
+  mapDBToExternalLinks,
 } from "./helper"
 
 /**
@@ -47,7 +48,6 @@ const professionalCreate = async (
   // #### CREATE DB ENTRY ####
   // #########################
   const hashedPass = await hashPassword(password)
-  console.log(password, hashedPass)
   const user = await prisma.professional.create({
     data: {
       email,
@@ -78,8 +78,8 @@ const professionalData = async (userId: string) => {
     lastName: user.lastName,
     description: user.description,
     skills: user.skills,
-    qualifications: user.certLinks,
-    externalWebsites: user.socialLinks,
+    qualifications: mapDBToExternalLinks(user.certLinks),
+    externalWebsites: mapDBToExternalLinks(user.socialLinks),
     verified: user.verified,
   }
 }
@@ -121,11 +121,11 @@ const professionalUpdate = async (
     where: { professionalId: Number(userId) },
   })
   await Promise.all(
-    externalWebsites.map(async currQual => {
+    externalWebsites.map(async currSocial => {
       await prisma.socialLink.create({
         data: {
-          name: currQual.websiteName,
-          url: currQual.websiteLink,
+          name: currSocial.websiteName,
+          url: currSocial.websiteLink,
           professionalId: Number(userId),
         },
       })

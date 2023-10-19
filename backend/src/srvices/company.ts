@@ -7,6 +7,7 @@ import {
   checkCompanyEmailExists,
   getCompanyUserEntry,
   hashPassword,
+  mapDBToExternalLinks,
 } from "./helper"
 
 const companyCreate = async (
@@ -56,7 +57,6 @@ const companyCreate = async (
   // #######################
   // FINALLY Create an entry in the DB
   const hashedPass = await hashPassword(password)
-  console.log(password, hashedPass)
   const companyUser = await prisma.company.create({
     data: {
       email,
@@ -79,7 +79,6 @@ const companyData = async (userId: string) => {
   // ####  WRITE TO DB #####
   // #######################
   const companyUser = await getCompanyUserEntry(Number(userId))
-  console.log(userId)
   // #######################
   // #### RETURN DICT ######
   // #######################
@@ -87,7 +86,7 @@ const companyData = async (userId: string) => {
     companyName: companyUser.name,
     abn: companyUser.abn,
     companyDescription: companyUser.description,
-    externalWebsites: companyUser.companyLinks,
+    externalWebsites: mapDBToExternalLinks(companyUser.companyLinks),
     verified: companyUser.verified,
   }
 }
@@ -131,11 +130,11 @@ const companyUpdate = async (
     where: { companyId: Number(userId) },
   })
   await Promise.all(
-    externalWebsites.map(async currQual => {
+    externalWebsites.map(async currWebsite => {
       await prisma.companyLink.create({
         data: {
-          name: currQual.websiteName,
-          url: currQual.websiteLink,
+          name: currWebsite.websiteName,
+          url: currWebsite.websiteLink,
           companyId: Number(userId),
         },
       })

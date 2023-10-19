@@ -76,6 +76,17 @@ const verifyToken = (token: string) => {
 }
 
 /**
+ * Return the given array of database links in ExternalLink format.
+ */
+const mapDBToExternalLinks = (
+  links: { name: string; url: string }[],
+): ExternalLink[] =>
+  links.map(link => ({
+    websiteName: link.name,
+    websiteLink: link.url,
+  }))
+
+/**
  * Checks whether given email already exists within the Company table entries in the DB
  */
 async function checkCompanyEmailExists(email: string) {
@@ -172,6 +183,7 @@ export {
   verifyPassword,
   createToken,
   verifyToken,
+  mapDBToExternalLinks,
   checkCompanyEmailExists,
   getCompanyUserID,
   getCompanyUserEntry,
