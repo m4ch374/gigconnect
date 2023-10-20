@@ -1,3 +1,7 @@
+import { CompanyProfileData } from "types/company.types"
+import { TUser } from "types/general.types"
+import { ProfessionalProfileData } from "types/professional.types"
+
 // Generic Type
 export type TEndpoint<Req, Res> = {
   requestType: Req
@@ -7,11 +11,6 @@ export type TEndpoint<Req, Res> = {
 // ###################################################
 // Auth related endponts
 // ###################################################
-
-// ===================================================
-// General
-// ===================================================
-type TUser = "admin" | "company" | "professional"
 
 // ===================================================
 // /api/login
@@ -113,6 +112,41 @@ type SetVerifyRes = {
 }
 
 export type TSetVerify = TEndpoint<SetVerifyReq, SetVerifyRes>
+// ===================================================
+
+// ###################################################
+// Professional related endponts
+// ###################################################
+
+// ===================================================
+// /api/professional/profiledata
+// ===================================================
+export type TProfessionalProfile = TEndpoint<void, ProfessionalProfileData>
+// ===================================================
+
+// ===================================================
+// /api/professional/profiledata/update
+// ===================================================
+export type TProfessionalProfileUpdate = TEndpoint<
+  ProfessionalProfileData,
+  void
+>
+// ===================================================
+
+// ###################################################
+// Company related endponts
+// ###################################################
+
+// ===================================================
+// /api/company/profiledata
+// ===================================================
+export type TCompanyProfile = TEndpoint<void, CompanyProfileData>
+// ===================================================
+
+// ===================================================
+// /api/company/profiledata/update
+// ===================================================
+export type TCompanyProfileUpdate = TEndpoint<CompanyProfileData, void>
 // ===================================================
 
 // ===================================================

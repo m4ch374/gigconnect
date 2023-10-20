@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { createProfessional } from "services/auth"
+import { createProfessional } from "services/auth.services"
 import { TCreatePro } from "services/types"
 
 const CreateProfessional: React.FC = () => {
@@ -50,7 +50,7 @@ const CreateProfessional: React.FC = () => {
 
       if (resp.userType === "professional") {
         localStorage.setItem("token", resp.loginToken)
-        navigate("/professional-myprofile")
+        navigate("/setup-professional")
         return
       }
 
@@ -73,7 +73,7 @@ const CreateProfessional: React.FC = () => {
           onChange={e =>
             setFormData({ ...formData, email: e.currentTarget.value })
           }
-          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
         <label htmlFor="form-first-name" className="block pt-4 pb-2">
           First name
@@ -84,7 +84,7 @@ const CreateProfessional: React.FC = () => {
           onChange={e =>
             setFormData({ ...formData, firstName: e.currentTarget.value })
           }
-          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
         <label htmlFor="form-last-name" className="block pt-4 pb-2">
           Last name
@@ -95,7 +95,7 @@ const CreateProfessional: React.FC = () => {
           onChange={e =>
             setFormData({ ...formData, lastName: e.currentTarget.value })
           }
-          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
         <label htmlFor="form-pass" className="block pt-4 pb-2">
           Password
@@ -106,7 +106,7 @@ const CreateProfessional: React.FC = () => {
           onChange={e =>
             setFormData({ ...formData, password: e.currentTarget.value })
           }
-          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
         <label htmlFor="form-confirm-pass" className="block pt-4 pb-2">
           Confirm password
@@ -115,16 +115,16 @@ const CreateProfessional: React.FC = () => {
           type="password"
           id="form-confirm-pass"
           onChange={e => updateConfirmPass(e.currentTarget.value)}
-          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
         <button
           type="submit"
-          className="text-black w-full my-2 p-2 bg-cyan-400 hover:bg-cyan-300 text-center rounded-md drop-shadow-md"
+          className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white"
         >
           Create account
         </button>
         {formError && (
-          <div className="w-full mt-4 p-2 bg-red-300 border border-red-500 rounded-md">
+          <div className="w-full mt-4 p-2 bg-red-700 border border-red-500 rounded-md text-white">
             <p>{formError}</p>
           </div>
         )}

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react"
-import { getAdmin, setVerify } from "services/admin"
+import { getAdmin, setVerify } from "services/admin.services"
 import { TGetAdmin } from "services/types"
 
 // Put this in here to prevent merge conflict issue

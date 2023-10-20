@@ -1,6 +1,6 @@
 import React, { useState, FormEvent } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import { login } from "services/auth"
+import { login } from "services/auth.services"
 
 const Login: React.FC = () => {
   const [email, updateEmail] = useState("")
@@ -49,7 +49,7 @@ const Login: React.FC = () => {
           type="text"
           id="login-email"
           onChange={e => updateEmail(e.currentTarget.value)}
-          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
         <label htmlFor="login-pass" className="block pt-4 pb-2">
           Password
@@ -58,32 +58,35 @@ const Login: React.FC = () => {
           type="password"
           id="login-pass"
           onChange={e => updatePass(e.currentTarget.value)}
-          className="text-black w-full p-2 bg-cyan-200 hover:bg-cyan-100 focus:bg-cyan-100 rounded-md drop-shadow-md"
+          className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
+
         <button
           type="submit"
-          className="text-black w-full mt-8 p-2 bg-cyan-400 hover:bg-cyan-300 text-center rounded-md drop-shadow-md"
+          className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white"
         >
           Login
         </button>
         {formError && (
-          <div className="w-full mt-4 p-2 bg-red-300 border border-red-500 rounded-md">
+          <div className="w-full mt-4 p-2 bg-red-700 border border-red-500 rounded-md text-white">
             <p>{formError}</p>
           </div>
         )}
       </form>
-      <div className="mt-4 text-sm">
-        <h6>Don&apos;t have an account yet?</h6>
+      <p className="pt-4">Don&apos;t have an account yet?</p>
+      <p>
         <Link
           to="/create-professional"
-          className="text-cyan-600 hover:underline block"
+          className="text-cyan-400 hover:underline"
         >
           Create professional account
         </Link>
-        <Link to="/create-company" className="text-cyan-600 hover:underline">
+      </p>
+      <p>
+        <Link to="/create-company" className="text-cyan-400 hover:underline">
           Create company account
         </Link>
-      </div>
+      </p>
     </div>
   )
 }

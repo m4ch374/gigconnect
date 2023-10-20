@@ -1,7 +1,7 @@
 import Wifi from "assets/icons/Wifi"
 import React from "react"
 import { Navigate, Outlet, useNavigate } from "react-router-dom"
-import { logout } from "services/auth"
+import { logout } from "services/auth.services"
 
 const ProtectedRoutes: React.FC = () => {
   const navigate = useNavigate()

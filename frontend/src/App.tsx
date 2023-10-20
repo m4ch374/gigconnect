@@ -8,6 +8,10 @@ import ProtectedRoutes from "components/ProtectedRoutes"
 import CompanyMyProfile from "pages/CompanyMyProfile"
 import ProfessionalMyProfile from "pages/ProfessionalMyProfile"
 import AdminDashboard from "pages/AdminDashboard"
+import SetupCompany from "pages/SetupCompany"
+import SetupProfessional from "pages/SetupProfessional"
+import CompanyEditProfile from "pages/CompanyEditProfile"
+import ProfessionalEditProfile from "pages/ProfessionalEditProfile"
 
 const App: React.FC = () => {
   return (
@@ -20,10 +24,20 @@ const App: React.FC = () => {
       {/* Main */}
       <Route path="/" element={<ProtectedRoutes />}>
         <Route path="/" element={<Landing />} />
+        <Route path="/setup-company" element={<SetupCompany />} />
+        <Route path="/setup-professional" element={<SetupProfessional />} />
         <Route path="/company-myprofile" element={<CompanyMyProfile />} />
+        <Route
+          path="/company-myprofile/edit"
+          element={<CompanyEditProfile />}
+        />
         <Route
           path="/professional-myprofile"
           element={<ProfessionalMyProfile />}
+        />
+        <Route
+          path="/professional-myprofile/edit"
+          element={<ProfessionalEditProfile />}
         />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
       </Route>

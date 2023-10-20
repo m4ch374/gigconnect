@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react"
-
-// This is not part of sprint 1 anymore due to db issues
-// type ExternalLink = {
-//   websiteName: string
-//   websiteLink: string
-// }
-
-type CompanyProfileData = {
-  companyName: string
-  abn: string
-  companyDescription: string
-  // externalWebsites: ExternalLink[] - this is not part of sprint 1 anymore due to backend issues
-  verified: boolean
-}
+import { Link } from "react-router-dom"
+import { getCompanyProfile } from "services/company.services"
+import { CompanyProfileData } from "types/company.types"
 
 const CompanyMyProfile: React.FC = () => {
   const [loading, updateLoading] = useState(true)
@@ -20,28 +9,18 @@ const CompanyMyProfile: React.FC = () => {
   const [profileData, updateFrofileData] = useState<CompanyProfileData>()
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/company/profiledata", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        Accept: "application/json",
-      },
-    })
-      .then(res => {
-        updateLoading(false)
-        res
-          .json()
-          .then(j => {
-            updateFrofileData(j as CompanyProfileData)
-          })
-          .catch(() => {
-            updateFetchError(true)
-          })
-      })
-      .catch(() => {
-        updateLoading(false)
+    ;(async () => {
+      const resp = await getCompanyProfile()
+
+      updateLoading(false)
+
+      if (typeof resp === "undefined") {
         updateFetchError(true)
-      })
+        return
+      }
+
+      updateFrofileData(resp)
+    })()
   }, [])
 
   return (
@@ -65,13 +44,11 @@ const CompanyMyProfile: React.FC = () => {
                 {profileData?.companyName}
               </h2>
               {profileData?.verified && (
-                <div className="text-cyan-700 font-bold">Verified</div>
+                <div className="text-cyan-300 font-bold">Verified</div>
               )}
               <p className="pt-2 text-justify">
                 {profileData?.companyDescription}
               </p>
-              {/*
-              The following is no longer part of sprint 1 due to issues on the backend
 
               <h3 className="text-lg font-bold pt-4 pb-2">External Websites</h3>
               {profileData?.externalWebsites ? (
@@ -87,8 +64,12 @@ const CompanyMyProfile: React.FC = () => {
               ) : (
                 <></>
               )}
-
-              */}
+              <Link
+                to="/company-myprofile/edit"
+                className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white"
+              >
+                Edit Profile
+              </Link>
             </>
           )}
         </>

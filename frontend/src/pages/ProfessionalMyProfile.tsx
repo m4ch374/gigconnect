@@ -1,19 +1,7 @@
 import React, { useEffect, useState } from "react"
-
-type ExternalLink = {
-  websiteName: string
-  websiteLink: string
-}
-
-type ProfessionalProfileData = {
-  firstName: string
-  lastName: string
-  description: string
-  skills: string[]
-  qualifications: ExternalLink[]
-  externalWebsites: ExternalLink[]
-  verified: boolean
-}
+import { Link } from "react-router-dom"
+import { getProfessionalProfile } from "services/professional.services"
+import { ProfessionalProfileData } from "types/professional.types"
 
 const ProfessionalMyProfile: React.FC = () => {
   const [loading, updateLoading] = useState(true)
@@ -21,28 +9,18 @@ const ProfessionalMyProfile: React.FC = () => {
   const [profileData, updateFrofileData] = useState<ProfessionalProfileData>()
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/professional/profiledata", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-        Accept: "application/json",
-      },
-    })
-      .then(res => {
-        updateLoading(false)
-        res
-          .json()
-          .then(j => {
-            updateFrofileData(j as ProfessionalProfileData)
-          })
-          .catch(() => {
-            updateFetchError(true)
-          })
-      })
-      .catch(() => {
-        updateLoading(false)
+    ;(async () => {
+      const resp = await getProfessionalProfile()
+
+      updateLoading(false)
+
+      if (typeof resp === "undefined") {
         updateFetchError(true)
-      })
+        return
+      }
+
+      updateFrofileData(resp)
+    })()
   }, [])
 
   return (
@@ -66,7 +44,7 @@ const ProfessionalMyProfile: React.FC = () => {
                 {`${profileData?.firstName} ${profileData?.lastName}`}
               </h2>
               {profileData?.verified && (
-                <div className="text-cyan-700 font-bold">Verified</div>
+                <div className="text-cyan-300 font-bold">Verified</div>
               )}
               <p className="pt-2 text-justify">{profileData?.description}</p>
               <h3 className="text-lg font-bold pt-4 pb-2">Skills</h3>
@@ -95,6 +73,12 @@ const ProfessionalMyProfile: React.FC = () => {
                     {i.websiteName}
                   </a>
                 ))}
+              <Link
+                to="/professional-myprofile/edit"
+                className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white"
+              >
+                Edit Profile
+              </Link>
             </>
           )}
         </>
