@@ -35,3 +35,9 @@ WEEK 5
 - Held our week 5 demonstration at the lab and held our retrospective meeting
   immediately afterwards.
 - Allocated user stores to be covered in sprint 2
+
+WEEK 6
+- Created forms for editing user profile data for company users and 
+  professional users.
+- Helped with planning for projects and requests to join projects on the 
+  web app.

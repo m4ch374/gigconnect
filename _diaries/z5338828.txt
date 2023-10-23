@@ -25,3 +25,7 @@ WEEK 4
 WEEK 5
 * Coded Admin page
 * Made the dmeo 
+
+WEEK 6
+* Tidied up codebase
+* integrated fetching behaviour with the fetcher class

@@ -19,3 +19,7 @@ Week 5
     - finished development on Professional-related functionalities
     - tested Professional-related functionalities
     - submitted and demo-ed project for Sprint A
+Week 6
+    - brainstormed new prisma db models for sprint 2
+    - drafted and [almost] finalised the new api routes for sprint 2, also edits to existing api routes for sprint 2
+        - these will be coded up soon after we've reached a consensus (hopefully by Wk7 Mon meeting)

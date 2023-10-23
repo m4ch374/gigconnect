@@ -36,3 +36,10 @@ wrote some helper functions for auth tokens and password hashing.
 I got code review from the other team members and helped to review
 other member's code too. Next week we will begin planning and working
 on Sprint 2 user stories, while incorporating feedback from Demo A.
+
+Week 6
+We started working on Sprint 2 user stories. I updated the Prisma
+schema to include project-related data. I also fixed some bugs in
+our codebase and gave feedback on Amith's api spec for Sprint 2
+functionality. Next week we will continue working on Sprint 2
+by implementing the functions we have planned.

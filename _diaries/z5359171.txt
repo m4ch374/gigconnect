@@ -19,3 +19,6 @@ Discussed the database schema and decided the relevant attributes and types for 
 
 Week 5
 I was tasked with the company functions implementation which I did the company create account function, company profile data function, and company update function. I also did the manual testing for these functions and did error handling.
+
+Week 6
+I added the external links component for company functions so that a company can display its website link and update its website link alongside updating the index.ts to accommodate for external links. I also added a new model called CompanyLink into the schema.prisma to handle the external links feature. Afterward, I fixed the error messages for both company and professional functions to be more descriptive for a better user experience so that they know why they can't log in or insert their ABN and other errors when using the functions. 
