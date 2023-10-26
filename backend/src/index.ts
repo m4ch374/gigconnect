@@ -17,6 +17,12 @@ import {
   professionalUpdate,
 } from "srvices/professional"
 import { adminDashboard, adminSetVerified } from "srvices/admin"
+import { projectDataCompany, projectDataProfessional } from "srvices/project"
+import { requestCreate, requestRespond } from "srvices/request"
+
+interface ReqQuery<T> extends Express.Request {
+  query: T
+}
 
 interface ReqBody<T> extends Express.Request {
   body: T
@@ -236,6 +242,76 @@ app.post(
     checkAuth(req as Request, UserType.Admin)
     const { userId, userType, verified } = req.body
     adminSetVerified(userId, userType, verified)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
+app.get(
+  "/api/project/profiledata/professional",
+  (
+    req: ReqQuery<{
+      projectId: string
+    }>,
+    res,
+    next,
+  ) => {
+    const userId = checkAuth(req as unknown as Request, UserType.Professional)
+    const { projectId } = req.query
+    projectDataProfessional(userId, projectId)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
+app.get(
+  "/api/project/profiledata/company",
+  (
+    req: ReqQuery<{
+      projectId: string
+    }>,
+    res,
+    next,
+  ) => {
+    const userId = checkAuth(req as unknown as Request, UserType.Company)
+    const { projectId } = req.query
+    projectDataCompany(userId, projectId)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
+app.post(
+  "/api/project/request",
+  (
+    req: ReqBody<{
+      projectId: string
+      message: string
+    }>,
+    res,
+    next,
+  ) => {
+    const userId = checkAuth(req as Request, UserType.Professional)
+    const { projectId, message } = req.body
+    requestCreate(userId, projectId, message)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
+app.post(
+  "/api/project/request/respond",
+  (
+    req: ReqBody<{
+      requestId: string
+      accepted: boolean
+    }>,
+    res,
+    next,
+  ) => {
+    const userId = checkAuth(req as Request, UserType.Company)
+    const { requestId, accepted } = req.body
+    requestRespond(userId, requestId, accepted)
       .then(result => res.json(result))
       .catch(next)
   },

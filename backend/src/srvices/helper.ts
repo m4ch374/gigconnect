@@ -175,6 +175,23 @@ const getProfeshUserEntry = async (uID: number) => {
   return user
 }
 
+/**
+ * Return a promise that resolves true if the professional is part of project,
+ * false if not (or if project does not exist).
+ */
+const professionalInProject = async (
+  professionalId: string,
+  projectId: string,
+) =>
+  (await prisma.project.findUnique({
+    where: { id: parseInt(projectId, 10) },
+    select: {
+      professionals: {
+        where: { id: parseInt(professionalId, 10) },
+      },
+    },
+  })) !== null
+
 export {
   UserType,
   ExternalLink,
@@ -190,4 +207,5 @@ export {
   checkProfeshEmailExists,
   getProfeshUserID,
   getProfeshUserEntry,
+  professionalInProject,
 }
