@@ -21,7 +21,7 @@ const projectCreate = async (
   // #######################
   // ####  WRITE TO DB #####
   // #######################
-  await prisma.project.create({
+  const project = await prisma.project.create({
     data: {
       companyId: parseInt(userID, 10),
       title,
@@ -36,7 +36,7 @@ const projectCreate = async (
   // #### RETURN DICT ######
   // #######################
   return {
-    success: true,
+    projectId: project.id.toString(),
   }
 }
 

@@ -296,7 +296,7 @@ type response400 = {
     message: string,
 }
 type response200 = {
-    success: boolean,
+    projectId: string,
 }
 
 // ROUTE = /api/project/profiledata/professional, METHOD = GET
