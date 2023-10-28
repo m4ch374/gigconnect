@@ -340,6 +340,7 @@ type response = {
 // ROUTE = /api/project/update, METHOD = POST
 // REQUEST - send LOGIN TOKEN in header, request as stringified JSON in body
 type request = {
+    projectId: string,
     title: string,
     publicDescription: string?,
     privateDescription: string?,

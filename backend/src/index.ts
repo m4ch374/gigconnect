@@ -17,7 +17,11 @@ import {
   professionalUpdate,
 } from "srvices/professional"
 import { adminDashboard, adminSetVerified } from "srvices/admin"
-import { projectDataCompany, projectDataProfessional } from "srvices/project"
+import {
+  projectCreate,
+  projectDataCompany,
+  projectDataProfessional,
+} from "srvices/project"
 import { requestCreate, requestRespond } from "srvices/request"
 
 interface ReqQuery<T> extends Express.Request {
@@ -242,6 +246,43 @@ app.post(
     checkAuth(req as Request, UserType.Admin)
     const { userId, userType, verified } = req.body
     adminSetVerified(userId, userType, verified)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
+app.post(
+  "/api/project/create",
+  (
+    req: ReqBody<{
+      title: string
+      publicDescription: string
+      privateDescription: string
+      tags: string[]
+      inPerson: boolean
+      location: string
+    }>,
+    res,
+    next,
+  ) => {
+    const userId = checkAuth(req as Request, UserType.Company)
+    const {
+      title,
+      publicDescription,
+      privateDescription,
+      tags,
+      inPerson,
+      location,
+    } = req.body
+    projectCreate(
+      userId,
+      title,
+      publicDescription,
+      privateDescription,
+      tags,
+      inPerson,
+      location,
+    )
       .then(result => res.json(result))
       .catch(next)
   },

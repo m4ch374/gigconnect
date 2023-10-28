@@ -1,6 +1,45 @@
 import HTTPError from "http-errors"
 import { prisma, professionalInProject } from "./helper"
 
+// Project create function
+const projectCreate = async (
+  userID: string,
+  title: string,
+  publicDescription: string,
+  privateDescription: string,
+  tags: string[],
+  inPerson: boolean,
+  location: string,
+) => {
+  // ####################
+  // #### TEST CASES ####
+  // ####################
+  // check the title
+  if (title.length === 0) {
+    throw HTTPError(400, "Title must not be empty")
+  }
+  // #######################
+  // ####  WRITE TO DB #####
+  // #######################
+  await prisma.project.create({
+    data: {
+      companyId: parseInt(userID, 10),
+      title,
+      publicDescription,
+      privateDescription,
+      tags,
+      inPerson,
+      location,
+    },
+  })
+  // #######################
+  // #### RETURN DICT ######
+  // #######################
+  return {
+    success: true,
+  }
+}
+
 const projectDataProfessional = async (
   professionalId: string,
   projectId: string,
@@ -84,4 +123,4 @@ const projectDataCompany = async (companyId: string, projectId: string) => {
   }
 }
 
-export { projectDataProfessional, projectDataCompany }
+export { projectCreate, projectDataProfessional, projectDataCompany }
