@@ -61,12 +61,12 @@ const CreateCompany: React.FC = () => {
   }
 
   return (
-    <div className=" w-11/12 sm:w-[600px] mx-auto">
+    <div className=" w-11/12 sm:w-[600px] mx-auto pb-8">
       <h1 className="text-4xl font-bold pt-6 text-center">
         Create company account
       </h1>
       <form onSubmit={submitForm} onChange={() => updateError("")}>
-        <label htmlFor="form-email" className="block pt-4 pb-2">
+        <label htmlFor="form-email" className="block pt-4 pb-2 text-bold">
           Email address
         </label>
         <input
@@ -77,7 +77,10 @@ const CreateCompany: React.FC = () => {
           }
           className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
-        <label htmlFor="form-company-name" className="block pt-4 pb-2">
+        <label
+          htmlFor="form-company-name"
+          className="block pt-4 pb-2 text-bold"
+        >
           Company name
         </label>
         <input
@@ -88,9 +91,10 @@ const CreateCompany: React.FC = () => {
           }
           className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
-        <label htmlFor="form-abn" className="block pt-4 pb-2">
+        <label htmlFor="form-abn" className="block pt-4 pb-2 text-bold">
           ABN
         </label>
+        <p>ABN should be an 11 digit number.</p>
         <input
           type="text"
           id="form-abn"
@@ -99,9 +103,10 @@ const CreateCompany: React.FC = () => {
           }
           className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
-        <label htmlFor="form-pass" className="block pt-4 pb-2">
+        <label htmlFor="form-pass" className="block pt-4 pb-2 text-bold">
           Password
         </label>
+        <p>Password should be at least 8 characters long.</p>
         <input
           type="password"
           id="form-pass"
@@ -110,7 +115,10 @@ const CreateCompany: React.FC = () => {
           }
           className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
-        <label htmlFor="form-confirm-pass" className="block pt-4 pb-2">
+        <label
+          htmlFor="form-confirm-pass"
+          className="block pt-4 pb-2 text-bold"
+        >
           Confirm password
         </label>
         <input
@@ -121,7 +129,7 @@ const CreateCompany: React.FC = () => {
         />
         <button
           type="submit"
-          className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white"
+          className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white font-bold"
         >
           Create account
         </button>

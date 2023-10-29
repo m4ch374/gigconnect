@@ -113,9 +113,9 @@ const SetupProfessional: React.FC = () => {
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     ;(async () => {
-      // why not
-      // eslint-disable-next-line prettier/prettier
-      if (typeof (await updateProfessionalProfile(profileData)) === "undefined") {
+      if (
+        typeof (await updateProfessionalProfile(profileData)) === "undefined"
+      ) {
         updateFormError("Failed to update data.")
         return
       }
@@ -125,7 +125,7 @@ const SetupProfessional: React.FC = () => {
   }
 
   return (
-    <div className="w-11/12 sm:w-[600px] mx-auto">
+    <div className="w-11/12 sm:w-[600px] mx-auto pb-8">
       <h1 className="text-2xl sm:text-4xl font-bold pt-6 text-center">
         Profile Setup
       </h1>
@@ -142,7 +142,10 @@ const SetupProfessional: React.FC = () => {
             </div>
           ) : (
             <form className="text-left" onSubmit={submitForm}>
-              <label htmlFor="description" className="block pt-4 pb-2">
+              <label
+                htmlFor="description"
+                className="block pt-4 pb-2 font-bold"
+              >
                 Description
               </label>
               <textarea
@@ -157,7 +160,7 @@ const SetupProfessional: React.FC = () => {
                 }
               />
 
-              <div className="block pt-4 pb-2">Skills</div>
+              <div className="block pt-4 pb-2 font-bold">Skills</div>
               {profileData?.skills.map((i, k) => (
                 <div className="flex space-x-1 mb-2" key={k}>
                   <div className="block w-full p-2 border border-cyan-400 hover:bg-cyan-900 text-cyan-400 text-left rounded-md">
@@ -192,7 +195,7 @@ const SetupProfessional: React.FC = () => {
                 </button>
               </div>
 
-              <div className="block pt-4 pb-2">Qualifications</div>
+              <div className="block pt-4 pb-2 font-bold">Qualifications</div>
               {profileData?.qualifications.map((i, k) => (
                 <div className="flex space-x-1 mb-2" key={k}>
                   <div className="block w-full p-2 border border-cyan-400 hover:bg-cyan-900 text-cyan-400 text-left rounded-md">
@@ -244,7 +247,7 @@ const SetupProfessional: React.FC = () => {
                 </button>
               </div>
 
-              <div className="block pt-4 pb-2">External websites</div>
+              <div className="block pt-4 pb-2 font-bold">External websites</div>
               {profileData?.externalWebsites.map((i, k) => (
                 <div className="flex space-x-1 mb-2" key={k}>
                   <div className="block w-full p-2 border border-cyan-400 hover:bg-cyan-900 text-cyan-400 text-left rounded-md">
@@ -305,7 +308,7 @@ const SetupProfessional: React.FC = () => {
                 </Link>
                 <button
                   type="submit"
-                  className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white"
+                  className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white font-bold"
                 >
                   Save
                 </button>

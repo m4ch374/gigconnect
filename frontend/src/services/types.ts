@@ -1,6 +1,7 @@
 import { CompanyProfileData } from "types/company.types"
 import { TUser } from "types/general.types"
 import { ProfessionalProfileData } from "types/professional.types"
+import { CreateProjectData } from "types/project.types"
 
 // Generic Type
 export type TEndpoint<Req, Res> = {
@@ -152,3 +153,10 @@ export type TCompanyProfileUpdate = TEndpoint<CompanyProfileData, void>
 // ===================================================
 // .................. adding more ....................
 // ===================================================
+
+// Project related endpoints
+
+type CreateProjectRes = {
+  projectId: string
+}
+export type TCreateProject = TEndpoint<CreateProjectData, CreateProjectRes>

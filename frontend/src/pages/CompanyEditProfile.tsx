@@ -56,6 +56,7 @@ const CompanyEditProfile: React.FC = () => {
     const newArray = [...profileData.externalWebsites]
     newArray.push(newExternalSite)
     updateFrofileData({ ...profileData, externalWebsites: newArray })
+    updateNewExternalSite({ websiteLink: "", websiteName: "" })
     updateFormError("")
   }
 
@@ -71,6 +72,11 @@ const CompanyEditProfile: React.FC = () => {
 
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    if (profileData.companyName === "") {
+      updateFormError("Please enter a company name.")
+      return
+    }
 
     const abnRegex = new RegExp("^[0-9]{11}$")
     if (!abnRegex.test(profileData?.abn || "")) {
@@ -89,7 +95,7 @@ const CompanyEditProfile: React.FC = () => {
   }
 
   return (
-    <div className="w-11/12 sm:w-[600px] mx-auto">
+    <div className="w-11/12 sm:w-[600px] mx-auto pb-8">
       <h1 className="text-2xl sm:text-4xl font-bold pt-6 text-center">
         Edit My Profile
       </h1>
@@ -105,7 +111,10 @@ const CompanyEditProfile: React.FC = () => {
             </div>
           ) : (
             <form className="text-left" onSubmit={submitForm}>
-              <label htmlFor="company-name" className="block pt-4 pb-2">
+              <label
+                htmlFor="company-name"
+                className="block pt-4 pb-2 font-bold"
+              >
                 Company name
               </label>
               <input
@@ -120,7 +129,10 @@ const CompanyEditProfile: React.FC = () => {
                   })
                 }
               />
-              <label htmlFor="company-name" className="block pt-4 pb-2">
+              <label
+                htmlFor="company-name"
+                className="block pt-4 pb-2 font-bold"
+              >
                 ABN
               </label>
               <input
@@ -129,7 +141,10 @@ const CompanyEditProfile: React.FC = () => {
                 className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
                 value={profileData?.abn}
               />
-              <label htmlFor="description" className="block pt-4 pb-2">
+              <label
+                htmlFor="description"
+                className="block pt-4 pb-2 font-bold"
+              >
                 Description
               </label>
               <textarea
@@ -144,7 +159,7 @@ const CompanyEditProfile: React.FC = () => {
                 }
               />
 
-              <div className="block pt-4 pb-2">External websites</div>
+              <div className="block pt-4 pb-2 font-bold">External websites</div>
               {profileData?.externalWebsites.map((i, k) => (
                 <div className="flex space-x-1 mb-2" key={k}>
                   <div className="block w-full p-2 border border-cyan-400 hover:bg-cyan-900 text-cyan-400 text-left rounded-md">
@@ -198,7 +213,7 @@ const CompanyEditProfile: React.FC = () => {
 
               <button
                 type="submit"
-                className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white"
+                className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white font-bold"
               >
                 Save changes
               </button>

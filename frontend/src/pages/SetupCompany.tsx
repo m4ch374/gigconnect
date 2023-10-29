@@ -55,6 +55,7 @@ const SetupCompany: React.FC = () => {
     newArray.push(newExternalSite)
     updateFrofileData({ ...profileData, externalWebsites: newArray })
     updateFormError("")
+    updateNewExternalSite({ websiteLink: "", websiteName: "" })
   }
 
   const removeExternalSite = (i: number) => {
@@ -77,7 +78,7 @@ const SetupCompany: React.FC = () => {
   }
 
   return (
-    <div className="w-11/12 sm:w-[600px] mx-auto">
+    <div className="w-11/12 sm:w-[600px] mx-auto pb-8">
       <h1 className="text-2xl sm:text-4xl font-bold pt-6 text-center">
         Profile Setup
       </h1>
@@ -95,7 +96,10 @@ const SetupCompany: React.FC = () => {
             </div>
           ) : (
             <form className="text-left" onSubmit={submitForm}>
-              <label htmlFor="description" className="block pt-4 pb-2">
+              <label
+                htmlFor="description"
+                className="block pt-4 pb-2 font-bold"
+              >
                 Description
               </label>
               <textarea
@@ -110,7 +114,7 @@ const SetupCompany: React.FC = () => {
                 }
               />
 
-              <div className="block pt-4 pb-2">External websites</div>
+              <div className="block pt-4 pb-2 font-bold">External websites</div>
               {profileData?.externalWebsites.map((i, k) => (
                 <div className="flex space-x-1 mb-2" key={k}>
                   <div className="block w-full p-2 border border-cyan-400 hover:bg-cyan-900 text-cyan-400 text-left rounded-md">
@@ -171,7 +175,7 @@ const SetupCompany: React.FC = () => {
                 </Link>
                 <button
                   type="submit"
-                  className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white"
+                  className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white font-bold"
                 >
                   Save
                 </button>

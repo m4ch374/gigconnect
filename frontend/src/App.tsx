@@ -12,6 +12,7 @@ import SetupCompany from "pages/SetupCompany"
 import SetupProfessional from "pages/SetupProfessional"
 import CompanyEditProfile from "pages/CompanyEditProfile"
 import ProfessionalEditProfile from "pages/ProfessionalEditProfile"
+import CreateProject from "pages/CreateProject"
 
 const App: React.FC = () => {
   return (
@@ -40,6 +41,7 @@ const App: React.FC = () => {
           element={<ProfessionalEditProfile />}
         />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/create-project" element={<CreateProject />} />
       </Route>
     </Routes>
   )

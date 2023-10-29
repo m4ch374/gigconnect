@@ -59,7 +59,7 @@ const CreateProfessional: React.FC = () => {
   }
 
   return (
-    <div className=" w-11/12 sm:w-[600px] mx-auto">
+    <div className=" w-11/12 sm:w-[600px] mx-auto pb-8">
       <h1 className="text-4xl font-bold pt-6 text-center">
         Create professional account
       </h1>
@@ -119,7 +119,7 @@ const CreateProfessional: React.FC = () => {
         />
         <button
           type="submit"
-          className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white"
+          className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white font-bold"
         >
           Create account
         </button>

@@ -39,10 +39,10 @@ const Login: React.FC = () => {
   }
 
   return (
-    <div className=" w-11/12 sm:w-[600px] mx-auto">
+    <div className=" w-11/12 sm:w-[600px] mx-auto pb-8">
       <h1 className="text-4xl font-bold pt-6 text-center">Login</h1>
       <form onSubmit={submitForm} onChange={() => updateError("")}>
-        <label htmlFor="login-email" className="block pt-4 pb-2">
+        <label htmlFor="login-email" className="block pt-4 pb-2 font-bold">
           Email address
         </label>
         <input
@@ -51,7 +51,7 @@ const Login: React.FC = () => {
           onChange={e => updateEmail(e.currentTarget.value)}
           className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
-        <label htmlFor="login-pass" className="block pt-4 pb-2">
+        <label htmlFor="login-pass" className="block pt-4 pb-2 font-bold">
           Password
         </label>
         <input
@@ -63,7 +63,7 @@ const Login: React.FC = () => {
 
         <button
           type="submit"
-          className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white"
+          className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white font-bold"
         >
           Login
         </button>

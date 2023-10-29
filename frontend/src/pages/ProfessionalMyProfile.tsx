@@ -24,7 +24,7 @@ const ProfessionalMyProfile: React.FC = () => {
   }, [])
 
   return (
-    <div className=" w-11/12 sm:w-[600px] mx-auto">
+    <div className=" w-11/12 sm:w-[600px] mx-auto pb-8">
       <h1 className="text-2xl sm:text-4xl font-bold pt-6 text-center">
         My Profile
       </h1>
