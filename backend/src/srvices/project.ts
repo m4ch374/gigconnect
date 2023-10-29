@@ -1,4 +1,5 @@
 import HTTPError from "http-errors"
+import { ProjectStatus } from "@prisma/client"
 import { prisma, professionalInProject } from "./helper"
 
 // Project create function
@@ -123,4 +124,45 @@ const projectDataCompany = async (companyId: string, projectId: string) => {
   }
 }
 
-export { projectCreate, projectDataProfessional, projectDataCompany }
+const projectChangeStatus = async (companyId: string, projectId: string) => {
+  const project = await prisma.project.findUnique({
+    where: { id: parseInt(projectId, 10) },
+    select: { companyId: true, status: true },
+  })
+  if (project === null) {
+    throw HTTPError(400, "projectId does not exist.")
+  }
+  if (project.companyId !== parseInt(companyId, 10)) {
+    throw HTTPError(400, "Company user does not own this project.")
+  }
+
+  // Perform the state transition based on the current state.
+  // (e.g. OPEN --> INPROGRESS or INPROGRESS --> CLOSED)
+  let { status } = project
+  if (status === ProjectStatus.OPEN) {
+    // Delete all pending requests for this project, since it has now started
+    await prisma.request.deleteMany({
+      where: { projectId: parseInt(projectId, 10) },
+    })
+    status = ProjectStatus.INPROGRESS
+  } else if (status === ProjectStatus.INPROGRESS) {
+    status = ProjectStatus.CLOSED
+  }
+
+  // If the status has changed, update status in DB
+  if (status !== project.status) {
+    await prisma.project.update({
+      where: { id: parseInt(projectId, 10) },
+      data: { status },
+    })
+  }
+
+  return { newStatus: status.valueOf().toLowerCase() }
+}
+
+export {
+  projectCreate,
+  projectDataProfessional,
+  projectDataCompany,
+  projectChangeStatus,
+}

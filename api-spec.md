@@ -355,6 +355,22 @@ type response200 = {
     success: boolean,
 }
 
+// ROUTE = /api/project/changestatus, METHOD = POST
+// REQUEST - send LOGIN TOKEN in header, request as stringified JSON in body
+//
+// NOTE: Moves the project status forward 'one step' and returns the new status.
+// (e.g. from open to inprogress OR from inprogress to closed)
+// If the project is already closed, nothing happens.
+type request = {
+    projectId: string,
+}
+type response400 = {
+    message: string,
+}
+type response200 = {
+    newStatus: projectStatus,
+}
+
 // ROUTE = /api/project/request, METHOD = POST
 // REQUEST - send login token in header, request as stringified JSON in body
 type request = {

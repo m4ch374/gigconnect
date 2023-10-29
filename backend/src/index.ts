@@ -18,6 +18,7 @@ import {
 } from "srvices/professional"
 import { adminDashboard, adminSetVerified } from "srvices/admin"
 import {
+  projectChangeStatus,
   projectCreate,
   projectDataCompany,
   projectDataProfessional,
@@ -317,6 +318,23 @@ app.get(
     const userId = checkAuth(req as unknown as Request, UserType.Company)
     const { projectId } = req.query
     projectDataCompany(userId, projectId)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
+app.post(
+  "/api/project/changestatus",
+  (
+    req: ReqBody<{
+      projectId: string
+    }>,
+    res,
+    next,
+  ) => {
+    const userId = checkAuth(req as Request, UserType.Company)
+    const { projectId } = req.body
+    projectChangeStatus(userId, projectId)
       .then(result => res.json(result))
       .catch(next)
   },
