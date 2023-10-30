@@ -1,7 +1,7 @@
 import HTTPError from "http-errors"
 import * as jwt from "jsonwebtoken"
 import { randomBytes, scrypt, timingSafeEqual } from "crypto"
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient, ProjectStatus } from "@prisma/client"
 
 const prisma = new PrismaClient()
 const hashKeyLen = 32
@@ -86,6 +86,37 @@ const mapDBToExternalLinks = (
     websiteLink: link.url,
   }))
 
+const getCompanyName = async (id: number) => {
+  const user = await prisma.company.findUnique({
+    where: { id },
+  })
+
+  return user?.name
+}
+
+const mapDBToProjects = (
+  projectParams: {
+    id: number
+    title: string
+    publicDescription: string | null
+    companyId: number
+    inPerson: boolean
+    location: string | null
+    creationDate: Date
+    status: ProjectStatus
+  }[],
+) =>
+  projectParams.map(param => ({
+    projectId: param.id.toString(),
+    title: param.title,
+    publicDescription: param.publicDescription,
+    companyName: getCompanyName(param.companyId),
+    companyId: param.companyId,
+    inPerson: param.inPerson,
+    location: param.location,
+    creationDate: param.creationDate.toJSON(),
+    status: param.status.valueOf().toLowerCase(),
+  }))
 /**
  * Checks whether given email already exists within the Company table entries in the DB
  */
@@ -140,7 +171,7 @@ const getCompanyUserEntry = async (uID: number) => {
   // if can't find a record with that id then return null
   const user = await prisma.company.findUnique({
     where: { id: uID },
-    include: { companyLinks: true },
+    include: { companyLinks: true, projects: true },
   })
   if (user === null) {
     throw HTTPError(403, "No user that matches that ID")
@@ -167,7 +198,7 @@ const getProfeshUserID = async (email: string) => {
 const getProfeshUserEntry = async (uID: number) => {
   const user = await prisma.professional.findUnique({
     where: { id: uID },
-    include: { socialLinks: true, certLinks: true },
+    include: { socialLinks: true, certLinks: true, projects: true },
   })
   if (user === null) {
     throw HTTPError(403, "No professional user that matches given ID")
@@ -210,4 +241,5 @@ export {
   getProfeshUserID,
   getProfeshUserEntry,
   professionalInProject,
+  mapDBToProjects,
 }

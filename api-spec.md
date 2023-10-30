@@ -112,7 +112,7 @@ type response200 = {
             companyId: string,
             inPerson: boolean,
             location: string?,
-            creationDate: string
+            creationDate: string,
             status: projectStatus,
         }
     ]

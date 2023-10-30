@@ -8,6 +8,7 @@ import {
   getCompanyUserEntry,
   hashPassword,
   mapDBToExternalLinks,
+  mapDBToProjects,
 } from "./helper"
 
 const companyCreate = async (
@@ -83,6 +84,7 @@ const companyData = async (userId: string) => {
   // #### RETURN DICT ######
   // #######################
   return {
+    projects: mapDBToProjects(companyUser.projects),
     companyName: companyUser.name,
     abn: companyUser.abn,
     companyDescription: companyUser.description,

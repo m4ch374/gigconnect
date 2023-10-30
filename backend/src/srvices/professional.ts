@@ -8,6 +8,7 @@ import {
   checkProfeshEmailExists,
   getProfeshUserEntry,
   mapDBToExternalLinks,
+  mapDBToProjects,
 } from "./helper"
 
 /**
@@ -81,6 +82,7 @@ const professionalData = async (userId: string) => {
     qualifications: mapDBToExternalLinks(user.certLinks),
     externalWebsites: mapDBToExternalLinks(user.socialLinks),
     verified: user.verified,
+    projects: mapDBToProjects(user.projects),
   }
 }
 

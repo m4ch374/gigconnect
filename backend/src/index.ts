@@ -26,6 +26,7 @@ import { adminDashboard, adminSetVerified } from "srvices/admin"
 import {
   projectChangeStatus,
   projectCreate,
+  projectUpdate,
   projectDataCompany,
   projectDataProfessional,
   allProjectPublicData,
@@ -299,6 +300,46 @@ app.post(
     } = req.body
     projectCreate(
       userId,
+      title,
+      publicDescription,
+      privateDescription,
+      tags,
+      inPerson,
+      location,
+    )
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
+app.post(
+  "/api/project/update",
+  (
+    req: ReqBody<{
+      projectId: string
+      title: string
+      publicDescription: string
+      privateDescription: string
+      tags: string[]
+      inPerson: boolean
+      location: string
+    }>,
+    res,
+    next,
+  ) => {
+    const companyId = checkAuth(req as Request, UserType.Company)
+    const {
+      projectId,
+      title,
+      publicDescription,
+      privateDescription,
+      tags,
+      inPerson,
+      location,
+    } = req.body
+    projectUpdate(
+      projectId,
+      companyId,
       title,
       publicDescription,
       privateDescription,

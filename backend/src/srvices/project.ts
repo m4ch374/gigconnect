@@ -2,7 +2,10 @@ import HTTPError from "http-errors"
 import { ProjectStatus } from "@prisma/client"
 import { prisma, professionalInProject } from "./helper"
 
-// Project create function
+/*
+  Function creates projects by Company Users
+           returns respone 200 with all OPEN project's basic info
+*/
 const projectCreate = async (
   userID: string,
   title: string,
@@ -38,6 +41,54 @@ const projectCreate = async (
   // #######################
   return {
     projectId: project.id.toString(),
+  }
+}
+
+/*
+  Function that updates project details by Company Users
+*/
+const projectUpdate = async (
+  projectId: string,
+  companyId: string,
+  title: string,
+  publicDescription: string,
+  privateDescription: string,
+  tags: string[],
+  inPerson: boolean,
+  location: string,
+) => {
+  // #######################
+  // ###  TEST CASES    ####
+  // #######################
+  if (title.length === 0) {
+    throw HTTPError(400, "Title must not be empty")
+  }
+  // #######################
+  // ####  WRITE TO DB #####
+  // #######################
+  // Update rest of the project entry attributes
+  const project = await prisma.project.findUnique({
+    where: { id: parseInt(projectId, 10) },
+  })
+  if (project?.companyId !== parseInt(companyId, 10)) {
+    throw HTTPError(400, "Company doesn't own the project")
+  }
+  await prisma.project.update({
+    where: { id: parseInt(projectId, 10) },
+    data: {
+      title,
+      publicDescription,
+      privateDescription,
+      tags,
+      inPerson,
+      location,
+    },
+  })
+  // #######################
+  // #### RETURN DICT ######
+  // #######################
+  return {
+    success: true,
   }
 }
 
@@ -204,6 +255,7 @@ const allProjectPublicData = async () => {
 
 export {
   projectCreate,
+  projectUpdate,
   projectDataProfessional,
   projectDataCompany,
   projectChangeStatus,
