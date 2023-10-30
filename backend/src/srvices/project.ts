@@ -197,7 +197,7 @@ const allProjectPublicData = async () => {
     location: info.location,
     tags: info.tags,
     creationDate: info.creationDate.toJSON(),
-    status: info.status.toString(),
+    status: info.status.valueOf().toLowerCase(),
   }))
   return { projects: basicInfo }
 }

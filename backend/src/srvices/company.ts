@@ -163,7 +163,7 @@ const allCompanyPublicData = async () => {
   // Change key name, and stringify id
   const basicInfo = queriedInfo.map(info => ({
     userId: info.id.toString(),
-    name: info.name,
+    companyName: info.name,
     verified: info.verified,
   }))
   return { companyUsers: basicInfo }

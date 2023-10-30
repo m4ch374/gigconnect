@@ -183,14 +183,16 @@ const professionalInProject = async (
   professionalId: string,
   projectId: string,
 ) =>
-  (await prisma.project.findUnique({
-    where: { id: parseInt(projectId, 10) },
-    select: {
-      professionals: {
-        where: { id: parseInt(professionalId, 10) },
+  (
+    await prisma.project.findUnique({
+      where: { id: parseInt(projectId, 10) },
+      select: {
+        professionals: {
+          where: { id: parseInt(professionalId, 10) },
+        },
       },
-    },
-  })) !== null
+    })
+  )?.professionals.length !== 0
 
 export {
   UserType,
