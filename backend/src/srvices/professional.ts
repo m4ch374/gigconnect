@@ -162,4 +162,32 @@ const professionalUpdate = async (
   }
 }
 
-export { professionalCreate, professionalData, professionalUpdate }
+/*
+  Function READS all existing Professional entries from the database
+           returns respone 200 with all basic users info
+*/
+const allProfessionalPublicData = async () => {
+  const queriedInfo = await prisma.professional.findMany({
+    select: {
+      id: true,
+      firstName: true,
+      lastName: true,
+      verified: true,
+    },
+  })
+  // Change key name, and stringify id
+  const basicInfo = queriedInfo.map(info => ({
+    userId: info.id.toString(),
+    firstName: info.firstName,
+    lastName: info.lastName,
+    verified: info.verified,
+  }))
+  return { professionalUsers: basicInfo }
+}
+
+export {
+  professionalCreate,
+  professionalData,
+  professionalUpdate,
+  allProfessionalPublicData,
+}

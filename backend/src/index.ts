@@ -10,11 +10,17 @@ import {
 } from "srvices/hello"
 import { ExternalLink, UserType, verifyToken } from "srvices/helper"
 import { authLogin, authLogout } from "srvices/auth"
-import { companyCreate, companyData, companyUpdate } from "srvices/company"
+import {
+  companyCreate,
+  companyData,
+  companyUpdate,
+  allCompanyPublicData,
+} from "srvices/company"
 import {
   professionalCreate,
   professionalData,
   professionalUpdate,
+  allProfessionalPublicData,
 } from "srvices/professional"
 import { adminDashboard, adminSetVerified } from "srvices/admin"
 import {
@@ -22,6 +28,7 @@ import {
   projectCreate,
   projectDataCompany,
   projectDataProfessional,
+  allProjectPublicData,
 } from "srvices/project"
 import { requestCreate, requestRespond } from "srvices/request"
 
@@ -137,6 +144,13 @@ app.get("/api/company/profiledata", (req, res, next) => {
     .catch(next)
 })
 
+app.get("/api/company/allpublicprofiledata", (req, res, next) => {
+  checkAuth(req, UserType.Any)
+  allCompanyPublicData()
+    .then(result => res.json(result))
+    .catch(next)
+})
+
 app.post(
   "/api/company/profiledata/update",
   (
@@ -185,6 +199,14 @@ app.post(
 app.get("/api/professional/profiledata", (req, res, next) => {
   const userId = checkAuth(req, UserType.Professional)
   professionalData(userId)
+    .then(result => res.json(result))
+    .catch(next)
+})
+
+app.get("/api/professional/allpublicprofiledata", (req, res, next) => {
+  // viewer must still be logged in, but we don't need userId
+  checkAuth(req, UserType.Any)
+  allProfessionalPublicData()
     .then(result => res.json(result))
     .catch(next)
 })
@@ -375,6 +397,13 @@ app.post(
       .catch(next)
   },
 )
+
+app.get("/api/project/allpublicprofiledata", (req, res, next) => {
+  checkAuth(req, UserType.Any)
+  allProjectPublicData()
+    .then(result => res.json(result))
+    .catch(next)
+})
 
 // Error-handler, this must be defined LAST after all other app.use() and routes
 app.use((err: Error, _: Request, res: Response, next: NextFunction) => {

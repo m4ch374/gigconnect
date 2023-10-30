@@ -160,9 +160,52 @@ const projectChangeStatus = async (companyId: string, projectId: string) => {
   return { newStatus: status.valueOf().toLowerCase() }
 }
 
+/*
+  Function READS all existing Projects entries from the database
+           returns respone 200 with all OPEN project's basic info
+*/
+const allProjectPublicData = async () => {
+  const queriedInfo = await prisma.project.findMany({
+    select: {
+      id: true,
+      title: true,
+      publicDescription: true,
+      companyId: true,
+      company: {
+        select: {
+          name: true,
+        },
+      },
+      inPerson: true,
+      location: true,
+      tags: true,
+      creationDate: true,
+      status: true,
+    },
+    where: {
+      status: ProjectStatus.OPEN,
+    },
+  })
+  // Change key names, access company name, and stringify ids
+  const basicInfo = queriedInfo.map(info => ({
+    projectId: info.id.toString(),
+    title: info.title,
+    publicDescription: info.publicDescription,
+    companyName: info.company.name,
+    companyId: info.companyId.toString(),
+    inPerson: info.inPerson,
+    location: info.location,
+    tags: info.tags,
+    creationDate: info.creationDate.toJSON(),
+    status: info.status.toString(),
+  }))
+  return { projects: basicInfo }
+}
+
 export {
   projectCreate,
   projectDataProfessional,
   projectDataCompany,
   projectChangeStatus,
+  allProjectPublicData,
 }

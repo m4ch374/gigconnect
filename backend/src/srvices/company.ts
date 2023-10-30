@@ -148,5 +148,26 @@ const companyUpdate = async (
   }
 }
 
+/*
+  Function READS all existing Company entries from the database
+           returns respone 200 with all basic company's info
+*/
+const allCompanyPublicData = async () => {
+  const queriedInfo = await prisma.company.findMany({
+    select: {
+      id: true,
+      name: true,
+      verified: true,
+    },
+  })
+  // Change key name, and stringify id
+  const basicInfo = queriedInfo.map(info => ({
+    userId: info.id.toString(),
+    name: info.name,
+    verified: info.verified,
+  }))
+  return { companyUsers: basicInfo }
+}
+
 // length of company name cannot equal 0
-export { companyCreate, companyData, companyUpdate }
+export { companyCreate, companyData, companyUpdate, allCompanyPublicData }
