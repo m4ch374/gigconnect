@@ -23,3 +23,6 @@ Week 6
     - brainstormed new prisma db models for sprint 2
     - drafted and [almost] finalised the new api routes for sprint 2, also edits to existing api routes for sprint 2
         - these will be coded up soon after we've reached a consensus (hopefully by Wk7 Mon meeting)
+Week 7
+    - finalised and implemented the API routes for Sprint 2
+    - implemented function stub code for Sprint 2 functions

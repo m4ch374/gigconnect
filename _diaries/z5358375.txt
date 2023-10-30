@@ -43,3 +43,9 @@ schema to include project-related data. I also fixed some bugs in
 our codebase and gave feedback on Amith's api spec for Sprint 2
 functionality. Next week we will continue working on Sprint 2
 by implementing the functions we have planned.
+
+Week 7
+We continued working on Sprint 2 user stories. I implemented 5
+routes and fixed some bugs. I also helped on other people's routes
+and gave feedback. Next week we will finish off Sprint 2 stories
+and start looking at the project report.

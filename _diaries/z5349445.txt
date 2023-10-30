@@ -37,7 +37,10 @@ WEEK 5
 - Allocated user stores to be covered in sprint 2
 
 WEEK 6
-- Created forms for editing user profile data for company users and 
+- Created pages for editing user profile data for company users and 
   professional users.
 - Helped with planning for projects and requests to join projects on the 
   web app.
+
+WEEK 7
+- Create pages for creating projects and requesting to join a project

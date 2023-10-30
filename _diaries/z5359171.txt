@@ -22,3 +22,6 @@ I was tasked with the company functions implementation which I did the company c
 
 Week 6
 I added the external links component for company functions so that a company can display its website link and update its website link alongside updating the index.ts to accommodate for external links. I also added a new model called CompanyLink into the schema.prisma to handle the external links feature. Afterward, I fixed the error messages for both company and professional functions to be more descriptive for a better user experience so that they know why they can't log in or insert their ABN and other errors when using the functions. 
+
+Week 7
+I did the projectCreate and projectUpdate function and also updated the original company and professional profiledata function to return Projects. I tested out some of the other project functions including projectCreate and will test out projectUpdate soon.
