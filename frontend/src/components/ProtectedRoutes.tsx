@@ -22,6 +22,7 @@ const ProtectedRoutes: React.FC = () => {
           items-center
           justify-between
           px-8
+          z-50
         "
       >
         <button

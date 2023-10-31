@@ -1,7 +1,7 @@
 import { CompanyProfileData } from "types/company.types"
 import { TUser } from "types/general.types"
 import { ProfessionalProfileData } from "types/professional.types"
-import { CreateProjectData } from "types/project.types"
+import { CreateProjectData, ListedProjectData } from "types/project.types"
 
 // Generic Type
 export type TEndpoint<Req, Res> = {
@@ -160,3 +160,13 @@ type CreateProjectRes = {
   projectId: string
 }
 export type TCreateProject = TEndpoint<CreateProjectData, CreateProjectRes>
+
+// ===================================================
+// /api/project/allpublicprofiledata
+// ===================================================
+type AllPublicProjectsRes = {
+  projects: ListedProjectData[]
+}
+
+export type TAllPublicProjects = TEndpoint<void, AllPublicProjectsRes>
+// ===================================================
