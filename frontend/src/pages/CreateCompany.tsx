@@ -1,3 +1,5 @@
+import useToken from "hooks/Token.hooks"
+import useUserType from "hooks/UserType.hooks"
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { createCompany } from "services/auth.services"
@@ -8,6 +10,8 @@ const CreateCompany: React.FC = () => {
   const abnRegex = new RegExp("^[0-9]{11}$")
 
   const navigate = useNavigate()
+  const { setUserType } = useUserType()
+  const { setToken } = useToken()
 
   const [formData, setFormData] = useState<TCreateComp["requestType"]>({
     email: "",
@@ -51,7 +55,8 @@ const CreateCompany: React.FC = () => {
       }
 
       if (resp.userType === "company") {
-        localStorage.setItem("token", resp.loginToken)
+        setToken(resp.loginToken)
+        setUserType(resp.userType)
         navigate("/setup-company")
         return
       }

@@ -12,7 +12,7 @@ import SetupProfessional from "pages/SetupProfessional"
 import CompanyEditProfile from "pages/CompanyEditProfile"
 import ProfessionalEditProfile from "pages/ProfessionalEditProfile"
 import CreateProject from "pages/CreateProject"
-import Projects from "pages/Projects"
+import Home from "pages/Home"
 
 const App: React.FC = () => {
   return (
@@ -24,7 +24,7 @@ const App: React.FC = () => {
 
       {/* Main */}
       <Route path="/" element={<ProtectedRoutes />}>
-        <Route index element={<Projects />} />
+        <Route index element={<Home />} />
         <Route path="setup-company" element={<SetupCompany />} />
         <Route path="setup-professional" element={<SetupProfessional />} />
 

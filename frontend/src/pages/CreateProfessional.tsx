@@ -1,3 +1,5 @@
+import useToken from "hooks/Token.hooks"
+import useUserType from "hooks/UserType.hooks"
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { createProfessional } from "services/auth.services"
@@ -17,6 +19,8 @@ const CreateProfessional: React.FC = () => {
   const [formError, updateError] = useState("")
 
   const navigate = useNavigate()
+  const { setToken } = useToken()
+  const { setUserType } = useUserType()
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -49,7 +53,8 @@ const CreateProfessional: React.FC = () => {
       }
 
       if (resp.userType === "professional") {
-        localStorage.setItem("token", resp.loginToken)
+        setToken(resp.loginToken)
+        setUserType(resp.userType)
         navigate("/setup-professional")
         return
       }

@@ -1,4 +1,4 @@
-import { CompanyProfileData } from "types/company.types"
+import { CompanyProfileData, CompanyUser } from "types/company.types"
 import { TUser } from "types/general.types"
 import { ProfessionalProfileData } from "types/professional.types"
 import { CreateProjectData, ListedProjectData } from "types/project.types"
@@ -150,10 +150,6 @@ export type TCompanyProfile = TEndpoint<void, CompanyProfileData>
 export type TCompanyProfileUpdate = TEndpoint<CompanyProfileData, void>
 // ===================================================
 
-// ===================================================
-// .................. adding more ....................
-// ===================================================
-
 // Project related endpoints
 
 type CreateProjectRes = {
@@ -169,4 +165,18 @@ type AllPublicProjectsRes = {
 }
 
 export type TAllPublicProjects = TEndpoint<void, AllPublicProjectsRes>
+// ===================================================
+
+// ===================================================
+// /api/company/allpublicprofiledata
+// ===================================================
+type GetCompanyUsersRes = {
+  companyUsers: CompanyUser[]
+}
+
+export type TGetCompanyUsers = TEndpoint<void, GetCompanyUsersRes>
+// ===================================================
+
+// ===================================================
+// .................. adding more ....................
 // ===================================================

@@ -9,3 +9,9 @@ export type CompanyProfileData = {
   externalWebsites: ExternalLink[]
   verified: boolean
 }
+
+export type CompanyUser = {
+  userId: string
+  companyName: string
+  verified: boolean
+}

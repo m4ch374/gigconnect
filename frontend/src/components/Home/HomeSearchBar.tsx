@@ -1,13 +1,11 @@
 import Magnifier from "assets/icons/Magnifier"
 import React, { Dispatch, SetStateAction, useState } from "react"
 
-type TProjectSearchBar = {
+type THomeSearchBar = {
   searchController: [string, Dispatch<SetStateAction<string>>]
 }
 
-const ProjectSearchBar: React.FC<TProjectSearchBar> = ({
-  searchController,
-}) => {
+const HomeSearchBar: React.FC<THomeSearchBar> = ({ searchController }) => {
   const [search, setSearch] = searchController
   const [currSearch, setCurrSearch] = useState(search)
 
@@ -15,7 +13,7 @@ const ProjectSearchBar: React.FC<TProjectSearchBar> = ({
     <div className="w-full gap-0 flex">
       <input
         type="text"
-        placeholder="Search Projects"
+        placeholder="Start Searching!"
         className="p-2
           w-full
           bg-zinc-700
@@ -54,4 +52,4 @@ const ProjectSearchBar: React.FC<TProjectSearchBar> = ({
   )
 }
 
-export default ProjectSearchBar
+export default HomeSearchBar

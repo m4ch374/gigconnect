@@ -1,7 +1,11 @@
 // Company related endponts
 
 import Fetcher from "utils/fetcher"
-import { TCompanyProfile, TCompanyProfileUpdate } from "./types"
+import {
+  TCompanyProfile,
+  TCompanyProfileUpdate,
+  TGetCompanyUsers,
+} from "./types"
 
 export const getCompanyProfile = () => {
   return Fetcher.init<TCompanyProfile>("GET", "/api/company/profiledata")
@@ -18,5 +22,14 @@ export const updateCompanyProfile = (
   )
     .withCurrentToken()
     .withJsonPaylad(data)
+    .fetchData()
+}
+
+export const getAllCompanies = () => {
+  return Fetcher.init<TGetCompanyUsers>(
+    "GET",
+    "/api/company/allpublicprofiledata",
+  )
+    .withCurrentToken()
     .fetchData()
 }

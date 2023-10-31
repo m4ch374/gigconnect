@@ -1,3 +1,5 @@
+import useToken from "hooks/Token.hooks"
+import useUserType from "hooks/UserType.hooks"
 import React, { useState, FormEvent } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { login } from "services/auth.services"
@@ -8,6 +10,8 @@ const Login: React.FC = () => {
   const [formError, updateError] = useState("")
 
   const navigate = useNavigate()
+  const { setUserType } = useUserType()
+  const { setToken } = useToken()
 
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -21,7 +25,7 @@ const Login: React.FC = () => {
         return
       }
 
-      localStorage.setItem("token", resp.loginToken)
+      setToken(resp.loginToken)
       switch (resp.userType) {
         case "admin":
           navigate("/admin-dashboard")
@@ -34,7 +38,10 @@ const Login: React.FC = () => {
           break
         default:
           updateError("invalid response received.")
+          return
       }
+
+      setUserType(resp.userType)
     })()
   }
 
