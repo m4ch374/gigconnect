@@ -27,7 +27,7 @@ const ProtectedRoutes: React.FC = () => {
       >
         <button
           className="flex flex-row items-center gap-4"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
         >
           <Wifi />
           <h1 className="font-bold text-4xl">GigConnect</h1>
@@ -48,7 +48,7 @@ const ProtectedRoutes: React.FC = () => {
         </button>
       </div>
 
-      <div className="mt-[70px] overflow-x-hidden">
+      <div className="mt-[70px]">
         <Outlet />
       </div>
     </div>

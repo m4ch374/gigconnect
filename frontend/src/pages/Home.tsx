@@ -3,6 +3,7 @@ import Companies from "components/Home/Companies"
 import HomeSearchBar from "components/Home/HomeSearchBar"
 import Projects from "components/Home/Projects"
 import React, { useState } from "react"
+import { Outlet } from "react-router-dom"
 
 const SELECTED_CLASS = "border-b-2 border-sky-400 font-medium"
 
@@ -62,7 +63,7 @@ const Home: React.FC = () => {
             <div className="relative">
               <AnimatedBlob />
               <img
-                src="Relax.svg"
+                src="/Relax.svg"
                 className="w-36 aspect-square absolute top-[30%] left-[25%]"
               />
             </div>
@@ -72,6 +73,8 @@ const Home: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <Outlet />
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { CompanyProfileData, CompanyUser } from "types/company.types"
-import { TUser } from "types/general.types"
+import { ProjectStatus, TUser } from "types/general.types"
 import { ProfessionalProfileData } from "types/professional.types"
 import { CreateProjectData, ListedProjectData } from "types/project.types"
 
@@ -150,7 +150,19 @@ export type TCompanyProfile = TEndpoint<void, CompanyProfileData>
 export type TCompanyProfileUpdate = TEndpoint<CompanyProfileData, void>
 // ===================================================
 
-// Project related endpoints
+// ===================================================
+// /api/company/allpublicprofiledata
+// ===================================================
+type GetCompanyUsersRes = {
+  companyUsers: CompanyUser[]
+}
+
+export type TGetCompanyUsers = TEndpoint<void, GetCompanyUsersRes>
+// ===================================================
+
+// ###################################################
+// Project related endponts
+// ###################################################
 
 type CreateProjectRes = {
   projectId: string
@@ -168,13 +180,29 @@ export type TAllPublicProjects = TEndpoint<void, AllPublicProjectsRes>
 // ===================================================
 
 // ===================================================
-// /api/company/allpublicprofiledata
+// /api/project/profiledata/professional
 // ===================================================
-type GetCompanyUsersRes = {
-  companyUsers: CompanyUser[]
+type ProjDetailsProfessionalReq = {
+  projectId: string
 }
 
-export type TGetCompanyUsers = TEndpoint<void, GetCompanyUsersRes>
+type ProjDetailsProfessionalRes = {
+  title: string
+  companyId: string
+  companyName: string
+  description: string
+  tags: string[]
+  inPerson: boolean
+  location?: string
+  creationDate: string
+  status: ProjectStatus
+  professionals: ProfessionalProfileData[]
+}
+
+export type TProjDetailsProfessional = TEndpoint<
+  ProjDetailsProfessionalReq,
+  ProjDetailsProfessionalRes
+>
 // ===================================================
 
 // ===================================================

@@ -13,6 +13,8 @@ import CompanyEditProfile from "pages/CompanyEditProfile"
 import ProfessionalEditProfile from "pages/ProfessionalEditProfile"
 import CreateProject from "pages/CreateProject"
 import Home from "pages/Home"
+import Landing from "pages/Landing"
+import ProjectDetails from "pages/ProjectDetails"
 
 const App: React.FC = () => {
   return (
@@ -23,8 +25,11 @@ const App: React.FC = () => {
       <Route path="create-professional" element={<CreateProfessional />} />
 
       {/* Main */}
+      <Route index element={<Landing />} />
       <Route path="/" element={<ProtectedRoutes />}>
-        <Route index element={<Home />} />
+        <Route path="home" element={<Home />}>
+          <Route path="details/:projectId" element={<ProjectDetails />} />
+        </Route>
         <Route path="setup-company" element={<SetupCompany />} />
         <Route path="setup-professional" element={<SetupProfessional />} />
 

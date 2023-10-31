@@ -1,6 +1,7 @@
 import Building from "assets/icons/Building"
 import MapPin from "assets/icons/MapPin"
 import React, { useMemo } from "react"
+import { useNavigate } from "react-router-dom"
 import { ListedProjectData } from "types/project.types"
 
 type TProjectPreview = {
@@ -16,7 +17,10 @@ const ProjectPreview: React.FC<TProjectPreview> = ({ projectDetail }) => {
     tags,
     title,
     location,
+    projectId,
   } = projectDetail
+
+  const navigate = useNavigate()
 
   // Ugly asf
   const postedTime = useMemo(() => {
@@ -36,7 +40,10 @@ const ProjectPreview: React.FC<TProjectPreview> = ({ projectDetail }) => {
   }, [creationDate])
 
   return (
-    <div className="p-4 group hover:bg-sky-300/10">
+    <div
+      className="p-4 group hover:bg-sky-300/10 cursor-pointer"
+      onClick={() => navigate(`/home/details/${projectId}`)}
+    >
       <h3 className="group-hover:text-sky-300 font-semibold text-lg truncate my-2">
         {title}
       </h3>
