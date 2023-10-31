@@ -1,4 +1,5 @@
 import HTTPError from "http-errors"
+import { ProjectStatus } from "@prisma/client"
 import {
   ExternalLink,
   prisma,
@@ -175,6 +176,7 @@ const allProfessionalPublicData = async () => {
       firstName: true,
       lastName: true,
       verified: true,
+      description: true,
     },
   })
   // Change key name, and stringify id
@@ -183,8 +185,68 @@ const allProfessionalPublicData = async () => {
     firstName: info.firstName,
     lastName: info.lastName,
     verified: info.verified,
+    description: info.description,
   }))
   return { professionalUsers: basicInfo }
+}
+
+/*
+  Function READS gets all necessary Public info from curr Professional, for profile page public viewing
+           returns respone 200 with all basic users info
+*/
+const professionalDataPublic = async (userId: string) => {
+  const user = await getProfeshUserEntry(Number(userId))
+  // get list of all of this user's closed projects, with public info
+  const closedProjects = await prisma.professional.findUnique({
+    select: {
+      projects: {
+        select: {
+          id: true,
+          title: true,
+          publicDescription: true,
+          companyId: true,
+          company: {
+            select: {
+              name: true,
+            },
+          },
+          inPerson: true,
+          location: true,
+          tags: true,
+          creationDate: true,
+          status: true,
+        },
+        where: {
+          status: ProjectStatus.CLOSED,
+        },
+      },
+    },
+    where: { id: parseInt(userId, 10) },
+  })
+
+  const cleanProjObj = closedProjects?.projects.map(info => ({
+    projectId: info.id.toString(),
+    title: info.title,
+    publicDescription: info.publicDescription,
+    companyId: info.companyId.toString(),
+    companyName: info.company.name,
+    inPerson: info.inPerson,
+    location: info.location,
+    tags: info.tags,
+    creationDate: info.creationDate.toJSON(),
+    status: info.status.toString().toLowerCase(),
+  }))
+
+  return {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    description: user.description,
+    skills: user.skills,
+    qualifications: mapDBToExternalLinks(user.certLinks),
+    externalWebsites: mapDBToExternalLinks(user.socialLinks),
+    verified: user.verified,
+    completedProjects: cleanProjObj,
+  }
 }
 
 export {
@@ -192,4 +254,5 @@ export {
   professionalData,
   professionalUpdate,
   allProfessionalPublicData,
+  professionalDataPublic,
 }

@@ -262,7 +262,7 @@ type response200 = {
     lastName: string,
     description: string,
     skills: string[],
-    qualifications: externalLin
+    qualifications: externalLink[],
     externalWebsites: externalLink[],
     verified: boolean,
     completedProjects: projects[], // only return completed projects for public view
@@ -278,7 +278,7 @@ type response200 = {
     abn: string,
     companyDescription: string,
     externalWebsites: externalLink[],
-    verified: boolean
+    verified: boolean,
     completedProjects: projects[], // only return completed projects for public view
 }
 
@@ -412,6 +412,7 @@ type response200 = {
             firstName: string,
             lastName: string,
             verified: boolean,
+            description: string,
         }
     ],
 }
@@ -430,6 +431,7 @@ type response200 = {
             userId: string,
             companyName: string,
             verified: boolean,
+            description: string,
         }
     ],
 }

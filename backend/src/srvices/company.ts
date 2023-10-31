@@ -1,4 +1,5 @@
 import HTTPError from "http-errors"
+import { ProjectStatus } from "@prisma/client"
 import {
   ExternalLink,
   prisma,
@@ -76,13 +77,7 @@ const companyCreate = async (
 }
 
 const companyData = async (userId: string) => {
-  // #######################
-  // ####  WRITE TO DB #####
-  // #######################
   const companyUser = await getCompanyUserEntry(Number(userId))
-  // #######################
-  // #### RETURN DICT ######
-  // #######################
   return {
     projects: mapDBToProjects(companyUser.projects),
     companyName: companyUser.name,
@@ -160,6 +155,7 @@ const allCompanyPublicData = async () => {
       id: true,
       name: true,
       verified: true,
+      description: true,
     },
   })
   // Change key name, and stringify id
@@ -167,9 +163,69 @@ const allCompanyPublicData = async () => {
     userId: info.id.toString(),
     companyName: info.name,
     verified: info.verified,
+    description: info.description,
   }))
   return { companyUsers: basicInfo }
 }
 
-// length of company name cannot equal 0
-export { companyCreate, companyData, companyUpdate, allCompanyPublicData }
+/*
+  Function READS gets all necessary Public info from curr Company, for profile page public viewing
+           returns respone 200 with all basic users info
+*/
+const companyDataPublic = async (userId: string) => {
+  const companyUser = await getCompanyUserEntry(Number(userId))
+  const closedProjects = await prisma.company.findUnique({
+    select: {
+      projects: {
+        select: {
+          id: true,
+          title: true,
+          publicDescription: true,
+          companyId: true,
+          company: {
+            select: {
+              name: true,
+            },
+          },
+          inPerson: true,
+          location: true,
+          tags: true,
+          creationDate: true,
+          status: true,
+        },
+        where: { status: ProjectStatus.CLOSED },
+      },
+    },
+    where: { id: parseInt(userId, 10) },
+  })
+
+  const cleanProjObj = closedProjects?.projects.map(info => ({
+    projectId: info.id.toString(),
+    title: info.title,
+    publicDescription: info.publicDescription,
+    companyId: info.companyId.toString(),
+    companyName: info.company.name,
+    inPerson: info.inPerson,
+    location: info.location,
+    tags: info.tags,
+    creationDate: info.creationDate.toJSON(),
+    status: info.status.toString().toLowerCase(),
+  }))
+
+  return {
+    companyName: companyUser.name,
+    abn: companyUser.abn,
+    companyDescription: companyUser.description,
+    externalWebsites: mapDBToExternalLinks(companyUser.companyLinks),
+    verified: companyUser.verified,
+    completedProjects: cleanProjObj,
+  }
+}
+
+export {
+  companyCreate,
+  companyData,
+  companyUpdate,
+  allCompanyPublicData,
+  companyDataPublic,
+}

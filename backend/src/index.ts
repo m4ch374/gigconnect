@@ -15,12 +15,14 @@ import {
   companyData,
   companyUpdate,
   allCompanyPublicData,
+  companyDataPublic,
 } from "srvices/company"
 import {
   professionalCreate,
   professionalData,
   professionalUpdate,
   allProfessionalPublicData,
+  professionalDataPublic,
 } from "srvices/professional"
 import { adminDashboard, adminSetVerified } from "srvices/admin"
 import {
@@ -145,6 +147,18 @@ app.get("/api/company/profiledata", (req, res, next) => {
     .catch(next)
 })
 
+app.get(
+  "/api/company/profiledata/public",
+  // tested via "?userId=2" in link, since its a GET req
+  (req: ReqQuery<{ userId: string }>, res, next) => {
+    checkAuth(req as unknown as Request, UserType.Any)
+    const { userId } = req.query
+    companyDataPublic(userId)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
 app.get("/api/company/allpublicprofiledata", (req, res, next) => {
   checkAuth(req, UserType.Any)
   allCompanyPublicData()
@@ -203,6 +217,17 @@ app.get("/api/professional/profiledata", (req, res, next) => {
     .then(result => res.json(result))
     .catch(next)
 })
+
+app.get(
+  "/api/professional/profiledata/public",
+  (req: ReqQuery<{ userId: string }>, res, next) => {
+    checkAuth(req as unknown as Request, UserType.Any)
+    const { userId } = req.query
+    professionalDataPublic(userId)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
 
 app.get("/api/professional/allpublicprofiledata", (req, res, next) => {
   // viewer must still be logged in, but we don't need userId
