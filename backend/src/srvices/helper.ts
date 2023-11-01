@@ -117,6 +117,7 @@ const mapDBToProjects = (
     creationDate: param.creationDate.toJSON(),
     status: param.status.valueOf().toLowerCase(),
   }))
+
 /**
  * Checks whether given email already exists within the Company table entries in the DB
  */
@@ -225,6 +226,23 @@ const professionalInProject = async (
     })
   )?.professionals.length !== 0
 
+/**
+ * Checks if companyId is the project owner
+ */
+const checkCompanyIsProjectOwner = async (
+  companyId: string,
+  projectId: string,
+) => {
+  const project = await prisma.project.findUnique({
+    where: { id: parseInt(projectId, 10), companyId: parseInt(companyId, 10) },
+  })
+  if (project) {
+    // project is assigned an entry which contains said company user as owner
+    return true
+  }
+  return false
+}
+
 export {
   UserType,
   ExternalLink,
@@ -242,4 +260,5 @@ export {
   getProfeshUserEntry,
   professionalInProject,
   mapDBToProjects,
+  checkCompanyIsProjectOwner,
 }

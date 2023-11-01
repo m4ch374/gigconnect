@@ -461,4 +461,22 @@ type response200 = {
     ]
 }
 
+// ROUTE = /api/project/removeprofessional/, METHOD = POST
+// REQUEST - send login token in header, request as query params
+type request = {
+    projectId: string,
+    professionalId: string,
+}
+// RESPONSE 403 if not logged in. Response object can be {success: false}.
+type response403 = {
+    message: string,
+}
+// RESPONSE 400 if: userId not in project OR token userId (company) is not project owner
+type response400 = {
+    message: string,
+}
+type response200 = {
+    success: boolean,
+}
+
 ```

@@ -32,6 +32,7 @@ import {
   projectDataCompany,
   projectDataProfessional,
   allProjectPublicData,
+  removeProfessional,
 } from "srvices/project"
 import { requestCreate, requestRespond } from "srvices/request"
 
@@ -470,6 +471,24 @@ app.get("/api/project/allpublicprofiledata", (req, res, next) => {
     .then(result => res.json(result))
     .catch(next)
 })
+
+app.post(
+  "/api/project/removeprofessional/",
+  (
+    req: ReqBody<{
+      professionalId: string
+      projectId: string
+    }>,
+    res,
+    next,
+  ) => {
+    const userId = checkAuth(req as Request, UserType.Company)
+    const { professionalId, projectId } = req.body
+    removeProfessional(userId, professionalId, projectId)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
 
 // Error-handler, this must be defined LAST after all other app.use() and routes
 app.use((err: Error, _: Request, res: Response, next: NextFunction) => {

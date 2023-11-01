@@ -1,6 +1,10 @@
 import HTTPError from "http-errors"
 import { ProjectStatus } from "@prisma/client"
-import { prisma, professionalInProject } from "./helper"
+import {
+  prisma,
+  professionalInProject,
+  checkCompanyIsProjectOwner,
+} from "./helper"
 
 /*
   Function creates projects by Company Users
@@ -253,6 +257,41 @@ const allProjectPublicData = async () => {
   return { projects: basicInfo }
 }
 
+/*
+  Function REMOVES a professional from a project, as requested by the owner Company usert
+           returns respone 200 with either success true or false
+*/
+const removeProfessional = async (
+  companyId: string,
+  professionalId: string,
+  projectId: string,
+) => {
+  // Check if company user is project owner
+  const isOwner = await checkCompanyIsProjectOwner(companyId, projectId)
+  if (!isOwner) {
+    throw HTTPError(400, "Company user is not owner of the project")
+  }
+  // Check if professional is accepted into project
+  const accepted = await professionalInProject(professionalId, projectId)
+  if (!accepted) {
+    throw HTTPError(400, "Professional is not apart of the project yet")
+  }
+  // Now remove the relations (profesh <-> proj) via disconnect-record query
+  await prisma.project.update({
+    where: {
+      id: parseInt(projectId, 10),
+    },
+    data: {
+      professionals: {
+        disconnect: [{ id: parseInt(professionalId, 10) }],
+      },
+    },
+  })
+  return {
+    success: true,
+  }
+}
+
 export {
   projectCreate,
   projectUpdate,
@@ -260,4 +299,5 @@ export {
   projectDataCompany,
   projectChangeStatus,
   allProjectPublicData,
+  removeProfessional,
 }
