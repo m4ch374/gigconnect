@@ -65,7 +65,10 @@ const ProjectDetails: React.FC = () => {
               <h1 className="font-bold text-2xl truncate">
                 {projDetail.title}
               </h1>
-              <Link className="bg-sky-500 px-4 py-1 rounded-full" to="/">
+              <Link
+                className="bg-sky-500 px-4 py-1 rounded-full"
+                to={`project-request/${projectId}`}
+              >
                 Apply
               </Link>
             </div>

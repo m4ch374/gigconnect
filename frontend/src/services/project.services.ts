@@ -3,6 +3,7 @@ import {
   TAllPublicProjects,
   TCreateProject,
   TProjDetailsProfessional,
+  TProjectRequest,
 } from "./types"
 
 export const apiCreateProject = (data: TCreateProject["requestType"]) => {
@@ -30,5 +31,14 @@ export const getProjectDetailsProfessional = (
   )
     .withCurrentToken()
     .withParams(data)
+    .fetchData()
+}
+
+export const apiCreateProjectRequest = (
+  data: TProjectRequest["requestType"],
+) => {
+  return Fetcher.init<TProjectRequest>("POST", "/api/project/request")
+    .withCurrentToken()
+    .withJsonPaylad(data)
     .fetchData()
 }

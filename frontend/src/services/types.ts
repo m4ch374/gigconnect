@@ -177,6 +177,7 @@ export type TGetCompanyUsers = TEndpoint<void, GetCompanyUsersRes>
 // Project related endponts
 // ###################################################
 
+// /api/project/create
 type CreateProjectRes = {
   projectId: string
 }
@@ -217,6 +218,13 @@ export type TProjDetailsProfessional = TEndpoint<
   ProjDetailsProfessionalRes
 >
 // ===================================================
+
+// /api/project/request
+type ProjectRequestReq = {
+  projectId: string
+  message: string
+}
+export type TProjectRequest = TEndpoint<ProjectRequestReq, void>
 
 // ===================================================
 // .................. adding more ....................

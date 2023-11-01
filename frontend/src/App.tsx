@@ -12,6 +12,7 @@ import SetupProfessional from "pages/SetupProfessional"
 import CompanyEditProfile from "pages/CompanyEditProfile"
 import ProfessionalEditProfile from "pages/ProfessionalEditProfile"
 import CreateProject from "pages/CreateProject"
+import RequestProject from "pages/RequestProject"
 import Home from "pages/Home"
 import Landing from "pages/Landing"
 import ProjectDetails from "pages/ProjectDetails"
@@ -20,9 +21,9 @@ const App: React.FC = () => {
   return (
     <Routes>
       {/* Auth */}
-      <Route path="login" element={<Login />} />
-      <Route path="create-company" element={<CreateCompany />} />
-      <Route path="create-professional" element={<CreateProfessional />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/create-company" element={<CreateCompany />} />
+      <Route path="/create-professional" element={<CreateProfessional />} />
 
       {/* Main */}
       <Route index element={<Landing />} />
@@ -47,6 +48,7 @@ const App: React.FC = () => {
 
         <Route path="admin-dashboard" element={<AdminDashboard />} />
         <Route path="create-project" element={<CreateProject />} />
+        <Route path="project-request/:projectId" element={<RequestProject />} />
       </Route>
     </Routes>
   )
