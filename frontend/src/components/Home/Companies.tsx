@@ -3,7 +3,11 @@ import { getAllCompanies } from "services/company.services"
 import { CompanyUser } from "types/company.types"
 import CompanyPreview from "./CompanyPreview"
 
-const Companies: React.FC = () => {
+type TCompanies = {
+  searches: string
+}
+
+const Companies: React.FC<TCompanies> = ({ searches }) => {
   const [companies, setCompanies] = useState<CompanyUser[]>([])
 
   useEffect(() => {
@@ -18,14 +22,16 @@ const Companies: React.FC = () => {
 
   return (
     <div>
-      {companies.map((company, idx) => {
-        return (
-          <div key={idx}>
-            <CompanyPreview company={company} />
-            <hr className="border-zinc-400" />
-          </div>
-        )
-      })}
+      {companies
+        .filter(comp => comp.companyName.includes(searches))
+        .map((company, idx) => {
+          return (
+            <div key={idx}>
+              <CompanyPreview company={company} />
+              <hr className="border-zinc-400" />
+            </div>
+          )
+        })}
     </div>
   )
 }

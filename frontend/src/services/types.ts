@@ -1,6 +1,9 @@
 import { CompanyProfileData, CompanyUser } from "types/company.types"
 import { ProjectStatus, TUser } from "types/general.types"
-import { ProfessionalProfileData } from "types/professional.types"
+import {
+  ProfessionalProfileData,
+  ProfessionalUser,
+} from "types/professional.types"
 import { CreateProjectData, ListedProjectData } from "types/project.types"
 
 // Generic Type
@@ -132,6 +135,16 @@ export type TProfessionalProfileUpdate = TEndpoint<
   ProfessionalProfileData,
   void
 >
+// ===================================================
+
+// ===================================================
+// /api/professional/allpublicprofiledata
+// ===================================================
+type GetProfessionalUsersRes = {
+  professionalUsers: ProfessionalUser[]
+}
+
+export type TGetProfessionalUsers = TEndpoint<void, GetProfessionalUsersRes>
 // ===================================================
 
 // ###################################################

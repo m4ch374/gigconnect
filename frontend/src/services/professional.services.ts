@@ -1,7 +1,11 @@
 // Professional related endpoints
 
 import Fetcher from "utils/fetcher"
-import { TProfessionalProfile, TProfessionalProfileUpdate } from "./types"
+import {
+  TGetProfessionalUsers,
+  TProfessionalProfile,
+  TProfessionalProfileUpdate,
+} from "./types"
 
 export const getProfessionalProfile = () => {
   return Fetcher.init<TProfessionalProfile>(
@@ -21,5 +25,14 @@ export const updateProfessionalProfile = (
   )
     .withCurrentToken()
     .withJsonPaylad(data)
+    .fetchData()
+}
+
+export const getAllProfessionals = () => {
+  return Fetcher.init<TGetProfessionalUsers>(
+    "GET",
+    "/api/professional/allpublicprofiledata",
+  )
+    .withCurrentToken()
     .fetchData()
 }

@@ -11,3 +11,11 @@ export type ProfessionalProfileData = {
   externalWebsites: ExternalLink[]
   verified: boolean
 }
+
+export type ProfessionalUser = {
+  userId: string
+  firstName: string
+  lastName: string
+  verified: boolean
+  description: string
+}
