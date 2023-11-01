@@ -130,6 +130,7 @@ const projectDataProfessional = async (
           firstName: p.firstName,
           lastName: p.lastName,
           verified: p.verified,
+          description: p.description,
         }))
       : [],
   }
@@ -167,6 +168,7 @@ const projectDataCompany = async (companyId: string, projectId: string) => {
           firstName: p.firstName,
           lastName: p.lastName,
           verified: p.verified,
+          description: p.description,
         }))
       : [],
     requests: project.requests.map(r => ({

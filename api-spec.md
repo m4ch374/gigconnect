@@ -3,6 +3,14 @@
 // ### Data types ###
 type projectStatus = "open" | "inprogress" | "closed"
 
+type Professional = {
+    userId: string,
+    firstName: string,
+    lastName: string,
+    verified: boolean,
+    description: string,
+}
+
 // following is a request to join a project
 type Request = {
     id: string,
