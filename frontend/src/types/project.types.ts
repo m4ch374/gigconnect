@@ -7,6 +7,24 @@ export type CreateProjectData = {
   location: string
 }
 
+export type EditProjectData = {
+  projectId: string
+  title: string
+  publicDescription: string
+  privateDescription: string
+  tags: string[]
+  inPerson: boolean
+  location: string
+}
+
+export type ProjectRequestData = {
+  id: string
+  projectId: string
+  userId: string
+  message: string
+  creationDate: string
+}
+
 export type ListedProjectData = {
   projectId: string
   title: string

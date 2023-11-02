@@ -2,7 +2,9 @@ import Fetcher from "utils/fetcher"
 import {
   TAllPublicProjects,
   TCreateProject,
+  TEditProject,
   TProjDetailsProfessional,
+  TProjectDetailsCompany,
   TProjectRequest,
 } from "./types"
 
@@ -31,6 +33,25 @@ export const getProjectDetailsProfessional = (
   )
     .withCurrentToken()
     .withParams(data)
+    .fetchData()
+}
+
+export const getProjectDetailsCompany = (
+  data: TProjectDetailsCompany["requestType"],
+) => {
+  return Fetcher.init<TProjectDetailsCompany>(
+    "GET",
+    "/api/project/profiledata/company",
+  )
+    .withCurrentToken()
+    .withParams(data)
+    .fetchData()
+}
+
+export const apiEditProject = (data: TEditProject["requestType"]) => {
+  return Fetcher.init<TEditProject>("POST", "/api/project/update")
+    .withCurrentToken()
+    .withJsonPaylad(data)
     .fetchData()
 }
 

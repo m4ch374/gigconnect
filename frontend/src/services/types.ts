@@ -4,7 +4,12 @@ import {
   ProfessionalProfileData,
   ProfessionalUser,
 } from "types/professional.types"
-import { CreateProjectData, ListedProjectData } from "types/project.types"
+import {
+  CreateProjectData,
+  EditProjectData,
+  ListedProjectData,
+  ProjectRequestData,
+} from "types/project.types"
 
 // Generic Type
 export type TEndpoint<Req, Res> = {
@@ -219,12 +224,62 @@ export type TProjDetailsProfessional = TEndpoint<
 >
 // ===================================================
 
+type ProjectDetailsCompanyReq = {
+  projectId: string
+}
+
+type ProjectDetailsCompanyRes = {
+  title: string
+  companyId: string
+  companyName: string
+  description: string
+  tags: string[]
+  inPerson: boolean
+  location?: string
+  creationDate: string
+  status: ProjectStatus
+  professionals: ProfessionalProfileData[]
+  requests: ProjectRequestData[]
+}
+
+export type TProjectDetailsCompany = TEndpoint<
+  ProjectDetailsCompanyReq,
+  ProjectDetailsCompanyRes
+>
+
+export type TEditProject = TEndpoint<EditProjectData, void>
 // /api/project/request
 type ProjectRequestReq = {
   projectId: string
   message: string
 }
 export type TProjectRequest = TEndpoint<ProjectRequestReq, void>
+
+type ProjectRequestRespondReq = {
+  requestId: string
+  accepted: boolean
+}
+export type TProjectRequestRespond = TEndpoint<ProjectRequestRespondReq, void>
+
+type ProfessionalByIdReq = {
+  userId: string
+}
+
+// type ProfessionalByIdRes = {
+//   firstName: string,
+//   lastName: string,
+//   description: string,
+//   skills: string[],
+//   qualifications: ExternalLink[],
+//   externalWebsites: ExternalLink[],
+//   verified: boolean,
+//   completedProjects: projects[],
+// }
+
+export type TProfessionalById = TEndpoint<
+  ProfessionalByIdReq,
+  ProfessionalProfileData
+>
 
 // ===================================================
 // .................. adding more ....................

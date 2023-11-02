@@ -16,6 +16,8 @@ import RequestProject from "pages/RequestProject"
 import Home from "pages/Home"
 import Landing from "pages/Landing"
 import ProjectDetails from "pages/ProjectDetails"
+import RequestRespond from "pages/RequestRespond"
+import EditProject from "pages/EditProject"
 
 const App: React.FC = () => {
   return (
@@ -48,7 +50,12 @@ const App: React.FC = () => {
 
         <Route path="admin-dashboard" element={<AdminDashboard />} />
         <Route path="create-project" element={<CreateProject />} />
+        <Route path="project/:projectId/edit" element={<EditProject />} />
         <Route path="project-request/:projectId" element={<RequestProject />} />
+        <Route
+          path="project/:projectId/request/:requestId"
+          element={<RequestRespond />}
+        />
       </Route>
     </Routes>
   )

@@ -45,7 +45,7 @@ const RequestProject: React.FC = () => {
           projectId: projectId,
           message: message,
         })
-        navigate(`/details/${projectId}`)
+        navigate(`/home/details/${projectId}`)
       } catch {
         setFormError("An error occured while sending the request.")
       }
