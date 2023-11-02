@@ -3,6 +3,7 @@ import { ProjectStatus, TUser } from "types/general.types"
 import {
   ProfessionalProfileData,
   ProfessionalUser,
+  ViewedProfessionalProfileData,
 } from "types/professional.types"
 import {
   CreateProjectData,
@@ -131,6 +132,15 @@ export type TSetVerify = TEndpoint<SetVerifyReq, SetVerifyRes>
 // /api/professional/profiledata
 // ===================================================
 export type TProfessionalProfile = TEndpoint<void, ProfessionalProfileData>
+// ===================================================
+
+// ===================================================
+// /api/professional/profiledata/public
+// ===================================================
+export type TPublicProfessionalProfile = TEndpoint<
+  { userId: string },
+  ViewedProfessionalProfileData
+>
 // ===================================================
 
 // ===================================================
@@ -279,6 +289,15 @@ type ProfessionalByIdReq = {
 export type TProfessionalById = TEndpoint<
   ProfessionalByIdReq,
   ProfessionalProfileData
+>
+
+// /api/project/removeprofessional/
+export type TRemoveProfessional = TEndpoint<
+  {
+    projectId: string
+    professionalId: string
+  },
+  { success: boolean }
 >
 
 // ===================================================

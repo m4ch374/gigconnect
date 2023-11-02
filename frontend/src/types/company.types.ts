@@ -1,6 +1,6 @@
 // Types for company users
 
-import { ExternalLink } from "./general.types"
+import { ExternalLink, ProjectStatus } from "./general.types"
 
 export type CompanyProfileData = {
   companyName: string
@@ -8,6 +8,17 @@ export type CompanyProfileData = {
   companyDescription: string
   externalWebsites: ExternalLink[]
   verified: boolean
+  projects: {
+    projectId: string
+    title: string
+    publicDescription: string
+    companyName: string
+    companyId: string
+    inPerson: boolean
+    location?: string
+    creationDate: string
+    status: ProjectStatus
+  }[]
 }
 
 export type CompanyUser = {

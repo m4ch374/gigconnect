@@ -4,25 +4,30 @@ import Clipboard from "assets/icons/Clipboard"
 import MapPin from "assets/icons/MapPin"
 import TalentPreview from "components/Home/TalentPreview"
 import useDisableScroll from "hooks/DisableScroll"
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { getProjectDetailsProfessional } from "services/project.services"
-import { TProjDetailsProfessional } from "services/types"
+import {
+  getProjectDetailsCompany,
+  removeProfessional,
+} from "services/project.services"
+import { TProjectDetailsCompany } from "services/types"
 import { ProfessionalUser } from "types/professional.types"
 
-const ProjectDetails: React.FC = () => {
+const ProjectDetailsCompany: React.FC = () => {
   const { projectId } = useParams()
   const navigate = useNavigate()
 
   useDisableScroll()
 
   const [projDetail, setProjDetail] =
-    useState<TProjDetailsProfessional["responseType"]>()
+    useState<TProjectDetailsCompany["responseType"]>()
+
+  const [removedId, setRemovedId] = useState<string[]>([])
 
   useEffect(() => {
     if (!projectId) return
     ;(async () => {
-      const resp = await getProjectDetailsProfessional({ projectId })
+      const resp = await getProjectDetailsCompany({ projectId })
 
       if (typeof resp === "undefined") return
 
@@ -30,6 +35,22 @@ const ProjectDetails: React.FC = () => {
       setProjDetail(resp)
     })()
   }, [projectId])
+
+  const handleRemove = useCallback(
+    (targetProjId: string, professionalId: string) => {
+      ;(async () => {
+        const resp = await removeProfessional({
+          projectId: targetProjId,
+          professionalId,
+        })
+
+        if (typeof resp === "undefined") return
+
+        setRemovedId(s => [...s, professionalId])
+      })()
+    },
+    [],
+  )
 
   // Cheating a lil bit
   if (typeof projDetail === "undefined") return <></>
@@ -102,7 +123,35 @@ const ProjectDetails: React.FC = () => {
           <hr className="border-zinc-400 my-4" />
 
           <div className="mb-4">
-            {projDetail.professionals.map((pro, idx) => {
+            <h1 className="mx-4">Accepted:</h1>
+            {projDetail.professionals
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+              .filter((pro: any) => !removedId.includes(pro.userId))
+              .map((pro, idx) => {
+                return (
+                  <div key={idx} className="relative">
+                    <TalentPreview
+                      talent={pro as unknown as ProfessionalUser} // ugly
+                    />
+                    <button
+                      className="absolute right-4 inset-y-0 bg-red-500 px-2 rounded-lg"
+                      onClick={() => {
+                        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-explicit-any
+                        handleRemove(projectId || "", (pro as any).userId)
+                      }}
+                    >
+                      remove
+                    </button>
+                  </div>
+                )
+              })}
+          </div>
+
+          <hr className="border-zinc-400 my-4" />
+
+          <div className="mb-4">
+            <h1 className="mx-4">Requested:</h1>
+            {projDetail.requests.map((pro, idx) => {
               return (
                 <TalentPreview
                   key={idx}
@@ -117,4 +166,4 @@ const ProjectDetails: React.FC = () => {
   )
 }
 
-export default ProjectDetails
+export default ProjectDetailsCompany

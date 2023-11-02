@@ -53,7 +53,7 @@ const CreateProject: React.FC = () => {
       if (typeof res === "undefined") {
         setFormError("An error occured while creating the project.")
       } else {
-        navigate(`/home/details/${res.projectId}`)
+        navigate(`/home`)
       }
     })()
   }

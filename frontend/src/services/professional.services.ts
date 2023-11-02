@@ -7,6 +7,7 @@ import {
   TProfessionalProfile,
   TProfessionalProfileUpdate,
   TProjectRequestRespond,
+  TPublicProfessionalProfile,
 } from "./types"
 
 export const getProfessionalProfile = () => {
@@ -15,6 +16,18 @@ export const getProfessionalProfile = () => {
     "/api/professional/profiledata",
   )
     .withCurrentToken()
+    .fetchData()
+}
+
+export const getProfessionalPublicProfile = (
+  data: TPublicProfessionalProfile["requestType"],
+) => {
+  return Fetcher.init<TPublicProfessionalProfile>(
+    "GET",
+    "/api/professional/profiledata/public",
+  )
+    .withCurrentToken()
+    .withParams(data)
     .fetchData()
 }
 

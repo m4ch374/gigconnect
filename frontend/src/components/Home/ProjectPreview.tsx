@@ -55,9 +55,9 @@ const ProjectPreview: React.FC<TProjectPreview> = ({ projectDetail }) => {
         </h6>
       </div>
 
-      <p className="text-zinc-300 max-h-[100px] truncate">
+      <h3 className="text-zinc-300 break-words line-clamp-4">
         {publicDescription}
-      </p>
+      </h3>
 
       <div className="my-2 flex gap-2 flex-wrap max-w-[500px]">
         {tags.map((tag, idx) => {

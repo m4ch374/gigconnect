@@ -18,6 +18,8 @@ import Landing from "pages/Landing"
 import ProjectDetails from "pages/ProjectDetails"
 import RequestRespond from "pages/RequestRespond"
 import EditProject from "pages/EditProject"
+import ProfessionalProfile from "pages/ProfessionalProfile"
+import ProjectDetailsCompany from "pages/ProjectDetailsCompany"
 
 const App: React.FC = () => {
   return (
@@ -37,10 +39,13 @@ const App: React.FC = () => {
         <Route path="setup-professional" element={<SetupProfessional />} />
 
         {/* Company Profile */}
-        <Route path="company-myprofile">
-          <Route index element={<CompanyMyProfile />} />
-          <Route path="edit" element={<CompanyEditProfile />} />
+        <Route path="company-myprofile" element={<CompanyMyProfile />}>
+          <Route
+            path="details/:projectId"
+            element={<ProjectDetailsCompany />}
+          />
         </Route>
+        <Route path="company-myprofile/edit" element={<CompanyEditProfile />} />
 
         {/* Professional Profile */}
         <Route path="professional-myprofile">
@@ -56,6 +61,7 @@ const App: React.FC = () => {
           path="project/:projectId/request/:requestId"
           element={<RequestRespond />}
         />
+        <Route path="professional/:userId" element={<ProfessionalProfile />} />
       </Route>
     </Routes>
   )

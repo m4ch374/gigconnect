@@ -6,6 +6,7 @@ import {
   TProjDetailsProfessional,
   TProjectDetailsCompany,
   TProjectRequest,
+  TRemoveProfessional,
 } from "./types"
 
 export const apiCreateProject = (data: TCreateProject["requestType"]) => {
@@ -59,6 +60,18 @@ export const apiCreateProjectRequest = (
   data: TProjectRequest["requestType"],
 ) => {
   return Fetcher.init<TProjectRequest>("POST", "/api/project/request")
+    .withCurrentToken()
+    .withJsonPaylad(data)
+    .fetchData()
+}
+
+export const removeProfessional = (
+  data: TRemoveProfessional["requestType"],
+) => {
+  return Fetcher.init<TRemoveProfessional>(
+    "POST",
+    "/api/project/removeprofessional/",
+  )
     .withCurrentToken()
     .withJsonPaylad(data)
     .fetchData()

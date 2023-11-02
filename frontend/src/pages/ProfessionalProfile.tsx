@@ -1,17 +1,21 @@
 import MapPin from "assets/icons/MapPin"
 import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import { getProfessionalProfile } from "services/professional.services"
-import { ProfessionalProfileData } from "types/professional.types"
+import { Link, useParams } from "react-router-dom"
+import { getProfessionalPublicProfile } from "services/professional.services"
+import { ViewedProfessionalProfileData } from "types/professional.types"
 
-const ProfessionalMyProfile: React.FC = () => {
+const ProfessionalProfile: React.FC = () => {
   const [loading, updateLoading] = useState(true)
   const [fetchError, updateFetchError] = useState(false)
-  const [profileData, updateFrofileData] = useState<ProfessionalProfileData>()
+  const [profileData, updateFrofileData] =
+    useState<ViewedProfessionalProfileData>()
+
+  const { userId } = useParams()
 
   useEffect(() => {
+    if (!userId) return
     ;(async () => {
-      const resp = await getProfessionalProfile()
+      const resp = await getProfessionalPublicProfile({ userId })
 
       updateLoading(false)
 
@@ -20,17 +24,16 @@ const ProfessionalMyProfile: React.FC = () => {
         return
       }
 
-      console.log(resp.projects)
       updateFrofileData(resp)
     })()
-  }, [])
+  }, [userId])
 
   if (typeof profileData === "undefined") return <></>
 
   return (
     <div className=" w-11/12 sm:w-[600px] mx-auto pb-8">
       <h1 className="text-2xl sm:text-4xl font-bold pt-6 text-center">
-        My Profile
+        Profile
       </h1>
       {loading ? (
         <h2 className="text-xl sm:text-2xl font-bold pt-4 text-center">
@@ -80,8 +83,8 @@ const ProfessionalMyProfile: React.FC = () => {
 
               <div>
                 <h1 className="text-lg font-bold">Projects involved:</h1>
-                {profileData?.projects &&
-                  profileData?.projects.map((proj, idx) => {
+                {profileData?.completedProjects &&
+                  profileData?.completedProjects.map((proj, idx) => {
                     return (
                       <div className="p-4 group hover:bg-sky-300/10" key={idx}>
                         <h3 className="group-hover:text-sky-300 font-semibold text-lg truncate my-2">
@@ -117,4 +120,4 @@ const ProfessionalMyProfile: React.FC = () => {
   )
 }
 
-export default ProfessionalMyProfile
+export default ProfessionalProfile

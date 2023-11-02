@@ -1,5 +1,7 @@
+import MapPin from "assets/icons/MapPin"
+import HomeSearchBar from "components/Home/HomeSearchBar"
 import React, { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, Outlet, useNavigate } from "react-router-dom"
 import { getCompanyProfile } from "services/company.services"
 import { CompanyProfileData } from "types/company.types"
 
@@ -7,6 +9,8 @@ const CompanyMyProfile: React.FC = () => {
   const [loading, updateLoading] = useState(true)
   const [fetchError, updateFetchError] = useState(false)
   const [profileData, updateFrofileData] = useState<CompanyProfileData>()
+  const [search, setSearch] = useState("")
+  const navigate = useNavigate()
 
   useEffect(() => {
     ;(async () => {
@@ -64,6 +68,39 @@ const CompanyMyProfile: React.FC = () => {
               ) : (
                 <></>
               )}
+
+              <div>
+                <h1 className="text-lg font-bold">Projects involved:</h1>
+                <HomeSearchBar searchController={[search, setSearch]} />
+                {profileData?.projects &&
+                  profileData?.projects
+                    .filter(proj => proj.title.includes(search))
+                    .map((proj, idx) => {
+                      return (
+                        <div
+                          className="p-4 group hover:bg-sky-300/10 cursor-pointer"
+                          onClick={() => navigate(`details/${proj.projectId}`)}
+                          key={idx}
+                        >
+                          <h3 className="group-hover:text-sky-300 font-semibold text-lg truncate my-2">
+                            {proj.title}
+                          </h3>
+
+                          <h3 className="text-zinc-300 break-words line-clamp-4">
+                            {proj.publicDescription}
+                          </h3>
+
+                          <div className="flex items-center font-thin text-zinc-300 gap-1 text-xs mt-2">
+                            <MapPin className="w-4 h-4" />
+                            <h3>{proj.location || "No Location Provided"}</h3>
+                            <h3>&#x2022;</h3>
+                            <h3>{proj.inPerson ? "In-Person" : "On-Site"}</h3>
+                          </div>
+                        </div>
+                      )
+                    })}
+              </div>
+
               <Link
                 to="/company-myprofile/edit"
                 className="block w-full mt-8 p-2 bg-cyan-600 hover:bg-cyan-500 text-center rounded-md drop-shadow-md text-white"
@@ -74,6 +111,7 @@ const CompanyMyProfile: React.FC = () => {
           )}
         </>
       )}
+      <Outlet />
     </div>
   )
 }
