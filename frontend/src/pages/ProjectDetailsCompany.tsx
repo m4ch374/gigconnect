@@ -153,10 +153,18 @@ const ProjectDetailsCompany: React.FC = () => {
             <h1 className="mx-4">Requested:</h1>
             {projDetail.requests.map((pro, idx) => {
               return (
-                <TalentPreview
-                  key={idx}
-                  talent={pro as unknown as ProfessionalUser} // ugly
-                />
+                <>
+                  <TalentPreview
+                    key={idx}
+                    talent={pro as unknown as ProfessionalUser} // ugly
+                  />
+                  <Link
+                    to={`/project/${projectId}/request/${pro.id}`}
+                    className="text-cyan-400 hover:underline"
+                  >
+                    Review request
+                  </Link>
+                </>
               )
             })}
           </div>
