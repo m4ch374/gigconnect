@@ -33,19 +33,29 @@ const ProtectedRoutes: React.FC = () => {
           <h1 className="font-bold text-4xl">GigConnect</h1>
         </button>
 
-        <button
-          className="px-2 py-1 bg-red-400 text-2xl rounded-md"
-          onClick={() => {
-            ;(async () => {
-              await logout()
+        <div className="flex gap-2">
+          <button
+            className="px-2 py-1 bg-green-400 text-2xl rounded-md"
+            onClick={() => {
+              navigate("/create-project")
+            }}
+          >
+            Create
+          </button>
+          <button
+            className="px-2 py-1 bg-red-400 text-2xl rounded-md"
+            onClick={() => {
+              ;(async () => {
+                await logout()
 
-              navigate("/login")
-              localStorage.removeItem("token")
-            })()
-          }}
-        >
-          Logout
-        </button>
+                navigate("/login")
+                localStorage.removeItem("token")
+              })()
+            }}
+          >
+            Logout
+          </button>
+        </div>
       </div>
 
       <div className="mt-[70px]">
