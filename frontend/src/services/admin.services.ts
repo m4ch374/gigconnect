@@ -6,12 +6,12 @@ import { TGetAdmin, TSetVerify } from "./types"
 export const getAdmin = () => {
   return Fetcher.init<TGetAdmin>("GET", "/api/admin/dashboard")
     .withCurrentToken()
-    .fetchData()
+    .newFetchData()
 }
 
 export const setVerify = (data: TSetVerify["requestType"]) => {
   return Fetcher.init<TSetVerify>("POST", "/api/admin/setverified")
     .withCurrentToken()
     .withJsonPaylad(data)
-    .fetchData()
+    .newFetchData()
 }

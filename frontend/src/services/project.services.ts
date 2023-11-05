@@ -13,7 +13,7 @@ export const apiCreateProject = (data: TCreateProject["requestType"]) => {
   return Fetcher.init<TCreateProject>("POST", "/api/project/create")
     .withCurrentToken()
     .withJsonPaylad(data)
-    .fetchData()
+    .newFetchData()
 }
 
 export const getAllPublicProjects = () => {
@@ -22,7 +22,7 @@ export const getAllPublicProjects = () => {
     "/api/project/allpublicprofiledata",
   )
     .withCurrentToken()
-    .fetchData()
+    .newFetchData()
 }
 
 export const getProjectDetailsProfessional = (
@@ -34,7 +34,7 @@ export const getProjectDetailsProfessional = (
   )
     .withCurrentToken()
     .withParams(data)
-    .fetchData()
+    .newFetchData()
 }
 
 export const getProjectDetailsCompany = (
@@ -46,14 +46,14 @@ export const getProjectDetailsCompany = (
   )
     .withCurrentToken()
     .withParams(data)
-    .fetchData()
+    .newFetchData()
 }
 
 export const apiEditProject = (data: TEditProject["requestType"]) => {
   return Fetcher.init<TEditProject>("POST", "/api/project/update")
     .withCurrentToken()
     .withJsonPaylad(data)
-    .fetchData()
+    .newFetchData()
 }
 
 export const apiCreateProjectRequest = (
@@ -62,7 +62,7 @@ export const apiCreateProjectRequest = (
   return Fetcher.init<TProjectRequest>("POST", "/api/project/request")
     .withCurrentToken()
     .withJsonPaylad(data)
-    .fetchData()
+    .newFetchData()
 }
 
 export const removeProfessional = (
@@ -74,5 +74,5 @@ export const removeProfessional = (
   )
     .withCurrentToken()
     .withJsonPaylad(data)
-    .fetchData()
+    .newFetchData()
 }

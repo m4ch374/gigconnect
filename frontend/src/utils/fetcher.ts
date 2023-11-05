@@ -2,6 +2,10 @@ import { TEndpoint } from "services/types"
 
 type Method = "GET" | "POST" | "PUT" | "DELETE"
 
+type ErrorResponse = {
+  message: string
+}
+
 // Thy type any is very much needed in this case
 /* eslint-disable @typescript-eslint/no-explicit-any */
 class Fetcher<T extends TEndpoint<any, any>> {
@@ -67,8 +71,11 @@ class Fetcher<T extends TEndpoint<any, any>> {
     return fetch(this.baseURL, this.requestConf)
   }
 
-  // Fuck it we ball bro
-  // No error checking lets go
+  /**
+   * @deprecated
+   * Use newFetchData() instead.
+   * fetchData() will be removed prior to final submission.
+   */
   async fetchData(): Promise<T["responseType"]> {
     try {
       const resp = await fetch(this.baseURL, this.requestConf)
@@ -82,6 +89,39 @@ class Fetcher<T extends TEndpoint<any, any>> {
     } catch (e) {
       console.log("unexpected error happened")
       console.log(e)
+    }
+  }
+
+  async newFetchData(): Promise<{
+    ok: boolean
+    data: T["responseType"]
+    error: string
+  }> {
+    try {
+      const res = await fetch(this.baseURL, this.requestConf)
+      if (res.status === 400 || res.status === 403) {
+        const errObj = (await res.json()) as ErrorResponse
+        return {
+          ok: false,
+          data: null,
+          error: errObj.message,
+        }
+      } else if (!res.ok) {
+        throw new Error()
+      } else {
+        const resObj = (await res.json()) as T["responseType"]
+        return {
+          ok: true,
+          data: resObj,
+          error: "",
+        }
+      }
+    } catch {
+      return {
+        ok: false,
+        data: null,
+        error: "An unexpected error occured",
+      }
     }
   }
 

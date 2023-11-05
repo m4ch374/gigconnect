@@ -15,23 +15,24 @@ const dummyData: ProfessionalProfileData = {
   qualifications: [],
   externalWebsites: [],
   verified: false,
+  projects: [],
 }
 
 const SetupProfessional: React.FC = () => {
-  const [formError, updateFormError] = useState("")
+  const [formError, setFormError] = useState("")
 
-  const [loading, updateLoading] = useState(true)
-  const [fetchError, updateFetchError] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [fetchError, setFetchError] = useState("")
 
-  const [profileData, updateFrofileData] =
+  const [profileData, setProfileData] =
     useState<ProfessionalProfileData>(dummyData)
 
-  const [newSkill, updateNewSkill] = useState("")
-  const [newQualification, updateNewQualification] = useState<ExternalLink>({
+  const [newSkill, setNewSkill] = useState("")
+  const [newQualification, setNewQualification] = useState<ExternalLink>({
     websiteLink: "",
     websiteName: "",
   })
-  const [newExternalSite, updateNewExternalSite] = useState<ExternalLink>({
+  const [newExternalSite, setNewExternalSite] = useState<ExternalLink>({
     websiteLink: "",
     websiteName: "",
   })
@@ -40,33 +41,33 @@ const SetupProfessional: React.FC = () => {
 
   useEffect(() => {
     ;(async () => {
-      const resp = await getProfessionalProfile()
+      const res = await getProfessionalProfile()
 
-      updateLoading(false)
+      setLoading(false)
 
-      if (typeof resp === "undefined") {
-        updateFetchError(true)
+      if (!res.ok) {
+        setFetchError(`Unable to load data: ${res.error}`)
         return
       }
 
-      updateFrofileData(resp)
+      setProfileData(res.data)
     })()
   }, [])
 
   const addSkill = () => {
     if (newSkill === "") {
-      updateFormError("Skill cannot be empty")
+      setFormError("Skill cannot be empty")
       return
     }
     const newArray = [...profileData.skills]
     newArray.push(newSkill)
-    updateFrofileData({ ...profileData, skills: newArray })
-    updateNewSkill("")
-    updateFormError("")
+    setProfileData({ ...profileData, skills: newArray })
+    setNewSkill("")
+    setFormError("")
   }
 
   const removeSkill = (i: number) => {
-    updateFrofileData({
+    setProfileData({
       ...profileData,
       skills: profileData.skills.filter((_, k) => i != k),
     })
@@ -74,18 +75,18 @@ const SetupProfessional: React.FC = () => {
 
   const addQualification = () => {
     if (!newQualification.websiteLink || !newQualification.websiteName) {
-      updateFormError("Qualificaition fields cannot be empty")
+      setFormError("Qualificaition fields cannot be empty")
       return
     }
     const newArray = [...profileData.qualifications]
     newArray.push(newQualification)
-    updateFrofileData({ ...profileData, qualifications: newArray })
-    updateNewQualification({ websiteLink: "", websiteName: "" })
-    updateFormError("")
+    setProfileData({ ...profileData, qualifications: newArray })
+    setNewQualification({ websiteLink: "", websiteName: "" })
+    setFormError("")
   }
 
   const removeQualification = (i: number) => {
-    updateFrofileData({
+    setProfileData({
       ...profileData,
       qualifications: profileData.qualifications.filter((_, k) => i != k),
     })
@@ -93,18 +94,18 @@ const SetupProfessional: React.FC = () => {
 
   const addExternalSite = () => {
     if (!newExternalSite.websiteLink || !newExternalSite.websiteName) {
-      updateFormError("External Website fields cannot be empty")
+      setFormError("External Website fields cannot be empty")
       return
     }
     const newArray = [...profileData.externalWebsites]
     newArray.push(newExternalSite)
-    updateFrofileData({ ...profileData, externalWebsites: newArray })
-    updateNewExternalSite({ websiteLink: "", websiteName: "" })
-    updateFormError("")
+    setProfileData({ ...profileData, externalWebsites: newArray })
+    setNewExternalSite({ websiteLink: "", websiteName: "" })
+    setFormError("")
   }
 
   const removeExternalSite = (i: number) => {
-    updateFrofileData({
+    setProfileData({
       ...profileData,
       externalWebsites: profileData.externalWebsites.filter((_, k) => i != k),
     })
@@ -113,10 +114,10 @@ const SetupProfessional: React.FC = () => {
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     ;(async () => {
-      if (
-        typeof (await updateProfessionalProfile(profileData)) === "undefined"
-      ) {
-        updateFormError("Failed to update data.")
+      const res = await updateProfessionalProfile(profileData)
+
+      if (!res.ok) {
+        setFormError(res.error)
         return
       }
 
@@ -153,7 +154,7 @@ const SetupProfessional: React.FC = () => {
                 className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
                 value={profileData.description || ""}
                 onChange={e =>
-                  updateFrofileData({
+                  setProfileData({
                     ...profileData,
                     description: e.currentTarget.value,
                   })
@@ -183,7 +184,7 @@ const SetupProfessional: React.FC = () => {
                   placeholder="Type a skill here"
                   value={newSkill}
                   onChange={e => {
-                    updateNewSkill(e.target.value)
+                    setNewSkill(e.target.value)
                   }}
                 />
                 <button
@@ -220,7 +221,7 @@ const SetupProfessional: React.FC = () => {
                   placeholder="Qualification name"
                   value={newQualification.websiteName}
                   onChange={e => {
-                    updateNewQualification({
+                    setNewQualification({
                       ...newQualification,
                       websiteName: e.target.value,
                     })
@@ -232,7 +233,7 @@ const SetupProfessional: React.FC = () => {
                   placeholder="Qualification link"
                   value={newQualification.websiteLink}
                   onChange={e => {
-                    updateNewQualification({
+                    setNewQualification({
                       ...newQualification,
                       websiteLink: e.target.value,
                     })
@@ -272,7 +273,7 @@ const SetupProfessional: React.FC = () => {
                   placeholder="Website name"
                   value={newExternalSite.websiteName}
                   onChange={e =>
-                    updateNewExternalSite({
+                    setNewExternalSite({
                       ...newExternalSite,
                       websiteName: e.target.value,
                     })
@@ -284,7 +285,7 @@ const SetupProfessional: React.FC = () => {
                   placeholder="Website link"
                   value={newExternalSite.websiteLink}
                   onChange={e =>
-                    updateNewExternalSite({
+                    setNewExternalSite({
                       ...newExternalSite,
                       websiteLink: e.target.value,
                     })

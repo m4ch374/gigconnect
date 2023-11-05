@@ -15,8 +15,8 @@ const CreateProfessional: React.FC = () => {
     password: "",
   })
 
-  const [confirmPass, updateConfirmPass] = useState("")
-  const [formError, updateError] = useState("")
+  const [confirmPass, setConfirmPass] = useState("")
+  const [formError, setFormERror] = useState("")
 
   const navigate = useNavigate()
   const { setToken } = useToken()
@@ -26,40 +26,40 @@ const CreateProfessional: React.FC = () => {
     e.preventDefault()
 
     if (formData.password != confirmPass) {
-      updateError("Passwords do not match.")
+      setFormERror("Passwords do not match.")
       return
     }
 
     if (!emailRegex.test(formData.email)) {
-      updateError("Please input a valid email address.")
+      setFormERror("Please input a valid email address.")
       return
     }
 
     if (formData.firstName == "") {
-      updateError("Please input a valid first name.")
+      setFormERror("Please input a valid first name.")
       return
     }
 
     if (formData.lastName == "") {
-      updateError("Please input a valid last name.")
+      setFormERror("Please input a valid last name.")
     }
 
     ;(async () => {
-      const resp = await createProfessional(formData)
+      const res = await createProfessional(formData)
 
-      if (typeof resp === "undefined") {
-        updateError("Unable to create account.")
+      if (!res.ok) {
+        setFormERror(res.error)
         return
       }
 
-      if (resp.userType === "professional") {
-        setToken(resp.loginToken)
-        setUserType(resp.userType)
+      if (res.data.userType === "professional") {
+        setToken(res.data.loginToken)
+        setUserType(res.data.userType)
         navigate("/setup-professional")
         return
       }
 
-      updateError("Invalid response recieved.")
+      setFormERror("Invalid response recieved.")
     })()
   }
 
@@ -68,7 +68,7 @@ const CreateProfessional: React.FC = () => {
       <h1 className="text-4xl font-bold pt-6 text-center">
         Create professional account
       </h1>
-      <form onSubmit={submitForm} onChange={() => updateError("")}>
+      <form onSubmit={submitForm} onChange={() => setFormERror("")}>
         <label htmlFor="form-email" className="block pt-4 pb-2">
           Email address
         </label>
@@ -119,7 +119,7 @@ const CreateProfessional: React.FC = () => {
         <input
           type="password"
           id="form-confirm-pass"
-          onChange={e => updateConfirmPass(e.currentTarget.value)}
+          onChange={e => setConfirmPass(e.currentTarget.value)}
           className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
         <button

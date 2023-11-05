@@ -50,7 +50,7 @@ const CreateProject: React.FC = () => {
     }
     ;(async () => {
       const res = await apiCreateProject(formData)
-      if (typeof res === "undefined") {
+      if (!res.ok) {
         setFormError("An error occured while creating the project.")
       } else {
         navigate(`/home`)

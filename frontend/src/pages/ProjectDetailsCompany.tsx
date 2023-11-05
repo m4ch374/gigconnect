@@ -27,24 +27,30 @@ const ProjectDetailsCompany: React.FC = () => {
   useEffect(() => {
     if (!projectId) return
     ;(async () => {
-      const resp = await getProjectDetailsCompany({ projectId })
+      const res = await getProjectDetailsCompany({ projectId })
 
-      if (typeof resp === "undefined") return
+      if (!res.ok) {
+        // TODO: Display the error message in res.error on the UI
+        return
+      }
 
-      console.log(resp)
-      setProjDetail(resp)
+      console.log(res.data)
+      setProjDetail(res.data)
     })()
   }, [projectId])
 
   const handleRemove = useCallback(
     (targetProjId: string, professionalId: string) => {
       ;(async () => {
-        const resp = await removeProfessional({
+        const res = await removeProfessional({
           projectId: targetProjId,
           professionalId,
         })
 
-        if (typeof resp === "undefined") return
+        if (!res.ok) {
+          // TODO: Display the error message in res.error on the UI
+          return
+        }
 
         setRemovedId(s => [...s, professionalId])
       })()

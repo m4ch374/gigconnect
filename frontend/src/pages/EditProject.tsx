@@ -11,7 +11,7 @@ const EditProject: React.FC = () => {
 
   const projectId = params.projectId || ""
   const [loading, setLoading] = useState(true)
-  const [fetchError, setFetchError] = useState(false)
+  const [fetchError, setFetchError] = useState("")
   const [formData, setFormData] = useState<EditProjectData>({
     projectId: "",
     title: "",
@@ -28,22 +28,22 @@ const EditProject: React.FC = () => {
 
   useEffect(() => {
     ;(async () => {
-      try {
-        const projectData = await getProjectDetailsCompany({
-          projectId: projectId,
-        })
-        setFormData({
-          projectId: projectId,
-          title: projectData.title,
-          publicDescription: projectData.description.split("\n")[0],
-          privateDescription: projectData.description.split("\n")[1],
-          tags: [...projectData.tags],
-          inPerson: projectData.inPerson,
-          location: projectData.location || "",
-        })
-      } catch {
-        setFetchError(true)
+      const res = await getProjectDetailsCompany({
+        projectId: projectId,
+      })
+      if (!res.ok) {
+        setFetchError(`Unable to load data: ${res.error}`)
       }
+
+      setFormData({
+        projectId: projectId,
+        title: res.data.title,
+        publicDescription: res.data.description.split("\n")[0],
+        privateDescription: res.data.description.split("\n")[1],
+        tags: [...res.data.tags],
+        inPerson: res.data.inPerson,
+        location: res.data.location || "",
+      })
       setLoading(false)
     })()
   })
@@ -81,8 +81,8 @@ const EditProject: React.FC = () => {
     }
     ;(async () => {
       const res = await apiEditProject(formData)
-      if (typeof res === "undefined") {
-        setFormError("An error occured while creating the project.")
+      if (!res.ok) {
+        setFormError(res.error)
       } else {
         navigate(`/home/details/${projectId}`)
       }
@@ -95,7 +95,7 @@ const EditProject: React.FC = () => {
         <h2 className="text-xl sm:text-2xl font-bold pt-4 text-center">
           Loading...
         </h2>
-      ) : fetchError ? (
+      ) : fetchError !== "" ? (
         <div className="w-full mt-4 p-2 bg-red-700 border border-red-500 rounded-md">
           <p>Error loading project data.</p>
         </div>

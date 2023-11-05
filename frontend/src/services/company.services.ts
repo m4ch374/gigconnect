@@ -10,7 +10,7 @@ import {
 export const getCompanyProfile = () => {
   return Fetcher.init<TCompanyProfile>("GET", "/api/company/profiledata")
     .withCurrentToken()
-    .fetchData()
+    .newFetchData()
 }
 
 export const updateCompanyProfile = (
@@ -22,7 +22,7 @@ export const updateCompanyProfile = (
   )
     .withCurrentToken()
     .withJsonPaylad(data)
-    .fetchData()
+    .newFetchData()
 }
 
 export const getAllCompanies = () => {
@@ -31,5 +31,5 @@ export const getAllCompanies = () => {
     "/api/company/allpublicprofiledata",
   )
     .withCurrentToken()
-    .fetchData()
+    .newFetchData()
 }

@@ -6,24 +6,24 @@ import { getCompanyProfile } from "services/company.services"
 import { CompanyProfileData } from "types/company.types"
 
 const CompanyMyProfile: React.FC = () => {
-  const [loading, updateLoading] = useState(true)
-  const [fetchError, updateFetchError] = useState(false)
-  const [profileData, updateFrofileData] = useState<CompanyProfileData>()
+  const [loading, setLoading] = useState(true)
+  const [fetchError, setFetchError] = useState("false")
+  const [profileData, setProfileData] = useState<CompanyProfileData>()
   const [search, setSearch] = useState("")
   const navigate = useNavigate()
 
   useEffect(() => {
     ;(async () => {
-      const resp = await getCompanyProfile()
+      const res = await getCompanyProfile()
 
-      updateLoading(false)
+      setLoading(false)
 
-      if (typeof resp === "undefined") {
-        updateFetchError(true)
+      if (!res.ok) {
+        setFetchError(`Unable to load data: ${res.error}`)
         return
       }
 
-      updateFrofileData(resp)
+      setProfileData(res.data)
     })()
   }, [])
 
@@ -38,7 +38,7 @@ const CompanyMyProfile: React.FC = () => {
         </h2>
       ) : (
         <>
-          {fetchError ? (
+          {fetchError !== "" ? (
             <div className="w-full mt-4 p-2 bg-red-300 border border-red-500 rounded-md">
               <p>Error loading profile data.</p>
             </div>
@@ -59,7 +59,7 @@ const CompanyMyProfile: React.FC = () => {
                 profileData.externalWebsites.map((i, k) => (
                   <a
                     href={i.websiteLink}
-                    className="font-bold text-cyan-600 hover:underline"
+                    className="block pt-2 font-bold text-cyan-600 hover:underline"
                     key={k}
                   >
                     {i.websiteName}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import {
   apiGetProfessionalById,
   apiProjectRequestRespond,
@@ -14,7 +14,7 @@ const RequestRespond: React.FC = () => {
   const requestId = params.requestId || ""
 
   const [loading, setLoading] = useState(true)
-  const [fetchError, setFetchError] = useState(false)
+  const [fetchError, setFetchError] = useState("")
   const [requestData, setRequestData] = useState({
     userId: "",
     userName: "",
@@ -33,59 +33,74 @@ const RequestRespond: React.FC = () => {
 
   useEffect(() => {
     ;(async () => {
-      try {
-        const projectData = await getProjectDetailsCompany({
-          projectId: projectId,
+      const projectRes = await getProjectDetailsCompany({
+        projectId: projectId,
+      })
+
+      if (!projectRes.ok) {
+        setFetchError(`Unable to load data: ${projectRes.error}`)
+        setLoading(false)
+        return
+      }
+
+      const projectRequest = getProjectRequest(
+        projectRes.data.requests,
+        requestId,
+      )
+
+      if (projectRequest) {
+        const userRes = await apiGetProfessionalById({
+          userId: projectRequest.userId,
         })
-        const projectRequest = getProjectRequest(
-          projectData.requests,
-          requestId,
-        )
-        if (projectRequest) {
-          const userData = await apiGetProfessionalById({
-            userId: projectRequest.userId,
-          })
-          setRequestData({
-            userId: projectRequest.userId,
-            userName: `${userData.firstName} ${userData.lastName}`,
-            message: requestData.message,
-          })
-        } else {
-          setFetchError(true)
+
+        if (!userRes.ok) {
+          setFetchError(`Unable to load data: ${userRes.error}`)
+          setLoading(false)
+          return
         }
-      } catch {
-        setFetchError(true)
+
+        setRequestData({
+          userId: projectRequest.userId,
+          userName: `${userRes.data.firstName} ${userRes.data.lastName}`,
+          message: requestData.message,
+        })
+      } else {
+        setFetchError("Invalid project.")
       }
       setLoading(false)
     })()
-  }, [])
+  }, [projectId, requestData.message, requestId])
 
   const accept = () => {
     setActionError("")
     ;(async () => {
-      try {
-        await apiProjectRequestRespond({
-          requestId: requestId,
-          accepted: true,
-        })
-        navigate(`/home/details/${projectId}`)
-      } catch {
-        setActionError("An error occued while accepting the request.")
+      const res = await apiProjectRequestRespond({
+        requestId: requestId,
+        accepted: true,
+      })
+
+      if (!res.ok) {
+        setActionError(res.error)
+        return
       }
+
+      navigate(`/home/details/${projectId}`)
     })()
   }
   const reject = () => {
     setActionError("")
     ;(async () => {
-      try {
-        await apiProjectRequestRespond({
-          requestId: requestId,
-          accepted: false,
-        })
-        navigate(`/home/details/${projectId}`)
-      } catch {
-        setActionError("An error occued while accepting the request.")
+      const res = await apiProjectRequestRespond({
+        requestId: requestId,
+        accepted: false,
+      })
+
+      if (!res.ok) {
+        setActionError(res.error)
+        return
       }
+
+      navigate(`/home/details/${projectId}`)
     })()
   }
 
@@ -95,7 +110,7 @@ const RequestRespond: React.FC = () => {
         <h2 className="text-xl sm:text-2xl font-bold pt-4 text-center">
           Loading...
         </h2>
-      ) : fetchError ? (
+      ) : fetchError !== "" ? (
         <div className="w-full mt-4 p-2 bg-red-700 border border-red-500 rounded-md">
           <p>Error loading project data.</p>
         </div>
@@ -104,7 +119,12 @@ const RequestRespond: React.FC = () => {
           <h1 className="text-4xl font-bold pt-6 text-center">
             {`${requestData.userName} has requested to join your project!`}
           </h1>
-          {/* Insert text and link to professional user's profile here */}
+          <Link
+            to={`/professional/${requestData.userId}`}
+            className="block pt-2 font-bold text-cyan-600 hover:underline"
+          >
+            See {requestData.userName}&apos;s profile
+          </Link>
           <p>{requestData.message}</p>
           <div className="flex space-x-2">
             <button

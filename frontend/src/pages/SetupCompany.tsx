@@ -13,13 +13,14 @@ const dummyData: CompanyProfileData = {
   companyDescription: "",
   externalWebsites: [],
   verified: false,
+  projects: [],
 }
 
 const SetupCompany: React.FC = () => {
-  const [formError, updateFormError] = useState("")
+  const [formError, setFormError] = useState("")
 
-  const [loading, updateLoading] = useState(true)
-  const [fetchError, updateFetchError] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const [fetchError, setFetchError] = useState("")
 
   const [profileData, updateFrofileData] =
     useState<CompanyProfileData>(dummyData)
@@ -33,28 +34,28 @@ const SetupCompany: React.FC = () => {
 
   useEffect(() => {
     ;(async () => {
-      const resp = await getCompanyProfile()
+      const res = await getCompanyProfile()
 
-      updateLoading(false)
+      setLoading(false)
 
-      if (typeof resp === "undefined") {
-        updateFetchError(true)
+      if (!res.ok) {
+        setFetchError(`Unable to load data: ${res.error}`)
         return
       }
 
-      updateFrofileData(resp)
+      updateFrofileData(res.data)
     })()
   }, [])
 
   const addExternalSite = () => {
     if (!newExternalSite.websiteLink || !newExternalSite.websiteName) {
-      updateFormError("External Website fields cannot be empty")
+      setFormError("External Website fields cannot be empty")
       return
     }
     const newArray = [...profileData.externalWebsites]
     newArray.push(newExternalSite)
     updateFrofileData({ ...profileData, externalWebsites: newArray })
-    updateFormError("")
+    setFormError("")
     updateNewExternalSite({ websiteLink: "", websiteName: "" })
   }
 
@@ -68,8 +69,10 @@ const SetupCompany: React.FC = () => {
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     ;(async () => {
-      if (typeof (await updateCompanyProfile(profileData)) === "undefined") {
-        updateFormError("Failed to update data.")
+      const res = await updateCompanyProfile(profileData)
+
+      if (!res.ok) {
+        setFormError(res.error)
         return
       }
 

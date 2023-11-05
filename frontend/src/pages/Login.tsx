@@ -5,9 +5,9 @@ import { Link, useNavigate } from "react-router-dom"
 import { login } from "services/auth.services"
 
 const Login: React.FC = () => {
-  const [email, updateEmail] = useState("")
-  const [pass, updatePass] = useState("")
-  const [formError, updateError] = useState("")
+  const [email, setEmail] = useState("")
+  const [pass, setPass] = useState("")
+  const [formError, setFormError] = useState("")
 
   const navigate = useNavigate()
   const { setUserType } = useUserType()
@@ -16,17 +16,17 @@ const Login: React.FC = () => {
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     ;(async () => {
-      const resp = await login({ email, password: pass })
+      const res = await login({ email, password: pass })
 
-      console.log(resp)
+      console.log(res.data)
 
-      if (typeof resp === "undefined") {
-        updateError("Email or password incorrect.")
+      if (!res.ok) {
+        setFormError(res.error)
         return
       }
 
-      setToken(resp.loginToken)
-      switch (resp.userType) {
+      setToken(res.data.loginToken)
+      switch (res.data.userType) {
         case "admin":
           navigate("/admin-dashboard")
           break
@@ -37,25 +37,25 @@ const Login: React.FC = () => {
           navigate("/professional-myprofile")
           break
         default:
-          updateError("invalid response received.")
+          setFormError("invalid response received.")
           return
       }
 
-      setUserType(resp.userType)
+      setUserType(res.data.userType)
     })()
   }
 
   return (
     <div className=" w-11/12 sm:w-[600px] mx-auto pb-8">
       <h1 className="text-4xl font-bold pt-6 text-center">Login</h1>
-      <form onSubmit={submitForm} onChange={() => updateError("")}>
+      <form onSubmit={submitForm} onChange={() => setFormError("")}>
         <label htmlFor="login-email" className="block pt-4 pb-2 font-bold">
           Email address
         </label>
         <input
           type="text"
           id="login-email"
-          onChange={e => updateEmail(e.currentTarget.value)}
+          onChange={e => setEmail(e.currentTarget.value)}
           className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
         <label htmlFor="login-pass" className="block pt-4 pb-2 font-bold">
@@ -64,7 +64,7 @@ const Login: React.FC = () => {
         <input
           type="password"
           id="login-pass"
-          onChange={e => updatePass(e.currentTarget.value)}
+          onChange={e => setPass(e.currentTarget.value)}
           className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
 

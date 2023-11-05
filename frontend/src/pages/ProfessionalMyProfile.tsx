@@ -5,23 +5,23 @@ import { getProfessionalProfile } from "services/professional.services"
 import { ProfessionalProfileData } from "types/professional.types"
 
 const ProfessionalMyProfile: React.FC = () => {
-  const [loading, updateLoading] = useState(true)
-  const [fetchError, updateFetchError] = useState(false)
-  const [profileData, updateFrofileData] = useState<ProfessionalProfileData>()
+  const [loading, setLoading] = useState(true)
+  const [fetchError, setFetchError] = useState("")
+  const [profileData, setProfileData] = useState<ProfessionalProfileData>()
 
   useEffect(() => {
     ;(async () => {
-      const resp = await getProfessionalProfile()
+      const res = await getProfessionalProfile()
 
-      updateLoading(false)
+      setLoading(false)
 
-      if (typeof resp === "undefined") {
-        updateFetchError(true)
+      if (!res.ok) {
+        setFetchError(`Unable to load data: ${res.error}`)
         return
       }
 
-      console.log(resp.projects)
-      updateFrofileData(resp)
+      console.log(res.data.projects)
+      setProfileData(res.data)
     })()
   }, [])
 
@@ -38,7 +38,7 @@ const ProfessionalMyProfile: React.FC = () => {
         </h2>
       ) : (
         <>
-          {fetchError ? (
+          {fetchError !== "" ? (
             <div className="w-full mt-4 p-2 bg-red-300 border border-red-500 rounded-md">
               <p>Error loading profile data.</p>
             </div>
@@ -60,7 +60,7 @@ const ProfessionalMyProfile: React.FC = () => {
                 profileData.qualifications.map((i, k) => (
                   <a
                     href={i.websiteLink}
-                    className="font-bold text-cyan-600 hover:underline"
+                    className="block pt-2 font-bold text-cyan-600 hover:underline"
                     key={k}
                   >
                     {i.websiteName}
@@ -71,7 +71,7 @@ const ProfessionalMyProfile: React.FC = () => {
                 profileData.externalWebsites.map((i, k) => (
                   <a
                     href={i.websiteLink}
-                    className="font-bold text-cyan-600 hover:underline"
+                    className="block pt-2 font-bold text-cyan-600 hover:underline"
                     key={k}
                   >
                     {i.websiteName}

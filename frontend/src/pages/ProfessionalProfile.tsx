@@ -5,9 +5,9 @@ import { getProfessionalPublicProfile } from "services/professional.services"
 import { ViewedProfessionalProfileData } from "types/professional.types"
 
 const ProfessionalProfile: React.FC = () => {
-  const [loading, updateLoading] = useState(true)
-  const [fetchError, updateFetchError] = useState(false)
-  const [profileData, updateFrofileData] =
+  const [loading, setLoading] = useState(true)
+  const [fetchError, setFetchError] = useState("")
+  const [profileData, setProfileData] =
     useState<ViewedProfessionalProfileData>()
 
   const { userId } = useParams()
@@ -15,16 +15,16 @@ const ProfessionalProfile: React.FC = () => {
   useEffect(() => {
     if (!userId) return
     ;(async () => {
-      const resp = await getProfessionalPublicProfile({ userId })
+      const res = await getProfessionalPublicProfile({ userId })
 
-      updateLoading(false)
+      setLoading(false)
 
-      if (typeof resp === "undefined") {
-        updateFetchError(true)
+      if (!res.ok) {
+        setFetchError(`Unable to load data: ${res.error}`)
         return
       }
 
-      updateFrofileData(resp)
+      setProfileData(res.data)
     })()
   }, [userId])
 
@@ -41,7 +41,7 @@ const ProfessionalProfile: React.FC = () => {
         </h2>
       ) : (
         <>
-          {fetchError ? (
+          {fetchError !== "" ? (
             <div className="w-full mt-4 p-2 bg-red-300 border border-red-500 rounded-md">
               <p>Error loading profile data.</p>
             </div>
@@ -63,7 +63,7 @@ const ProfessionalProfile: React.FC = () => {
                 profileData.qualifications.map((i, k) => (
                   <a
                     href={i.websiteLink}
-                    className="font-bold text-cyan-600 hover:underline"
+                    className="block pt-2 font-bold text-cyan-600 hover:underline"
                     key={k}
                   >
                     {i.websiteName}
@@ -74,7 +74,7 @@ const ProfessionalProfile: React.FC = () => {
                 profileData.externalWebsites.map((i, k) => (
                   <a
                     href={i.websiteLink}
-                    className="font-bold text-cyan-600 hover:underline"
+                    className="block pt-2 font-bold text-cyan-600 hover:underline"
                     key={k}
                   >
                     {i.websiteName}

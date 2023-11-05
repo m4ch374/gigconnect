@@ -9,7 +9,7 @@ const RequestProject: React.FC = () => {
   const params = useParams()
   const projectId = params.projectId || ""
   const [loading, setLoading] = useState(true)
-  const [fetchError, setFetchError] = useState(false)
+  const [fetchError, setFetchError] = useState("")
   const [formError, setFormError] = useState("")
   const [companyName, setCompanyName] = useState("the company")
   const [projectName, setProjectName] = useState("the project")
@@ -20,19 +20,23 @@ const RequestProject: React.FC = () => {
   useEffect(() => {
     ;(async () => {
       if (projectId === "") {
-        setFetchError(true)
+        setFetchError("Invalid project.")
         setLoading(false)
         return
       }
-      try {
-        const projectData = await getProjectDetailsProfessional({
-          projectId: projectId,
-        })
-        setProjectName(projectData.title)
-        setCompanyName(projectData.companyName)
-      } catch {
-        setFetchError(true)
+
+      const res = await getProjectDetailsProfessional({
+        projectId: projectId,
+      })
+
+      if (!res.ok) {
+        setFetchError(`Unable to load data: ${res.error}`)
+        setLoading(false)
+        return
       }
+
+      setProjectName(res.data.title)
+      setCompanyName(res.data.companyName)
       setLoading(false)
     })()
   }, [projectId])
@@ -40,15 +44,17 @@ const RequestProject: React.FC = () => {
   const submitForm = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     ;(async () => {
-      try {
-        await apiCreateProjectRequest({
-          projectId: projectId,
-          message: message,
-        })
-        navigate(-1)
-      } catch {
-        setFormError("An error occured while sending the request.")
+      const res = await apiCreateProjectRequest({
+        projectId: projectId,
+        message: message,
+      })
+
+      if (!res.ok) {
+        setFormError(res.error)
+        return
       }
+
+      navigate(-1)
     })()
   }
 
@@ -58,7 +64,7 @@ const RequestProject: React.FC = () => {
         <h2 className="text-xl sm:text-2xl font-bold pt-4 text-center">
           Loading...
         </h2>
-      ) : fetchError ? (
+      ) : fetchError !== "" ? (
         <div className="w-full mt-4 p-2 bg-red-700 border border-red-500 rounded-md">
           <p>Error loading project data.</p>
         </div>

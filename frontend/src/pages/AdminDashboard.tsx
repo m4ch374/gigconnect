@@ -48,15 +48,18 @@ const UserVerfifyItem: React.FC<TUserVerifyItem> = ({
         }`}
         onClick={() => {
           ;(async () => {
-            const resp = await setVerify({
+            const res = await setVerify({
               userId,
               userType: companyName ? "company" : "professional",
               verified: !localVerify,
             })
 
-            if (typeof resp === "undefined") return
+            if (!res.ok) {
+              // TODO: Display the error message in res.error on the UI.
+              return
+            }
 
-            if (resp.success) setLocalVerify(state => !state)
+            if (res.data.success) setLocalVerify(state => !state)
           })()
         }}
       >
@@ -77,12 +80,15 @@ const Admin: React.FC = () => {
 
   useEffect(() => {
     ;(async () => {
-      const resp = await getAdmin()
+      const res = await getAdmin()
 
-      if (typeof resp === "undefined") return
+      if (!res.ok) {
+        // TODO: Display the error message in res.error on the UI.
+        return
+      }
 
-      setCompanyUsers(resp.companyUsers)
-      setProfessionalUsers(resp.professionalUsers)
+      setCompanyUsers(res.data.companyUsers)
+      setProfessionalUsers(res.data.professionalUsers)
     })()
   }, [])
 

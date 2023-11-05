@@ -22,12 +22,15 @@ const ProjectDetails: React.FC = () => {
   useEffect(() => {
     if (!projectId) return
     ;(async () => {
-      const resp = await getProjectDetailsProfessional({ projectId })
+      const res = await getProjectDetailsProfessional({ projectId })
 
-      if (typeof resp === "undefined") return
+      if (!res.ok) {
+        // TODO: Display the error message in res.error on the UI
+        return
+      }
 
-      console.log(resp)
-      setProjDetail(resp)
+      console.log(res.data)
+      setProjDetail(res.data)
     })()
   }, [projectId])
 

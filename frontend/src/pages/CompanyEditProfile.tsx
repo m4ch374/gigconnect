@@ -13,17 +13,17 @@ const dummyData: CompanyProfileData = {
   companyDescription: "",
   externalWebsites: [],
   verified: false,
+  projects: [],
 }
 
 const CompanyEditProfile: React.FC = () => {
-  const [formError, updateFormError] = useState("")
+  const [formError, setFormError] = useState("")
 
-  const [loading, updateLoading] = useState(true)
-  const [fetchError, updateFetchError] = useState(false)
-  const [profileData, updateFrofileData] =
-    useState<CompanyProfileData>(dummyData)
+  const [loading, setLoading] = useState(true)
+  const [fetchError, setFetchError] = useState("")
+  const [profileData, setProfileData] = useState<CompanyProfileData>(dummyData)
 
-  const [newExternalSite, updateNewExternalSite] = useState<ExternalLink>({
+  const [newExternalSite, setNewExternalSite] = useState<ExternalLink>({
     websiteLink: "",
     websiteName: "",
   })
@@ -32,16 +32,16 @@ const CompanyEditProfile: React.FC = () => {
 
   useEffect(() => {
     ;(async () => {
-      const resp = await getCompanyProfile()
+      const res = await getCompanyProfile()
 
-      updateLoading(false)
+      setLoading(false)
 
-      if (typeof resp === "undefined") {
-        updateFetchError(true)
+      if (!res.ok) {
+        setFetchError(`Unable to load data: ${res.error}`)
         return
       }
 
-      updateFrofileData(resp)
+      setProfileData(res.data)
     })()
   }, [])
 
@@ -50,21 +50,21 @@ const CompanyEditProfile: React.FC = () => {
       return
     }
     if (!newExternalSite.websiteLink || !newExternalSite.websiteName) {
-      updateFormError("External Website fields cannot be empty")
+      setFormError("External Website fields cannot be empty")
       return
     }
     const newArray = [...profileData.externalWebsites]
     newArray.push(newExternalSite)
-    updateFrofileData({ ...profileData, externalWebsites: newArray })
-    updateNewExternalSite({ websiteLink: "", websiteName: "" })
-    updateFormError("")
+    setProfileData({ ...profileData, externalWebsites: newArray })
+    setNewExternalSite({ websiteLink: "", websiteName: "" })
+    setFormError("")
   }
 
   const removeExternalSite = (i: number) => {
     if (!profileData) {
       return
     }
-    updateFrofileData({
+    setProfileData({
       ...profileData,
       externalWebsites: profileData.externalWebsites.filter((_, k) => i != k),
     })
@@ -74,19 +74,21 @@ const CompanyEditProfile: React.FC = () => {
     e.preventDefault()
 
     if (profileData.companyName === "") {
-      updateFormError("Please enter a company name.")
+      setFormError("Please enter a company name.")
       return
     }
 
     const abnRegex = new RegExp("^[0-9]{11}$")
     if (!abnRegex.test(profileData?.abn || "")) {
-      updateFormError("Please enter a valid ABN.")
+      setFormError("Please enter a valid ABN.")
       return
     }
 
     ;(async () => {
-      if (typeof (await updateCompanyProfile(profileData)) === "undefined") {
-        updateFormError("Failed to update data.")
+      const res = await updateCompanyProfile(profileData)
+
+      if (!res.ok) {
+        setFormError(res.error)
         return
       }
 
@@ -105,9 +107,9 @@ const CompanyEditProfile: React.FC = () => {
         </h2>
       ) : (
         <>
-          {fetchError ? (
+          {fetchError !== "" ? (
             <div className="w-full mt-4 p-2 bg-red-300 border border-red-500 rounded-md">
-              <p>Error loading profile data.</p>
+              <p>{fetchError}</p>
             </div>
           ) : (
             <form className="text-left" onSubmit={submitForm}>
@@ -123,7 +125,7 @@ const CompanyEditProfile: React.FC = () => {
                 className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
                 value={profileData.companyName}
                 onChange={e =>
-                  updateFrofileData({
+                  setProfileData({
                     ...profileData,
                     companyName: e.currentTarget.value,
                   })
@@ -152,7 +154,7 @@ const CompanyEditProfile: React.FC = () => {
                 className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
                 value={profileData.companyDescription || ""}
                 onChange={e =>
-                  updateFrofileData({
+                  setProfileData({
                     ...profileData,
                     companyDescription: e.currentTarget.value,
                   })
@@ -184,7 +186,7 @@ const CompanyEditProfile: React.FC = () => {
                   placeholder="Website name"
                   value={newExternalSite.websiteName}
                   onChange={e =>
-                    updateNewExternalSite({
+                    setNewExternalSite({
                       ...newExternalSite,
                       websiteName: e.target.value,
                     })
@@ -196,7 +198,7 @@ const CompanyEditProfile: React.FC = () => {
                   placeholder="Website link"
                   value={newExternalSite.websiteLink}
                   onChange={e =>
-                    updateNewExternalSite({
+                    setNewExternalSite({
                       ...newExternalSite,
                       websiteLink: e.target.value,
                     })

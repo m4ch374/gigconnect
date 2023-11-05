@@ -20,48 +20,48 @@ const CreateCompany: React.FC = () => {
     abn: "",
   })
 
-  const [confirmPass, updateConfirmPass] = useState("")
-  const [formError, updateError] = useState("")
+  const [confirmPass, setConfirmPass] = useState("")
+  const [formError, setFormError] = useState("")
 
   const submitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (formData.password != confirmPass) {
-      updateError("Passwords do not match.")
+      setFormError("Passwords do not match.")
       return
     }
-
     if (!emailRegex.test(formData.email)) {
-      updateError("Please input a valid email address.")
+      setFormError("Please input a valid email address.")
       return
     }
-
     if (formData.companyName == "") {
-      updateError("Please input a valid company name.")
+      setFormError("Please input a valid company name.")
       return
     }
-
     if (!abnRegex.test(formData.abn)) {
-      updateError("Please input a valid ABN.")
+      setFormError("Please input a valid ABN.")
       return
+    }
+    if (formData.password.length < 8) {
+      setFormError("Password should be at least 8 characters long.")
     }
 
     ;(async () => {
-      const resp = await createCompany(formData)
+      const res = await createCompany(formData)
 
-      if (typeof resp === "undefined") {
-        updateError("Unable to create account.")
+      if (!res.ok) {
+        setFormError(res.error)
         return
       }
 
-      if (resp.userType === "company") {
-        setToken(resp.loginToken)
-        setUserType(resp.userType)
+      if (res.data.userType === "company") {
+        setToken(res.data.loginToken)
+        setUserType(res.data.userType)
         navigate("/setup-company")
         return
       }
 
-      updateError("Invalid response recieved.")
+      setFormError("Invalid response recieved.")
     })()
   }
 
@@ -70,7 +70,7 @@ const CreateCompany: React.FC = () => {
       <h1 className="text-4xl font-bold pt-6 text-center">
         Create company account
       </h1>
-      <form onSubmit={submitForm} onChange={() => updateError("")}>
+      <form onSubmit={submitForm} onChange={() => setFormError("")}>
         <label htmlFor="form-email" className="block pt-4 pb-2 text-bold">
           Email address
         </label>
@@ -129,7 +129,7 @@ const CreateCompany: React.FC = () => {
         <input
           type="password"
           id="form-confirm-pass"
-          onChange={e => updateConfirmPass(e.currentTarget.value)}
+          onChange={e => setConfirmPass(e.currentTarget.value)}
           className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
         />
         <button

@@ -16,7 +16,7 @@ export const getProfessionalProfile = () => {
     "/api/professional/profiledata",
   )
     .withCurrentToken()
-    .fetchData()
+    .newFetchData()
 }
 
 export const getProfessionalPublicProfile = (
@@ -28,7 +28,7 @@ export const getProfessionalPublicProfile = (
   )
     .withCurrentToken()
     .withParams(data)
-    .fetchData()
+    .newFetchData()
 }
 
 export const updateProfessionalProfile = (
@@ -40,7 +40,7 @@ export const updateProfessionalProfile = (
   )
     .withCurrentToken()
     .withJsonPaylad(data)
-    .fetchData()
+    .newFetchData()
 }
 
 export const getAllProfessionals = () => {
@@ -49,7 +49,7 @@ export const getAllProfessionals = () => {
     "/api/professional/allpublicprofiledata",
   )
     .withCurrentToken()
-    .fetchData()
+    .newFetchData()
 }
 
 export const apiGetProfessionalById = (
@@ -61,7 +61,7 @@ export const apiGetProfessionalById = (
   )
     .withCurrentToken()
     .withParams(data)
-    .fetchData()
+    .newFetchData()
 }
 
 export const apiProjectRequestRespond = (
@@ -73,5 +73,5 @@ export const apiProjectRequestRespond = (
   )
     .withCurrentToken()
     .withJsonPaylad(data)
-    .fetchData()
+    .newFetchData()
 }
