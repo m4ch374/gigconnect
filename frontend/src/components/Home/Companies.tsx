@@ -16,7 +16,7 @@ const Companies: React.FC<TCompanies> = ({ searches }) => {
 
       if (typeof resp === undefined) return
 
-      setCompanies(resp.companyUsers)
+      setCompanies(resp.data.companyUsers)
     })()
   }, [])
 

@@ -18,11 +18,13 @@ const CompanyMyProfile: React.FC = () => {
 
       setLoading(false)
 
+      console.log(res)
       if (!res.ok) {
         setFetchError(`Unable to load data: ${res.error}`)
         return
       }
 
+      setFetchError("")
       setProfileData(res.data)
     })()
   }, [])

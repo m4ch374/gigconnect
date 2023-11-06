@@ -99,7 +99,7 @@ class Fetcher<T extends TEndpoint<any, any>> {
   }> {
     try {
       const res = await fetch(this.baseURL, this.requestConf)
-      if (res.status === 400 || res.status === 403) {
+      if (res.status === 401 || res.status === 403) {
         const errObj = (await res.json()) as ErrorResponse
         return {
           ok: false,

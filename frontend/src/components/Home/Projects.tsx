@@ -16,7 +16,7 @@ const Projects: React.FC<TProjects> = ({ searches }) => {
 
       if (typeof resp === "undefined") return
 
-      setProjects(resp.projects)
+      setProjects(resp.data.projects)
     })()
   }, [])
 

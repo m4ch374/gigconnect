@@ -141,7 +141,13 @@ const CompanyEditProfile: React.FC = () => {
                 type="text"
                 id="abn"
                 className="block w-full p-2 bg-cyan-800 hover:bg-cyan-700 focus:bg-cyan-700 rounded-md drop-shadow-md text-white"
-                value={profileData?.abn}
+                value={profileData?.abn || ""}
+                onChange={e => {
+                  setProfileData({
+                    ...profileData,
+                    abn: e.currentTarget.value,
+                  })
+                }}
               />
               <label
                 htmlFor="description"

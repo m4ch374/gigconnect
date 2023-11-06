@@ -16,7 +16,7 @@ const Talents: React.FC<TTalents> = ({ searches }) => {
 
       if (typeof resp === "undefined") return undefined
 
-      setTalents(resp.professionalUsers)
+      setTalents(resp.data.professionalUsers)
     })()
   }, [])
 

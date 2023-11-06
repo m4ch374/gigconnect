@@ -1,10 +1,14 @@
 import Wifi from "assets/icons/Wifi"
+import useToken from "hooks/Token.hooks"
+import useUserType from "hooks/UserType.hooks"
 import React from "react"
 import { Navigate, Outlet, useNavigate } from "react-router-dom"
 import { logout } from "services/auth.services"
 
 const ProtectedRoutes: React.FC = () => {
   const navigate = useNavigate()
+  const setToken = useToken().setToken
+  const setUserType = useUserType().setUserType
 
   if (!localStorage.getItem("token")) return <Navigate to="/login" />
 
@@ -48,9 +52,9 @@ const ProtectedRoutes: React.FC = () => {
               ;(async () => {
                 await logout()
 
+                setToken("")
+                setUserType("unknown")
                 navigate("/login")
-                localStorage.removeItem("token")
-                localStorage.removeItem("userType")
               })()
             }}
           >

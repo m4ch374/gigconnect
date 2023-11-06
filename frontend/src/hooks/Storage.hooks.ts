@@ -17,6 +17,7 @@ const useStorage = <T extends string>(targetKey: string, defaultItem?: T) => {
   )
 
   const handleStorage = useCallback(() => {
+    console.log(`setting ${targetKey}`)
     SET_STORAGE(localStorage.getItem(targetKey) as T)
   }, [targetKey])
 
