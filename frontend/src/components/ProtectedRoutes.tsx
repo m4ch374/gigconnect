@@ -50,6 +50,7 @@ const ProtectedRoutes: React.FC = () => {
 
                 navigate("/login")
                 localStorage.removeItem("token")
+                localStorage.removeItem("userType")
               })()
             }}
           >

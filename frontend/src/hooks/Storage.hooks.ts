@@ -5,24 +5,20 @@ import { useCallback, useEffect, useState } from "react"
 // Ugly asf lol
 const useStorage = <T extends string>(targetKey: string, defaultItem?: T) => {
   const [storageItem, SET_STORAGE] = useState<T>(
-    (localStorage.getItem(targetKey) as T) || defaultItem || ("" as T),
+    (localStorage.getItem(targetKey) || defaultItem || "") as T,
   )
 
   const setStorageItem = useCallback(
     (value: T) => {
       localStorage.setItem(targetKey, value as string)
+      window.dispatchEvent(new Event("storage"))
     },
     [targetKey],
   )
 
-  const handleStorage = useCallback(
-    (e: StorageEvent) => {
-      if (e.key !== targetKey) return
-
-      SET_STORAGE(e.newValue as T)
-    },
-    [targetKey],
-  )
+  const handleStorage = useCallback(() => {
+    SET_STORAGE(localStorage.getItem(targetKey) as T)
+  }, [targetKey])
 
   useEffect(() => {
     window.addEventListener("storage", handleStorage)
