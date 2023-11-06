@@ -7,6 +7,7 @@ type Professional = {
     userId: string,
     firstName: string,
     lastName: string,
+    profilePhoto: string,
     verified: boolean,
     description: string,
 }
@@ -106,6 +107,7 @@ type response403 = {
 // RESPONSE 200 if logged in as a company user.
 type response200 = {
     companyName: string,
+    profilePhoto: string,
     abn: string,
     companyDescription: string, // Empty string on initial account creation
     externalWebsites: externalLink[], // Empty array on initial account creation
@@ -123,13 +125,16 @@ type response200 = {
             creationDate: string,
             status: projectStatus,
         }
-    ]
+    ],
+    hasReviews: boolean,
+    reviewAvg: number
 }
 
 // ROUTE = /api/company/profiledata/update, METHOD = POST
 // REQUEST - send login token in header, request as stringified JSON in body
 type request = {
     companyName: string, // Client and server should verify that this is not an empty string.
+    profilePhoto: string,
     abn: string, // Client and server should verify that this is the valid format of an ABN.
     companyDescription: string, // Can be an empty string,
     externalWebsites: externalLink[] // Can be an empty array. Client and server should verify that any array elements are of the correct type.
@@ -159,6 +164,7 @@ type request = {
 type response = {
     firstName: string,
     lastName: string,
+    profilePhoto: string,
     description: string, // Empty string on initial account creation.
     skills: string[], // Empty array on initial account creation.
     qualifications: externalLink[], // Empty array on initial account creation
@@ -177,7 +183,9 @@ type response = {
             creationDate: string
             status: projectStatus,
         }
-    ]
+    ],
+    hasReviews: boolean,
+    reviewAvg: number
 }
 
 // ROUTE = /api/professional/profiledata/update, METHOD = POST
@@ -185,6 +193,7 @@ type response = {
 type request = {
     firstName: string, // Client and server should verify that this is not an empty string.
     lastName: string, // Client and server should verify that this is not an empty string.
+    profilePhoto: string,
     description: string, // Can be an empty string.
     skills: string[], // Can be an empty array. Client and server should verify that any array elements are not empty strings.
     qualifications: externalLink[] // Can be an empty array. Client and server should verify that any array elements are of the correct type.
@@ -223,6 +232,7 @@ type response200 = {
         {
             userId: string,
             companyName: string,
+            profilePhoto: string,
             verified: boolean,
         }
     ],
@@ -231,6 +241,7 @@ type response200 = {
             userId: string,
             firstName: string,
             lastName: string,
+            profilePhoto: string,
             verified: boolean,
         }
     ]
@@ -268,12 +279,15 @@ type request = {
 type response200 = {
     firstName: string,
     lastName: string,
+    profilePhoto: string,
     description: string,
     skills: string[],
     qualifications: externalLink[],
     externalWebsites: externalLink[],
     verified: boolean,
     completedProjects: projects[], // only return completed projects for public view
+    hasReviews: boolean,
+    reviewAvg: number
 }
 
 // ROUTE = /api/company/profiledata/public, METHOD = GET
@@ -283,11 +297,14 @@ type request = {
 }
 type response200 = {
     companyName: string,
+    profilePhoto: string,
     abn: string,
     companyDescription: string,
     externalWebsites: externalLink[],
     verified: boolean,
     completedProjects: projects[], // only return completed projects for public view
+    hasReviews: boolean,
+    reviewAvg: number
 }
 
 // ROUTE = /api/project/create, METHOD = POST
@@ -419,6 +436,7 @@ type response200 = {
             userId: string,
             firstName: string,
             lastName: string,
+            profilePhoto: string,
             verified: boolean,
             description: string,
         }
@@ -438,6 +456,7 @@ type response200 = {
         {
             userId: string,
             companyName: string,
+            profilePhoto: string,
             verified: boolean,
             description: string,
         }
@@ -486,5 +505,172 @@ type response400 = {
 type response200 = {
     success: boolean,
 }
+
+// SPRINT 3 ROUTES AND TYPES START HERE
+
+
+// ROUTE = /api/project/data, METHOD = GET
+// REQUEST - send login token in header, request as query params
+type request = {
+    projectId: string
+}
+type response = {
+    title: string,
+    companyId: string,
+    companyName: string,
+    description: string, // Concat public and private descriptons with \n
+                         // inbetween if user is part of the project, otherwise
+                         // only public descriptoin.
+    tags: string[],
+    inPerson: boolean,
+    location: string?,
+    creationDate: string,
+    status: projectStatus,
+    professionals: Professional[], // Empty array if not part of the project
+    requests: Request[] // Empty array if not part of the project
+}
+
+// ROUTE = /api/project/editdata, METHOD = GET
+// REQUEST - send login token in header, request as query params
+type request = {
+    projectId: string
+}
+// RESPONSE 403 if not logged in, or the logged in user is not the company
+// user who owns the relevant project.
+type response403 = {
+    message: string
+}
+// RESPONSE 400 if invalid projectId
+type response400 = {
+    message: string
+}
+type response200 = {
+    title: string,
+    publicDescription: string,
+    privateDescription: string,
+    tags: string[],
+    inPerson: boolean,
+    location: string,
+}
+
+// ROUTE = /api/project/requestdata, METHOD = GET
+// REQUEST - send login token in header, request as query params
+type request = {
+    requestId: string
+}
+// RESPONSE 403 if not logged in, or the logged in user is not the company
+// user who owns the relevant project.
+type response403 = {
+    message: string
+}
+// RESPONSE 400 if invalid requestId
+type response400 = {
+    message: string
+}
+// RESPONSE 200 if logged in and request is valid.
+type response200 = {
+    requestId: string,
+    projectId: string,
+    projectName: string,
+    userId: string,
+    firstname: string,
+    lastName: string,
+    profilePhoto: string,
+    message: string,
+    creationDate: string,
+}
+
+// ROUTE = /api/project/delete, METHOD = POST
+// REQUEST - send login token in header, request as stringified JSON in body
+type request = {
+    projectId: string
+}
+// RESPONSE 403 if not logged in, or the logged in user is not the company
+// user who owns the relevant project.
+type response403 = {
+    message: string
+}
+// RESPONSE 400 if invalid projectId
+type response400 = {
+    message: string
+}
+type request200 = {
+    success: boolean
+}
+
+// ROUTE = /api/project/review-userinfo, METHOD = GET
+// REQUEST - send login token in header, request as query params
+type request = {
+    projectId: string,
+}
+// RESPONSE 403 if not logged in, or the logged in user is not part of the
+// relevant project
+type response403 = {
+    message: string
+}
+// RESPONSE 400 if invalid projectId
+type response400 = {
+    message: string
+}
+type response200 = {
+    // Return an array of users who this person can review
+    users: [
+        {
+            userId: string,
+            userName: string, // Concat first + last with ' ' if professional user
+            profilePhoto: string
+        }
+    ]
+}
+
+// ROUTE = /api/project/review-dara, METHOD = POST
+// REQUEST - send login token in header, request as stringified JSON in body
+type request = {
+    projectId: string,
+    reviews: [
+        {
+            userId: string, // User ID of person receiving this review
+            projectId: string, // Project ID related to the review
+            rating: number, // between 0 and 5
+            comment: string
+        }
+    ]
+}
+// RESPONSE 403 if not logged in, or the logged in user is not part of the
+// relevant project
+type response403 = {
+    message: string
+}
+// RESPONSE 400 if invalid projectId, or if one or more users in ReviewData[]
+// is not part of the project.
+type response400 = {
+    message: string
+}
+// RESPONSE 200 if request is valid and review data saved successsfully
+type response200 = {
+    success: boolean
+}
+
+// ROUTE = /api/user/reviews, METHOD = GET
+// REQUEST - send login token in header, request as query params
+type request = {
+    requestId: string
+}
+
+type response200 = {
+    // Return a list of reviews which this user has received
+    reviews: [
+        {
+            userId: string,
+            userName: string, // concat first + last with ' ' if professional user
+            profilePhoto: string,
+            projectId: string,
+            projectName: string,
+            rating: number,
+            comment: string
+        }
+    ]
+}
+
 
 ```
