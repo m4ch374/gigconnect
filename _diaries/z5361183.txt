@@ -26,3 +26,11 @@ Week 6
 Week 7
     - finalised and implemented the API routes for Sprint 2
     - implemented function stub code for Sprint 2 functions
+
+Week 8
+    - tested routes for Sprint 2
+    - added + tested extra unplanned route, `project/removeprofessional`.
+    - added format for final project report.
+
+Week 9
+    - 

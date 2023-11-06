@@ -43,4 +43,9 @@ WEEK 6
   web app.
 
 WEEK 7
-- Create pages for creating projects and requesting to join a project
+- Created pages for creating projects and requesting to join a project
+
+WEEK 8
+- Created pages for comapnies to accept/reject requests
+- Held our second demo and retrospective, which went fairly well
+- Wrote some updated to the code to prepare for the next sprint

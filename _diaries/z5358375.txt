@@ -49,3 +49,10 @@ We continued working on Sprint 2 user stories. I implemented 5
 routes and fixed some bugs. I also helped on other people's routes
 and gave feedback. Next week we will finish off Sprint 2 stories
 and start looking at the project report.
+
+Week 8
+We finished implementing Sprint 2 user stories. I fixed some
+bugs and did some manual testing using the frontend. I also
+updated the Prisma schema for Sprint 3 data. Next week we
+will begin implementing Sprint 3 stories and work on the
+project report.
