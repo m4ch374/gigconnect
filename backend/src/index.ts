@@ -38,6 +38,12 @@ import {
   projectDelete,
 } from "srvices/project"
 import { requestCreate, requestData, requestRespond } from "srvices/request"
+import {
+  reviewCandidates,
+  reviewCreate,
+  reviewData,
+  reviewInput,
+} from "srvices/review"
 
 interface ReqQuery<T> extends Express.Request {
   query: T
@@ -539,6 +545,54 @@ app.post(
       .catch(next)
   },
 )
+
+app.get(
+  "/api/project/review-userinfo",
+  (
+    req: ReqQuery<{
+      projectId: string
+    }>,
+    res,
+    next,
+  ) => {
+    const { userId, userType } = checkAuthPayload(
+      req as unknown as Request,
+      UserType.Any,
+    )
+    const { projectId } = req.query
+    reviewCandidates(userId, userType, projectId)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
+app.post(
+  "/api/project/review-data",
+  (
+    req: ReqBody<{
+      projectId: string
+      reviews: reviewInput[]
+    }>,
+    res,
+    next,
+  ) => {
+    const { userId, userType } = checkAuthPayload(
+      req as unknown as Request,
+      UserType.Any,
+    )
+    const { projectId, reviews } = req.body
+    reviewCreate(userId, userType, projectId, reviews)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
+app.get("/api/user/reviews", (req, res, next) => {
+  const { userId, userType } = checkAuthPayload(req, UserType.Any)
+  reviewData(userId, userType)
+    .then(result => res.json(result))
+    .catch(next)
+})
 
 app.get("/api/project/allpublicprofiledata", (req, res, next) => {
   checkAuth(req, UserType.Any)
