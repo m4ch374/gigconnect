@@ -101,4 +101,29 @@ const requestRespond = async (
   return { success: true }
 }
 
-export { requestCreate, requestRespond }
+const requestData = async (companyId: string, requestId: string) => {
+  const request = await prisma.request.findUnique({
+    where: { id: parseInt(requestId, 10) },
+    include: { professional: true, project: true },
+  })
+  if (request === null) {
+    throw HTTPError(400, "requestId does not exist.")
+  }
+  if (request.project.companyId !== parseInt(companyId, 10)) {
+    throw HTTPError(403, "Company user does not own project for this request.")
+  }
+
+  return {
+    requestId,
+    projectId: request.projectId.toString(),
+    projectName: request.project.title,
+    userId: request.professionalId.toString(),
+    firstname: request.professional.firstName,
+    lastName: request.professional.lastName,
+    profilePhoto: request.professional.profilePic,
+    message: request.message,
+    creationDate: request.creationDate.toJSON(),
+  }
+}
+
+export { requestCreate, requestRespond, requestData }

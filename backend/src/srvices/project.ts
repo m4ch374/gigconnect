@@ -4,6 +4,7 @@ import {
   prisma,
   professionalInProject,
   checkCompanyIsProjectOwner,
+  UserType,
 } from "./helper"
 
 /*
@@ -129,10 +130,12 @@ const projectDataProfessional = async (
           userId: p.id.toString(),
           firstName: p.firstName,
           lastName: p.lastName,
+          profilePhoto: p.profilePic,
           verified: p.verified,
           description: p.description,
         }))
       : [],
+    requests: [],
   }
 }
 
@@ -167,6 +170,7 @@ const projectDataCompany = async (companyId: string, projectId: string) => {
           userId: p.id.toString(),
           firstName: p.firstName,
           lastName: p.lastName,
+          profilePhoto: p.profilePic,
           verified: p.verified,
           description: p.description,
         }))
@@ -181,6 +185,55 @@ const projectDataCompany = async (companyId: string, projectId: string) => {
   }
 }
 
+const projectDataAdmin = async (projectId: string) => {
+  const project = await prisma.project.findUnique({
+    where: { id: parseInt(projectId, 10) },
+    select: { companyId: true },
+  })
+  if (project === null) {
+    throw HTTPError(400, "projectId does not exist.")
+  }
+  return projectDataCompany(project.companyId.toString(), projectId)
+}
+
+const projectData = async (
+  userId: string,
+  userType: UserType,
+  projectId: string,
+) => {
+  switch (userType) {
+    case UserType.Admin:
+      return projectDataAdmin(projectId)
+    case UserType.Company:
+      return projectDataCompany(userId, projectId)
+    case UserType.Professional:
+      return projectDataProfessional(userId, projectId)
+    default:
+      throw HTTPError(400, "Unsupported user type for getting project data.")
+  }
+}
+
+const projectDataEdit = async (companyId: string, projectId: string) => {
+  const project = await prisma.project.findUnique({
+    where: { id: parseInt(projectId, 10) },
+  })
+  if (project === null) {
+    throw HTTPError(400, "projectId does not exist.")
+  }
+  if (project.companyId !== parseInt(companyId, 10)) {
+    throw HTTPError(403, "Company user does not own this project.")
+  }
+
+  return {
+    title: project.title,
+    publicDescription: project.publicDescription,
+    privateDescription: project.privateDescription,
+    tags: project.tags,
+    inPerson: project.inPerson,
+    location: project.location,
+  }
+}
+
 const projectChangeStatus = async (companyId: string, projectId: string) => {
   const project = await prisma.project.findUnique({
     where: { id: parseInt(projectId, 10) },
@@ -190,7 +243,7 @@ const projectChangeStatus = async (companyId: string, projectId: string) => {
     throw HTTPError(400, "projectId does not exist.")
   }
   if (project.companyId !== parseInt(companyId, 10)) {
-    throw HTTPError(400, "Company user does not own this project.")
+    throw HTTPError(403, "Company user does not own this project.")
   }
 
   // Perform the state transition based on the current state.
@@ -294,12 +347,34 @@ const removeProfessional = async (
   }
 }
 
+const projectDelete = async (companyId: string, projectId: string) => {
+  const project = await prisma.project.findUnique({
+    where: { id: parseInt(projectId, 10) },
+  })
+  if (project === null) {
+    throw HTTPError(400, "projectId does not exist.")
+  }
+  if (project.companyId !== parseInt(companyId, 10)) {
+    throw HTTPError(403, "Company user does not own this project.")
+  }
+
+  await prisma.project.delete({
+    where: { id: parseInt(projectId, 10) },
+  })
+
+  return { success: true }
+}
+
 export {
   projectCreate,
   projectUpdate,
   projectDataProfessional,
   projectDataCompany,
+  projectDataAdmin,
+  projectData,
+  projectDataEdit,
   projectChangeStatus,
   allProjectPublicData,
   removeProfessional,
+  projectDelete,
 }

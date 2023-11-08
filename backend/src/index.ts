@@ -33,8 +33,11 @@ import {
   projectDataProfessional,
   allProjectPublicData,
   removeProfessional,
+  projectData,
+  projectDataEdit,
+  projectDelete,
 } from "srvices/project"
-import { requestCreate, requestRespond } from "srvices/request"
+import { requestCreate, requestData, requestRespond } from "srvices/request"
 
 interface ReqQuery<T> extends Express.Request {
   query: T
@@ -61,10 +64,10 @@ app.use(cors())
 // Helper functions
 
 /**
- * Return userId as string if the user's token is valid and matches the
+ * Return token payload if the user's token is valid and matches the
  * expected userType, otherwise throw error.
  */
-const checkAuth = (req: Request, userType: UserType) => {
+const checkAuthPayload = (req: Request, userType: UserType) => {
   const header = req.headers.authorization
   if (header === undefined || !header.startsWith("Bearer ")) {
     throw HTTPError(
@@ -78,8 +81,15 @@ const checkAuth = (req: Request, userType: UserType) => {
     throw HTTPError(403, "Incorrect permissions to access this route.")
   }
 
-  return payload.userId
+  return payload
 }
+
+/**
+ * Return userId as string if the user's token is valid and matches the
+ * expected userType, otherwise throw error.
+ */
+const checkAuth = (req: Request, userType: UserType) =>
+  checkAuthPayload(req, userType).userId
 
 // Debug routes
 
@@ -172,6 +182,7 @@ app.post(
   (
     req: ReqBody<{
       companyName: string
+      profilePhoto: string
       abn: string
       companyDescription: string
       externalWebsites: ExternalLink[]
@@ -180,10 +191,17 @@ app.post(
     next,
   ) => {
     const userId = checkAuth(req as Request, UserType.Company)
-    const { companyName, abn, companyDescription, externalWebsites } = req.body
+    const {
+      companyName,
+      profilePhoto,
+      abn,
+      companyDescription,
+      externalWebsites,
+    } = req.body
     companyUpdate(
       userId,
       companyName,
+      profilePhoto,
       abn,
       companyDescription,
       externalWebsites,
@@ -244,6 +262,7 @@ app.post(
     req: ReqBody<{
       firstName: string
       lastName: string
+      profilePhoto: string
       description: string
       skills: string[]
       qualifications: ExternalLink[]
@@ -256,6 +275,7 @@ app.post(
     const {
       firstName,
       lastName,
+      profilePhoto,
       description,
       skills,
       qualifications,
@@ -265,6 +285,7 @@ app.post(
       userId,
       firstName,
       lastName,
+      profilePhoto,
       description,
       skills,
       qualifications,
@@ -412,6 +433,60 @@ app.get(
   },
 )
 
+app.get(
+  "/api/project/data",
+  (
+    req: ReqQuery<{
+      projectId: string
+    }>,
+    res,
+    next,
+  ) => {
+    const { userId, userType } = checkAuthPayload(
+      req as unknown as Request,
+      UserType.Any,
+    )
+    const { projectId } = req.query
+    projectData(userId, userType, projectId)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
+app.get(
+  "/api/project/editdata",
+  (
+    req: ReqQuery<{
+      projectId: string
+    }>,
+    res,
+    next,
+  ) => {
+    const userId = checkAuth(req as unknown as Request, UserType.Company)
+    const { projectId } = req.query
+    projectDataEdit(userId, projectId)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
+app.get(
+  "/api/project/requestdata",
+  (
+    req: ReqQuery<{
+      requestId: string
+    }>,
+    res,
+    next,
+  ) => {
+    const userId = checkAuth(req as unknown as Request, UserType.Company)
+    const { requestId } = req.query
+    requestData(userId, requestId)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
 app.post(
   "/api/project/changestatus",
   (
@@ -485,6 +560,23 @@ app.post(
     const userId = checkAuth(req as Request, UserType.Company)
     const { professionalId, projectId } = req.body
     removeProfessional(userId, professionalId, projectId)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
+
+app.post(
+  "/api/project/delete",
+  (
+    req: ReqBody<{
+      projectId: string
+    }>,
+    res,
+    next,
+  ) => {
+    const userId = checkAuth(req as Request, UserType.Company)
+    const { projectId } = req.body
+    projectDelete(userId, projectId)
       .then(result => res.json(result))
       .catch(next)
   },

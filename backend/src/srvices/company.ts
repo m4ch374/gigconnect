@@ -10,6 +10,7 @@ import {
   hashPassword,
   mapDBToExternalLinks,
   mapDBToProjects,
+  avgReviewScore,
 } from "./helper"
 
 const companyCreate = async (
@@ -81,16 +82,20 @@ const companyData = async (userId: string) => {
   return {
     projects: mapDBToProjects(companyUser.projects),
     companyName: companyUser.name,
+    profilePhoto: companyUser.profilePic,
     abn: companyUser.abn,
     companyDescription: companyUser.description,
     externalWebsites: mapDBToExternalLinks(companyUser.companyLinks),
     verified: companyUser.verified,
+    hasReviews: companyUser.reviews.length > 0,
+    reviewAvg: avgReviewScore(companyUser.reviews),
   }
 }
 
 const companyUpdate = async (
   userId: string,
   companyName: string,
+  profilePhoto: string,
   abn: string,
   companyDescription: string,
   externalWebsites: ExternalLink[],
@@ -118,6 +123,7 @@ const companyUpdate = async (
     where: { id: Number(userId) },
     data: {
       name: companyName,
+      profilePic: profilePhoto,
       abn,
       description: companyDescription,
     },
@@ -154,6 +160,7 @@ const allCompanyPublicData = async () => {
     select: {
       id: true,
       name: true,
+      profilePic: true,
       verified: true,
       description: true,
     },
@@ -162,6 +169,7 @@ const allCompanyPublicData = async () => {
   const basicInfo = queriedInfo.map(info => ({
     userId: info.id.toString(),
     companyName: info.name,
+    profilePhoto: info.profilePic,
     verified: info.verified,
     description: info.description,
   }))
@@ -214,11 +222,14 @@ const companyDataPublic = async (userId: string) => {
 
   return {
     companyName: companyUser.name,
+    profilePhoto: companyUser.profilePic,
     abn: companyUser.abn,
     companyDescription: companyUser.description,
     externalWebsites: mapDBToExternalLinks(companyUser.companyLinks),
     verified: companyUser.verified,
     completedProjects: cleanProjObj,
+    hasReviews: companyUser.reviews.length > 0,
+    reviewAvg: avgReviewScore(companyUser.reviews),
   }
 }
 

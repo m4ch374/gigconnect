@@ -10,6 +10,7 @@ import {
   getProfeshUserEntry,
   mapDBToExternalLinks,
   mapDBToProjects,
+  avgReviewScore,
 } from "./helper"
 
 /**
@@ -78,12 +79,15 @@ const professionalData = async (userId: string) => {
   return {
     firstName: user.firstName,
     lastName: user.lastName,
+    profilePhoto: user.profilePic,
     description: user.description,
     skills: user.skills,
     qualifications: mapDBToExternalLinks(user.certLinks),
     externalWebsites: mapDBToExternalLinks(user.socialLinks),
     verified: user.verified,
     projects: mapDBToProjects(user.projects),
+    hasReviews: user.reviews.length > 0,
+    reviewAvg: avgReviewScore(user.reviews),
   }
 }
 
@@ -95,6 +99,7 @@ const professionalUpdate = async (
   userId: string,
   firstName: string,
   lastName: string,
+  profilePhoto: string,
   description: string,
   skills: string[],
   qualifications: ExternalLink[],
@@ -114,6 +119,7 @@ const professionalUpdate = async (
     data: {
       firstName,
       lastName,
+      profilePic: profilePhoto,
       description,
       skills,
     },
@@ -175,6 +181,7 @@ const allProfessionalPublicData = async () => {
       id: true,
       firstName: true,
       lastName: true,
+      profilePic: true,
       verified: true,
       description: true,
     },
@@ -184,6 +191,7 @@ const allProfessionalPublicData = async () => {
     userId: info.id.toString(),
     firstName: info.firstName,
     lastName: info.lastName,
+    profilePhoto: info.profilePic,
     verified: info.verified,
     description: info.description,
   }))
@@ -240,12 +248,15 @@ const professionalDataPublic = async (userId: string) => {
   return {
     firstName: user.firstName,
     lastName: user.lastName,
+    profilePhoto: user.profilePic,
     description: user.description,
     skills: user.skills,
     qualifications: mapDBToExternalLinks(user.certLinks),
     externalWebsites: mapDBToExternalLinks(user.socialLinks),
     verified: user.verified,
     completedProjects: cleanProjObj,
+    hasReviews: user.reviews.length > 0,
+    reviewAvg: avgReviewScore(user.reviews),
   }
 }
 

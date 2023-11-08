@@ -6,6 +6,7 @@ const adminDashboard = async () => {
     select: {
       id: true,
       name: true,
+      profilePic: true,
       verified: true,
     },
   })
@@ -14,6 +15,7 @@ const adminDashboard = async () => {
       id: true,
       firstName: true,
       lastName: true,
+      profilePic: true,
       verified: true,
     },
   })
@@ -22,12 +24,14 @@ const adminDashboard = async () => {
     companyUsers: companyUsers.map(c => ({
       userId: c.id.toString(),
       companyName: c.name,
+      profilePhoto: c.profilePic,
       verified: c.verified,
     })),
     professionalUsers: professionalUsers.map(c => ({
       userId: c.id.toString(),
       firstName: c.firstName,
       lastName: c.lastName,
+      profilePhoto: c.profilePic,
       verified: c.verified,
     })),
   }

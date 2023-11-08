@@ -118,6 +118,13 @@ const mapDBToProjects = (
     status: param.status.valueOf().toLowerCase(),
   }))
 
+const avgReviewScore = (reviews: { score: number }[]) => {
+  if (reviews.length === 0) {
+    return 0
+  }
+  return reviews.map(r => r.score).reduce((a, b) => a + b, 0) / reviews.length
+}
+
 /**
  * Checks whether given email already exists within the Company table entries in the DB
  */
@@ -172,7 +179,7 @@ const getCompanyUserEntry = async (uID: number) => {
   // if can't find a record with that id then return null
   const user = await prisma.company.findUnique({
     where: { id: uID },
-    include: { companyLinks: true, projects: true },
+    include: { companyLinks: true, projects: true, reviews: true },
   })
   if (user === null) {
     throw HTTPError(403, "No user that matches that ID")
@@ -199,7 +206,12 @@ const getProfeshUserID = async (email: string) => {
 const getProfeshUserEntry = async (uID: number) => {
   const user = await prisma.professional.findUnique({
     where: { id: uID },
-    include: { socialLinks: true, certLinks: true, projects: true },
+    include: {
+      socialLinks: true,
+      certLinks: true,
+      projects: true,
+      reviews: true,
+    },
   })
   if (user === null) {
     throw HTTPError(403, "No professional user that matches given ID")
@@ -252,6 +264,8 @@ export {
   createToken,
   verifyToken,
   mapDBToExternalLinks,
+  mapDBToProjects,
+  avgReviewScore,
   checkCompanyEmailExists,
   getCompanyUserID,
   getCompanyUserEntry,
@@ -259,6 +273,5 @@ export {
   getProfeshUserID,
   getProfeshUserEntry,
   professionalInProject,
-  mapDBToProjects,
   checkCompanyIsProjectOwner,
 }
