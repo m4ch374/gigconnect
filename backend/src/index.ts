@@ -9,7 +9,12 @@ import {
   returnPassword,
 } from "srvices/hello"
 import { ExternalLink, UserType, verifyToken } from "srvices/helper"
-import { authLogin, authLogout } from "srvices/auth"
+import {
+  authLogin,
+  authLogout,
+  onboardedData,
+  onboardedUpdate,
+} from "srvices/auth"
 import {
   companyCreate,
   companyData,
@@ -136,6 +141,20 @@ app.post(
 app.post("/api/logout", (req, res) => {
   checkAuth(req, UserType.Any)
   res.json(authLogout())
+})
+
+app.get("/api/user/onboarded", (req, res, next) => {
+  const { userId, userType } = checkAuthPayload(req, UserType.Any)
+  onboardedData(userId, userType)
+    .then(result => res.json(result))
+    .catch(next)
+})
+
+app.put("/api/user/onboarded", (req, res, next) => {
+  const { userId, userType } = checkAuthPayload(req, UserType.Any)
+  onboardedUpdate(userId, userType)
+    .then(result => res.json(result))
+    .catch(next)
 })
 
 app.post(

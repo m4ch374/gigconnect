@@ -656,7 +656,6 @@ type request = {
     userId: string,
     userType: string
 }
-
 type response200 = {
     // Return a list of reviews which this user has received
     reviews: [
@@ -670,6 +669,20 @@ type response200 = {
             comment: string
         }
     ]
+}
+
+// ROUTE = /api/user/onboarded, METHOD = GET
+// REQUEST - send login token in header, request as query params
+type request = {}
+type response200 = {
+  onboarded: boolean
+}
+
+// ROUTE = /api/user/onboarded, METHOD = PUT
+// REQUEST - send login token in header, request as query params
+type request = {}
+type response200 = {
+  onboarded: boolean // always true when calling this method
 }
 
 

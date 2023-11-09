@@ -47,4 +47,60 @@ const authLogin = async (email: string, password: string) => {
 
 const authLogout = () => ({ success: true })
 
-export { authLogin, authLogout }
+const onboardedData = async (userId: string, userType: UserType) => {
+  if (userType === UserType.Company) {
+    const company = await prisma.company.findUnique({
+      where: { id: parseInt(userId, 10) },
+    })
+    if (company === null) {
+      throw HTTPError(400, "companyId does not exist.")
+    }
+
+    return { onboarded: company.onboarded }
+  }
+
+  if (userType === UserType.Professional) {
+    const professional = await prisma.professional.findUnique({
+      where: { id: parseInt(userId, 10) },
+    })
+    if (professional === null) {
+      throw HTTPError(400, "professionalId does not exist.")
+    }
+
+    return { onboarded: professional.onboarded }
+  }
+
+  throw HTTPError(400, "Unsupported user type for getting onboarded data.")
+}
+
+const onboardedUpdate = async (userId: string, userType: UserType) => {
+  if (userType === UserType.Company) {
+    try {
+      await prisma.company.update({
+        where: { id: parseInt(userId, 10) },
+        data: { onboarded: true },
+      })
+    } catch {
+      throw HTTPError(400, "companyId does not exist.")
+    }
+
+    return { onboarded: true }
+  }
+
+  if (userType === UserType.Professional) {
+    try {
+      await prisma.professional.update({
+        where: { id: parseInt(userId, 10) },
+        data: { onboarded: true },
+      })
+    } catch {
+      throw HTTPError(400, "professionalId does not exist.")
+    }
+
+    return { onboarded: true }
+  }
+
+  throw HTTPError(400, "Unsupported user type for updating onboarded data.")
+}
+
+export { authLogin, authLogout, onboardedData, onboardedUpdate }

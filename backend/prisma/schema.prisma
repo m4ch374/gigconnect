@@ -27,6 +27,7 @@ model Company {
   email          String               @unique
   password       String
   verified       Boolean              @default(false)
+  onboarded      Boolean              @default(false)
   name           String
   address        String?
   description    String?
@@ -63,6 +64,7 @@ model Professional {
   email          String               @unique
   password       String
   verified       Boolean              @default(false)
+  onboarded      Boolean              @default(false)
   firstName      String
   lastName       String
   description    String?
