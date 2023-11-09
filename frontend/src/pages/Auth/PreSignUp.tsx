@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
-import SignUpChoice from "../../components/SignUp/SignUpChoice"
+import SignUpChoice from "../../components/Auth/SignUpChoice"
 import { TUser } from "types/general.types"
 import toast from "react-hot-toast"
 

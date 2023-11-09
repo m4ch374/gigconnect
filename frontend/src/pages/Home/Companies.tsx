@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { getAllCompanies } from "services/company.services"
 import { CompanyUser } from "types/company.types"
-import CompanyPreview from "./CompanyPreview"
+import CompanyPreview from "../../components/Home/CompanyPreview"
+import { useOutletContext } from "react-router-dom"
 
-type TCompanies = {
-  searches: string
-}
-
-const Companies: React.FC<TCompanies> = ({ searches }) => {
+const Companies: React.FC = () => {
+  const searches = useOutletContext()
   const [companies, setCompanies] = useState<CompanyUser[]>([])
 
   useEffect(() => {
@@ -23,7 +21,7 @@ const Companies: React.FC<TCompanies> = ({ searches }) => {
   return (
     <div>
       {companies
-        .filter(comp => comp.companyName.includes(searches))
+        .filter(comp => comp.companyName.includes(searches as string))
         .map((company, idx) => {
           return (
             <div key={idx}>

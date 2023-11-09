@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react"
 import { getAllProfessionals } from "services/professional.services"
 import { ProfessionalUser } from "types/professional.types"
-import TalentPreview from "./TalentPreview"
+import TalentPreview from "../../components/Home/TalentPreview"
+import { useOutletContext } from "react-router-dom"
 
-type TTalents = {
-  searches: string
-}
-
-const Talents: React.FC<TTalents> = ({ searches }) => {
+const Talents: React.FC = () => {
+  const searches = useOutletContext()
   const [talents, setTalents] = useState<ProfessionalUser[]>([])
 
   useEffect(() => {
@@ -24,7 +22,9 @@ const Talents: React.FC<TTalents> = ({ searches }) => {
     <div>
       {talents
         .filter(talent =>
-          (talent.firstName + " " + talent.lastName).includes(searches),
+          (talent.firstName + " " + talent.lastName).includes(
+            searches as string,
+          ),
         )
         .map((talent, idx) => {
           return (

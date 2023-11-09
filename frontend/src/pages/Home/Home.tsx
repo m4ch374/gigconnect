@@ -1,11 +1,11 @@
 import AnimatedBlob from "assets/AnimatedBlob"
-import Companies from "components/Home/Companies"
 import HomeSearchBar from "components/Home/HomeSearchBar"
-import Projects from "components/Home/Projects"
-import Talents from "components/Home/Talents"
+import useStorage from "hooks/Storage.hooks"
 import useUserType from "hooks/UserType.hooks"
+import SetupProfessional from "components/Home/Onboard/Professional/SetupProfessional"
 import React, { useState } from "react"
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
+import { AnimatePresence } from "framer-motion"
 
 type ShowItem = "Projects" | "Companies" | "Talents"
 
@@ -13,14 +13,18 @@ const SELECTED_CLASS = "border-b-2 border-sky-400 font-medium"
 
 const Home: React.FC = () => {
   const { userType } = useUserType()
+  const navigate = useNavigate()
 
   const [currItem, setCurrItem] = useState<ShowItem>(
     userType === "professional" ? "Projects" : "Talents",
   )
   const [searches, setSearches] = useState("")
 
+  const onboarded = useStorage("onboarded").storageItem
+  const [showSetup, setShowSetup] = useState<boolean>(onboarded === "")
+
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center relative">
       <div className="max-w-[800px] w-[90%]">
         <h1 className="text-lg sm:text-2xl font-semibold my-4">
           {userType === "professional"
@@ -51,7 +55,10 @@ const Home: React.FC = () => {
                 className={`w-full sm:w-auto sm:px-2 py-2 ${
                   currItem === "Projects" && SELECTED_CLASS
                 }`}
-                onClick={() => setCurrItem("Projects")}
+                onClick={() => {
+                  setCurrItem("Projects")
+                  navigate("/home/projects")
+                }}
               >
                 Projects
               </button>
@@ -59,7 +66,10 @@ const Home: React.FC = () => {
                 className={`w-full sm:w-auto sm:px-2 py-2 ${
                   currItem === "Companies" && SELECTED_CLASS
                 }`}
-                onClick={() => setCurrItem("Companies")}
+                onClick={() => {
+                  setCurrItem("Companies")
+                  navigate("/home/companies")
+                }}
               >
                 Companies
               </button>
@@ -67,13 +77,7 @@ const Home: React.FC = () => {
           )}
           <hr className="border-zinc-400" />
 
-          {currItem === "Projects" ? (
-            <Projects searches={searches} />
-          ) : currItem === "Companies" ? (
-            <Companies searches={searches} />
-          ) : (
-            <Talents searches={searches} />
-          )}
+          <Outlet context={searches} />
 
           <div className="w-full flex flex-col items-center m-2 mb-4">
             <div className="relative">
@@ -90,7 +94,12 @@ const Home: React.FC = () => {
         </div>
       </div>
 
-      <Outlet />
+      {/* Popup */}
+      <AnimatePresence>
+        {showSetup && userType === "professional" && (
+          <SetupProfessional setShow={setShowSetup} />
+        )}
+      </AnimatePresence>
     </div>
   )
 }

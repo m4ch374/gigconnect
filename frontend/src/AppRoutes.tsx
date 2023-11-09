@@ -1,5 +1,5 @@
 import React from "react"
-import { Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import Login from "pages/Auth/Login"
 import ProtectedRoutes from "components/ProtectedRoutes"
 import CompanyMyProfile from "pages/CompanyMyProfile"
@@ -11,7 +11,7 @@ import CompanyEditProfile from "pages/CompanyEditProfile"
 import ProfessionalEditProfile from "pages/ProfessionalEditProfile"
 import CreateProject from "pages/CreateProject"
 import RequestProject from "pages/RequestProject"
-import Home from "pages/Home"
+import Home from "pages/Home/Home"
 import Landing from "pages/Landing"
 import ProjectDetails from "pages/ProjectDetails"
 import RequestRespond from "pages/RequestRespond"
@@ -22,9 +22,14 @@ import useToken from "hooks/Token.hooks"
 import PreSignUp from "pages/Auth/PreSignUp"
 import SignUpProfessional from "pages/Auth/SignUpProfessional"
 import SignUpCompany from "pages/Auth/SignUpCompany"
+import useUserType from "hooks/UserType.hooks"
+import Projects from "pages/Home/Projects"
+import Companies from "pages/Home/Companies"
+import Talents from "pages/Home/Talents"
 
 const AppRoutes: React.FC = () => {
   const token = useToken().token
+  const userType = useUserType().userType
 
   return (
     <Routes>
@@ -41,10 +46,24 @@ const AppRoutes: React.FC = () => {
       )}
 
       {/* Main */}
-      <Route index element={<Landing />} />
+      <Route index element={!token ? <Landing /> : <Navigate to={"/home"} />} />
       <Route path="/" element={<ProtectedRoutes />}>
         <Route path="home" element={<Home />}>
-          <Route path="details/:projectId" element={<ProjectDetails />} />
+          <Route
+            index
+            element={userType === "professional" ? <Projects /> : <Talents />}
+          />
+          {userType === "professional" && (
+            <>
+              <Route path="projects" element={<Projects />}>
+                <Route path="details/:projectId" element={<ProjectDetails />} />
+              </Route>
+              <Route path="companies" element={<Companies />} />
+            </>
+          )}
+          {userType === "company" && (
+            <Route path="talents" element={<Talents />} />
+          )}
         </Route>
         <Route path="setup-company" element={<SetupCompany />} />
         <Route path="setup-professional" element={<SetupProfessional />} />

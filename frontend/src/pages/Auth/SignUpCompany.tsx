@@ -1,5 +1,5 @@
 import InputField from "components/InputField"
-import PasswordInputField from "components/SignUp/PasswordInputField"
+import PasswordInputField from "components/Auth/PasswordInputField"
 import useToken from "hooks/Token.hooks"
 import useObject from "hooks/UseObject.hooks"
 import useUserType from "hooks/UserType.hooks"

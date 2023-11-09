@@ -1,10 +1,10 @@
 import Lock from "assets/icons/Lock"
 import User from "assets/icons/User"
-import LoginInput from "components/Login/LoginInput"
+import LoginInput from "components/Auth/LoginInput"
 import useToken from "hooks/Token.hooks"
 import useObject from "hooks/UseObject.hooks"
 import useUserType from "hooks/UserType.hooks"
-import React from "react"
+import React, { FormEvent } from "react"
 import toast from "react-hot-toast"
 import { Link, useNavigate } from "react-router-dom"
 import { login } from "services/auth.services"
@@ -20,7 +20,8 @@ const Login: React.FC = () => {
     password: "",
   })
 
-  const handleLogin = () => {
+  const handleLogin = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
     ;(async () => {
       const resp = await login(data)
 
@@ -43,27 +44,32 @@ const Login: React.FC = () => {
           Login to GigConnect
         </h1>
 
-        {/* skill issue */}
-        <div className="flex flex-col gap-4 my-8 w-full text-zinc-400">
-          <LoginInput
-            icon={(<User />) as unknown as React.FC}
-            placeholder="User Email"
-            onChange={e => setData("email", e.currentTarget.value)}
-          />
-          <LoginInput
-            icon={(<Lock />) as unknown as React.FC}
-            placeholder="Password"
-            onChange={e => setData("password", e.currentTarget.value)}
-            type="password"
-          />
-        </div>
-
-        <button
-          className="px-2 py-1 w-full bg-sky-400 max-w-[300px] rounded-full"
-          onClick={handleLogin}
+        <form
+          className="w-full flex flex-col items-center"
+          onSubmit={handleLogin}
         >
-          Login
-        </button>
+          {/* skill issue */}
+          <div className="flex flex-col gap-4 my-8 w-full text-zinc-400">
+            <LoginInput
+              icon={(<User />) as unknown as React.FC}
+              placeholder="User Email"
+              onChange={e => setData("email", e.currentTarget.value)}
+            />
+            <LoginInput
+              icon={(<Lock />) as unknown as React.FC}
+              placeholder="Password"
+              onChange={e => setData("password", e.currentTarget.value)}
+              type="password"
+            />
+          </div>
+
+          <button
+            className="px-2 py-1 w-full bg-sky-400 max-w-[300px] rounded-full"
+            type="submit"
+          >
+            Login
+          </button>
+        </form>
 
         <div className="flex justify-evenly w-full my-8 items-center text-zinc-400 gap-4">
           <hr className="border-zinc-400 w-full" />
