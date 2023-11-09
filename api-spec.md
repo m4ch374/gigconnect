@@ -626,7 +626,7 @@ type response200 = {
 // ROUTE = /api/project/review-data, METHOD = POST
 // REQUEST - send login token in header, request as stringified JSON in body
 type request = {
-    projectId: string, // Project ID related to the reviews
+    projectId: string,
     reviews: [
         {
             userId: string, // User ID of person receiving this review
@@ -653,7 +653,8 @@ type response200 = {
 // ROUTE = /api/user/reviews, METHOD = GET
 // REQUEST - send login token in header, request as query params
 type request = {
-
+    userId: string,
+    userType: string
 }
 
 type response200 = {

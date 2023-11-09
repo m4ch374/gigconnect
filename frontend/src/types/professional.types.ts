@@ -6,6 +6,7 @@ import { ListedProjectData } from "./project.types"
 export type ProfessionalProfileData = {
   firstName: string
   lastName: string
+  profilePhoto: string
   projects: ListedProjectData[]
   description: string
   skills: string[]
@@ -18,6 +19,7 @@ export type ProfessionalUser = {
   userId: string
   firstName: string
   lastName: string
+  profilePhoto: string
   verified: boolean
   description: string
 }
@@ -25,6 +27,7 @@ export type ProfessionalUser = {
 export type ViewedProfessionalProfileData = {
   firstName: string
   lastName: string
+  profilePhoto: string
   description: string
   skills: string[]
   qualifications: ExternalLink[]

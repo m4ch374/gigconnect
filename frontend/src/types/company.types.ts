@@ -6,6 +6,7 @@ export type CompanyProfileData = {
   companyName: string
   abn: string
   companyDescription: string
+  profilePhoto: string
   externalWebsites: ExternalLink[]
   verified: boolean
   projects: {
@@ -24,5 +25,6 @@ export type CompanyProfileData = {
 export type CompanyUser = {
   userId: string
   companyName: string
+  profilePhoto: string
   verified: boolean
 }

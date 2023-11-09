@@ -300,6 +300,96 @@ export type TRemoveProfessional = TEndpoint<
   { success: boolean }
 >
 
+// /api/project/changestatus
+export type TProjectChangeStatus = TEndpoint<
+  { projectId: string },
+  { newStatus: ProjectStatus }
+>
+
+// /api/project/editdata
+export type TProjectEditData = TEndpoint<
+  { projectId: string },
+  {
+    title: string
+    publicDescription: string
+    privateDescription: string
+    tags: string[]
+    inPerson: boolean
+    location: string
+  }
+>
+
+// /api/project/requestData
+export type TProjectRequestData = TEndpoint<
+  {
+    requestId: string
+  },
+  {
+    requestId: string
+    projectId: string
+    projectName: string
+    userId: string
+    firstname: string
+    lastName: string
+    profilePhoto: string
+    message: string
+    creationDate: string
+  }
+>
+
+// /api/project/delete
+export type TProjectDelete = TEndpoint<{ projectId: string }, void>
+
+// /api/project/review-userinfo
+export type TProjectReviewUserInfo = TEndpoint<
+  { projectId: string },
+  {
+    users: [
+      {
+        userId: string
+        userName: string
+        profilePhoto: string
+      },
+    ]
+  }
+>
+
+// /api/project/review-data
+export type TProjectReviewData = TEndpoint<
+  {
+    projectId: string
+    reviews: [
+      {
+        userId: string
+        rating: number
+        comment: string
+      },
+    ]
+  },
+  void
+>
+
+// /api/user/reviews
+export type TUsserReviews = TEndpoint<
+  {
+    userId: string
+    userType: string
+  },
+  {
+    reviews: [
+      {
+        userId: string
+        userName: string
+        profilePhoto: string
+        projectId: string
+        projectName: string
+        rating: number
+        comment: string
+      },
+    ]
+  }
+>
+
 // ===================================================
 // .................. adding more ....................
 // ===================================================
