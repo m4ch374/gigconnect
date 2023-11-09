@@ -247,11 +247,11 @@ const reviewDataProfessional = async (professionalId: string) => {
   }
 }
 
-const reviewData = async (userId: string, userType: UserType) => {
+const reviewData = async (userId: string, userType: string) => {
   switch (userType) {
-    case UserType.Company:
+    case "company":
       return reviewDataCompany(userId)
-    case UserType.Professional:
+    case "professional":
       return reviewDataProfessional(userId)
     default:
       throw HTTPError(400, "Unsupported user type for getting review data.")

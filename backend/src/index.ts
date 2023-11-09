@@ -587,12 +587,23 @@ app.post(
   },
 )
 
-app.get("/api/user/reviews", (req, res, next) => {
-  const { userId, userType } = checkAuthPayload(req, UserType.Any)
-  reviewData(userId, userType)
-    .then(result => res.json(result))
-    .catch(next)
-})
+app.get(
+  "/api/user/reviews",
+  (
+    req: ReqQuery<{
+      userId: string
+      userType: string
+    }>,
+    res,
+    next,
+  ) => {
+    checkAuth(req as unknown as Request, UserType.Any)
+    const { userId, userType } = req.query
+    reviewData(userId, userType)
+      .then(result => res.json(result))
+      .catch(next)
+  },
+)
 
 app.get("/api/project/allpublicprofiledata", (req, res, next) => {
   checkAuth(req, UserType.Any)
