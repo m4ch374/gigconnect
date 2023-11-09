@@ -1,8 +1,74 @@
 import CheckCircle from "assets/icons/CheckCircle"
-import React from "react"
+import React, { useCallback, useContext, useEffect } from "react"
 import { motion } from "framer-motion"
+import ProfessionalSetupContext from "./Professional/ProfessionalSetupContext"
+import {
+  getProfessionalProfile,
+  updateProfessionalProfile,
+} from "services/professional.services"
+import toast from "react-hot-toast"
+import CompanySetupContext from "./Company/CompanySetupContext"
+import useUserType from "hooks/UserType.hooks"
+import {
+  getCompanyProfile,
+  updateCompanyProfile,
+} from "services/company.services"
 
 const FinishSetup: React.FC = () => {
+  const professionalSetup = useContext(ProfessionalSetupContext)[0]
+  const companySetup = useContext(CompanySetupContext)[0]
+
+  const { userType } = useUserType()
+
+  const updateProfessional = useCallback(() => {
+    ;(async () => {
+      const profileData = await getProfessionalProfile()
+
+      if (!profileData.ok) {
+        toast.error(profileData.error)
+        return
+      }
+
+      const originalData = profileData.data
+      const resp = await updateProfessionalProfile({
+        ...professionalSetup,
+        firstName: originalData.firstName,
+        lastName: originalData.lastName,
+      })
+
+      if (!resp.ok) toast.error(resp.error)
+    })()
+  }, [professionalSetup])
+
+  const updateCompany = useCallback(() => {
+    ;(async () => {
+      const profileData = await getCompanyProfile()
+
+      if (!profileData.ok) {
+        toast.error(profileData.error)
+        return
+      }
+
+      const originalData = profileData.data
+      const resp = await updateCompanyProfile({
+        ...companySetup,
+        companyName: originalData.companyName,
+        abn: originalData.abn,
+      })
+
+      if (!resp.ok) toast.error(resp.error)
+    })()
+  }, [companySetup])
+
+  useEffect(() => {
+    if (userType === "professional") {
+      updateProfessional()
+      return
+    }
+
+    updateCompany()
+  }, [professionalSetup, updateCompany, updateProfessional, userType])
+
   return (
     <div className="w-full h-full flex flex-col items-center justify-center p-4">
       <h1 className="font-semibold text-4xl mb-8">Congrats!</h1>

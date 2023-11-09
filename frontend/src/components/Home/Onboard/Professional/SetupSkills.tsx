@@ -1,7 +1,8 @@
 import Cross from "assets/icons/Cross"
 import useArray from "hooks/UseArray.hooks"
-import React, { useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import toast from "react-hot-toast"
+import ProfessionalSetupContext from "./ProfessionalSetupContext"
 
 const SkillItem: React.FC<{
   skill: string
@@ -23,7 +24,14 @@ const SkillItem: React.FC<{
 
 const SetupSkills: React.FC = () => {
   const [currSkill, setCurrSkill] = useState("")
-  const { arr, pushItem, removeCb } = useArray<string>()
+  const [setupData, setSetupData] = useContext(ProfessionalSetupContext)
+
+  const { arr, pushItem, removeCb } = useArray<string>(setupData.skills)
+
+  useEffect(() => {
+    setSetupData("skills", arr)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [arr])
 
   return (
     <div className="h-full w-full p-4">

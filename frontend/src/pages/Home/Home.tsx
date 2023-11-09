@@ -1,11 +1,12 @@
 import AnimatedBlob from "assets/AnimatedBlob"
 import HomeSearchBar from "components/Home/HomeSearchBar"
-import useStorage from "hooks/Storage.hooks"
 import useUserType from "hooks/UserType.hooks"
 import SetupProfessional from "components/Home/Onboard/Professional/SetupProfessional"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Outlet, useNavigate } from "react-router-dom"
 import { AnimatePresence } from "framer-motion"
+import SetupCompany from "components/Home/Onboard/Company/SetupCompany"
+import { getOnboarded } from "services/auth.services"
 
 type ShowItem = "Projects" | "Companies" | "Talents"
 
@@ -20,8 +21,17 @@ const Home: React.FC = () => {
   )
   const [searches, setSearches] = useState("")
 
-  const onboarded = useStorage("onboarded").storageItem
-  const [showSetup, setShowSetup] = useState<boolean>(onboarded === "")
+  const [showSetup, setShowSetup] = useState<boolean>(false)
+
+  useEffect(() => {
+    ;(async () => {
+      const resp = await getOnboarded()
+
+      if (!resp.ok) return
+
+      setShowSetup(!resp.data.onboarded)
+    })()
+  }, [])
 
   return (
     <div className="flex flex-col items-center relative">
@@ -96,9 +106,13 @@ const Home: React.FC = () => {
 
       {/* Popup */}
       <AnimatePresence>
-        {showSetup && userType === "professional" && (
-          <SetupProfessional setShow={setShowSetup} />
-        )}
+        {showSetup &&
+          userType !== "admin" &&
+          (userType === "professional" ? (
+            <SetupProfessional setShow={setShowSetup} />
+          ) : (
+            <SetupCompany setShow={setShowSetup} />
+          ))}
       </AnimatePresence>
     </div>
   )

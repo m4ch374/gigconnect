@@ -390,6 +390,8 @@ export type TUsserReviews = TEndpoint<
   }
 >
 
+export type TOnboarded = TEndpoint<void, { onboarded: boolean }>
+
 // ===================================================
 // .................. adding more ....................
 // ===================================================
