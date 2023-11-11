@@ -85,7 +85,7 @@ const professionalData = async (userId: string) => {
     qualifications: mapDBToExternalLinks(user.certLinks),
     externalWebsites: mapDBToExternalLinks(user.socialLinks),
     verified: user.verified,
-    projects: mapDBToProjects(user.projects),
+    projects: await mapDBToProjects(user.projects),
     hasReviews: user.reviews.length > 0,
     reviewAvg: avgReviewScore(user.reviews),
   }

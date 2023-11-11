@@ -80,7 +80,7 @@ const companyCreate = async (
 const companyData = async (userId: string) => {
   const companyUser = await getCompanyUserEntry(Number(userId))
   return {
-    projects: mapDBToProjects(companyUser.projects),
+    projects: await mapDBToProjects(companyUser.projects),
     companyName: companyUser.name,
     profilePhoto: companyUser.profilePic,
     abn: companyUser.abn,

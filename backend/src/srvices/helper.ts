@@ -94,7 +94,7 @@ const getCompanyName = async (id: number) => {
   return user?.name
 }
 
-const mapDBToProjects = (
+const mapDBToProjects = async (
   projectParams: {
     id: number
     title: string
@@ -102,21 +102,25 @@ const mapDBToProjects = (
     companyId: number
     inPerson: boolean
     location: string | null
+    tags: string[]
     creationDate: Date
     status: ProjectStatus
   }[],
 ) =>
-  projectParams.map(param => ({
-    projectId: param.id.toString(),
-    title: param.title,
-    publicDescription: param.publicDescription,
-    companyName: getCompanyName(param.companyId),
-    companyId: param.companyId,
-    inPerson: param.inPerson,
-    location: param.location,
-    creationDate: param.creationDate.toJSON(),
-    status: param.status.valueOf().toLowerCase(),
-  }))
+  Promise.all(
+    projectParams.map(async param => ({
+      projectId: param.id.toString(),
+      title: param.title,
+      publicDescription: param.publicDescription,
+      companyName: await getCompanyName(param.companyId),
+      companyId: param.companyId.toString(),
+      inPerson: param.inPerson,
+      location: param.location,
+      tags: param.tags,
+      creationDate: param.creationDate.toJSON(),
+      status: param.status.valueOf().toLowerCase(),
+    })),
+  )
 
 const avgReviewScore = (reviews: { score: number }[]) => {
   if (reviews.length === 0) {

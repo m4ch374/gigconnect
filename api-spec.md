@@ -122,6 +122,7 @@ type response200 = {
             companyId: string,
             inPerson: boolean,
             location: string?,
+            tags: string[],
             creationDate: string,
             status: projectStatus,
         }
@@ -180,7 +181,8 @@ type response = {
             companyId: string,
             inPerson: boolean,
             location: string?,
-            creationDate: string
+            tags: string[],
+            creationDate: string,
             status: projectStatus,
         }
     ],
