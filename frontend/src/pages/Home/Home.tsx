@@ -94,7 +94,7 @@ const Home: React.FC = () => {
               <AnimatedBlob />
               <img
                 src="/Relax.svg"
-                className="w-36 aspect-square absolute top-[30%] left-[25%]"
+                className="w-36 aspect-square absolute top-[30%] left-[25%] z-10"
               />
             </div>
             <h1 className="text-xl font-bold">

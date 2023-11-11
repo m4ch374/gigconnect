@@ -42,7 +42,7 @@ const ProjectPreview: React.FC<TProjectPreview> = ({ projectDetail }) => {
   return (
     <div
       className="p-4 group hover:bg-sky-300/10 cursor-pointer"
-      onClick={() => navigate(`details/${projectId}`)}
+      onClick={() => navigate(`/home/projects/details/${projectId}`)}
     >
       <h3 className="group-hover:text-sky-300 font-semibold text-lg truncate my-2">
         {title}

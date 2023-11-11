@@ -3,12 +3,16 @@ import CheveronLeft from "assets/icons/CheveronLeft"
 import Clipboard from "assets/icons/Clipboard"
 import MapPin from "assets/icons/MapPin"
 import TalentPreview from "components/Home/TalentPreview"
+import ModalBackdrop from "components/ModalBackdrop"
 import useDisableScroll from "hooks/DisableScroll"
 import React, { useEffect, useState } from "react"
+import toast from "react-hot-toast"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { getProjectDetailsProfessional } from "services/project.services"
 import { TProjDetailsProfessional } from "services/types"
 import { ProfessionalUser } from "types/professional.types"
+import { Variants, motion } from "framer-motion"
+import useWindowDimensions from "hooks/WindowDimensions"
 
 const ProjectDetails: React.FC = () => {
   const { projectId } = useParams()
@@ -19,17 +23,18 @@ const ProjectDetails: React.FC = () => {
   const [projDetail, setProjDetail] =
     useState<TProjDetailsProfessional["responseType"]>()
 
+  const { width } = useWindowDimensions()
+
   useEffect(() => {
     if (!projectId) return
     ;(async () => {
       const res = await getProjectDetailsProfessional({ projectId })
 
       if (!res.ok) {
-        // TODO: Display the error message in res.error on the UI
+        toast.error(res.error)
         return
       }
 
-      console.log(res.data)
       setProjDetail(res.data)
     })()
   }, [projectId])
@@ -37,18 +42,48 @@ const ProjectDetails: React.FC = () => {
   // Cheating a lil bit
   if (typeof projDetail === "undefined") return <></>
 
+  const variants: Variants = {
+    enter: () => {
+      if (width < 640) {
+        return { y: 1000 }
+      }
+      return { x: 1000 }
+    },
+    finish: {
+      x: 0,
+      y: 0,
+      transition: { ease: "circOut", type: "tween", duration: 0.4 },
+    },
+    exit: () => {
+      if (width < 640) {
+        return {
+          y: 1000,
+          transition: { ease: "easeIn", type: "tween", duration: 0.4 },
+        }
+      }
+      return {
+        x: 1000,
+        transition: { ease: "easeIn", type: "tween", duration: 0.4 },
+      }
+    },
+  }
+
   return (
-    <div
-      className="fixed top-0 left-0 flex justify-end backdrop-blur-sm w-screen h-screen z-[1000] cursor-pointer"
-      onClick={() => navigate(-1)}
+    <ModalBackdrop
+      onBackdropClick={() => navigate(-1)}
+      className="flex justify-end items-end w-full pt-10 sm:pt-0"
     >
-      <div
-        className="h-full bg-stone-700 w-[100%] max-w-[600px] cursor-default rounded-l-2xl pt-10 px-6 overflow-auto"
+      <motion.div
+        className="h-full rounded-t-2xl bg-stone-700 w-[100%] sm:w-[90%] max-w-[800px] cursor-default pt-10 px-6 overflow-auto sm:rounded-l-2xl sm:rounded-r-none"
         onClick={e => e.stopPropagation()}
+        variants={variants}
+        initial="enter"
+        animate="finish"
+        exit="exit"
       >
         <div className="flex justify-between items-center mb-5">
           <button
-            className="flex items-center justify-center p-1.5 rounded-full hover:bg-stone-600"
+            className="flex items-center justify-center p-1.5 rounded-full -rotate-90 sm:rotate-0 transition-transform hover:bg-stone-600"
             onClick={() => navigate(-1)}
           >
             <CheveronLeft />
@@ -115,8 +150,8 @@ const ProjectDetails: React.FC = () => {
             })}
           </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </ModalBackdrop>
   )
 }
 
