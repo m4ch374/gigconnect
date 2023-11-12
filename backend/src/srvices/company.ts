@@ -18,7 +18,7 @@ const companyCreate = async (
   password: string,
   companyName: string,
   abn: string,
-): Promise<object> => {
+) => {
   // make a record and store company user to the database
   // #######################
   // ###  TEST CASES    ####

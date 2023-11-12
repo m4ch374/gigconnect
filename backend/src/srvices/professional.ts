@@ -22,7 +22,7 @@ const professionalCreate = async (
   password: string,
   firstName: string,
   lastName: string,
-): Promise<object> => {
+) => {
   // ####################
   // #### TEST CASES ####
   // ####################

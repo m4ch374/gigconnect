@@ -7,6 +7,7 @@ import {
   returnError,
   returnHi,
   returnPassword,
+  returnTestData,
 } from "srvices/hello"
 import { ExternalLink, UserType, verifyToken } from "srvices/helper"
 import {
@@ -122,6 +123,12 @@ app.get("/password", (_, res, next) => {
 
 app.get("/dummy", (_, res, next) => {
   returnDummy()
+    .then(result => res.json(result))
+    .catch(next)
+})
+
+app.get("/testdata", (_, res, next) => {
+  returnTestData()
     .then(result => res.json(result))
     .catch(next)
 })
