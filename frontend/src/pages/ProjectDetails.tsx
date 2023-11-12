@@ -8,8 +8,8 @@ import useDisableScroll from "hooks/DisableScroll"
 import React, { useEffect, useState } from "react"
 import toast from "react-hot-toast"
 import { Link, useNavigate, useParams } from "react-router-dom"
-import { getProjectDetailsProfessional } from "services/project.services"
-import { TProjDetailsProfessional } from "services/types"
+import { apiProjectData } from "services/project.services"
+import { TProjectData } from "services/types"
 import { ProfessionalUser } from "types/professional.types"
 import { Variants, motion } from "framer-motion"
 import useWindowDimensions from "hooks/WindowDimensions"
@@ -20,15 +20,14 @@ const ProjectDetails: React.FC = () => {
 
   useDisableScroll()
 
-  const [projDetail, setProjDetail] =
-    useState<TProjDetailsProfessional["responseType"]>()
+  const [projDetail, setProjDetail] = useState<TProjectData["responseType"]>()
 
   const { width } = useWindowDimensions()
 
   useEffect(() => {
     if (!projectId) return
     ;(async () => {
-      const res = await getProjectDetailsProfessional({ projectId })
+      const res = await apiProjectData({ projectId })
 
       if (!res.ok) {
         toast.error(res.error)
