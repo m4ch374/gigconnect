@@ -7,12 +7,16 @@ import {
   TGetCompanyUsers,
 } from "./types"
 
+// Function for calling API route /api/company/profiledata
+// Used to get the profile data of the currently logged in company user
 export const getCompanyProfile = () => {
   return Fetcher.init<TCompanyProfile>("GET", "/api/company/profiledata")
     .withCurrentToken()
     .newFetchData()
 }
 
+// Function for calling API route /api/company/profiledata/update
+// Used to update the profile datails of the currently logged in company user.
 export const updateCompanyProfile = (
   data: TCompanyProfileUpdate["requestType"],
 ) => {
@@ -25,6 +29,8 @@ export const updateCompanyProfile = (
     .newFetchData()
 }
 
+// Function for calling API route /api/company/allpublicprofiledata
+// Used to get details of all company users on the system.
 export const getAllCompanies = () => {
   return Fetcher.init<TGetCompanyUsers>(
     "GET",

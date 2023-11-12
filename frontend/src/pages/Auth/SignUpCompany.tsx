@@ -55,6 +55,7 @@ const SignUpCompany: React.FC = () => {
 
         if (!resp.ok) {
           toast.error(resp.error)
+          return
         }
 
         setUserType(resp.data.userType)

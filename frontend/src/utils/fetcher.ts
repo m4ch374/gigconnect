@@ -8,6 +8,9 @@ type ErrorResponse = {
 
 // Thy type any is very much needed in this case
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+// Create the Fetcher class which acts as a wrapper around fetch() calls
+// with some conveniances for fetching data from the backend API
 class Fetcher<T extends TEndpoint<any, any>> {
   private baseURL = "http://localhost:8080"
 
@@ -29,6 +32,7 @@ class Fetcher<T extends TEndpoint<any, any>> {
     return this
   }
 
+  // Create Fetcher instance, intialising API route to call and HTTP request method
   static init<T extends TEndpoint<any, any> = TEndpoint<void, void>>(
     method: Method,
     endpoint: string,
@@ -39,6 +43,7 @@ class Fetcher<T extends TEndpoint<any, any>> {
     return fetcher
   }
 
+  // Add a payload to the request body as a stringified JSON object
   withJsonPaylad(payload: T["requestType"]) {
     this.requestConf = {
       ...this.requestConf,
@@ -47,11 +52,13 @@ class Fetcher<T extends TEndpoint<any, any>> {
     return this
   }
 
+  // Add search params to the request URI
   withParams(params: T["requestType"]) {
     this.baseURL += "?" + new URLSearchParams(params).toString()
     return this
   }
 
+  // Add a token to request headers
   withToken(token: string) {
     this.requestConf = {
       ...this.requestConf,
@@ -63,6 +70,7 @@ class Fetcher<T extends TEndpoint<any, any>> {
     return this
   }
 
+  // Add currently logged in user's token to request headers
   withCurrentToken() {
     return this.withToken(localStorage.getItem("token")!)
   }
@@ -71,27 +79,8 @@ class Fetcher<T extends TEndpoint<any, any>> {
     return fetch(this.baseURL, this.requestConf)
   }
 
-  /**
-   * @deprecated
-   * Use newFetchData() instead.
-   * fetchData() will be removed prior to final submission.
-   */
-  async fetchData(): Promise<T["responseType"]> {
-    try {
-      const resp = await fetch(this.baseURL, this.requestConf)
-
-      // Its either my skill issue or its just really hard to type it out
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      if (resp.ok) return await resp.json()
-
-      this.logFetchError(resp)
-      return undefined
-    } catch (e) {
-      console.log("unexpected error happened")
-      console.log(e)
-    }
-  }
-
+  // Call the API, returning a representation of the request outcome,
+  // response data and an error message if an error occured.
   async newFetchData(): Promise<{
     ok: boolean
     data: T["responseType"]
@@ -123,20 +112,6 @@ class Fetcher<T extends TEndpoint<any, any>> {
         error: "An unexpected error occured",
       }
     }
-  }
-
-  // =============================================================
-  // Helpers
-  // =============================================================
-
-  // Writing a better logger soon
-  private logFetchError(e: Response) {
-    console.log(e)
-    e.json()
-      .then(data => {
-        console.log(data)
-      })
-      .catch(er => console.log(er))
   }
 }
 

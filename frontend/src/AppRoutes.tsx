@@ -32,6 +32,7 @@ const AppRoutes: React.FC = () => {
 
   const location = useLocation()
 
+  // Define routes for pages on the web app.
   return (
     <AnimatePresence>
       <Routes location={location} key={location.pathname}>

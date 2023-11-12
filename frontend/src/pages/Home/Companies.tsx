@@ -12,7 +12,7 @@ const Companies: React.FC = () => {
     ;(async () => {
       const resp = await getAllCompanies()
 
-      if (typeof resp === undefined) return
+      if (!resp.ok) return
 
       setCompanies(resp.data.companyUsers)
     })()

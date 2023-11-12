@@ -12,7 +12,7 @@ const Talents: React.FC = () => {
     ;(async () => {
       const resp = await getAllProfessionals()
 
-      if (typeof resp === "undefined") return undefined
+      if (!resp.ok) return undefined
 
       setTalents(resp.data.professionalUsers)
     })()

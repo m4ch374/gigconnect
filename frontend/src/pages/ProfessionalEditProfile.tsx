@@ -10,6 +10,7 @@ import { ProfessionalProfileData } from "types/professional.types"
 const dummyData: ProfessionalProfileData = {
   firstName: "",
   lastName: "",
+  profilePhoto: "",
   description: "",
   skills: [],
   qualifications: [],

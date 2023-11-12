@@ -6,10 +6,11 @@ import {
   TProfessionalById,
   TProfessionalProfile,
   TProfessionalProfileUpdate,
-  TProjectRequestRespond,
   TPublicProfessionalProfile,
 } from "./types"
 
+// Function for calling API route /api/professional/profiledata
+// Gets the profile data of the currently logged in professional user.
 export const getProfessionalProfile = () => {
   return Fetcher.init<TProfessionalProfile>(
     "GET",
@@ -19,6 +20,8 @@ export const getProfessionalProfile = () => {
     .newFetchData()
 }
 
+// Function for calling API route /api/professional/profiledata/public
+// Used to get the profile data of a professional user specified in the request
 export const getProfessionalPublicProfile = (
   data: TPublicProfessionalProfile["requestType"],
 ) => {
@@ -31,6 +34,8 @@ export const getProfessionalPublicProfile = (
     .newFetchData()
 }
 
+// Function for calling API route /api/professional/profiledata/update
+// Used to update the profile data of the currently logged in professional user.
 export const updateProfessionalProfile = (
   data: TProfessionalProfileUpdate["requestType"],
 ) => {
@@ -43,6 +48,8 @@ export const updateProfessionalProfile = (
     .newFetchData()
 }
 
+// Function for calling API route /api/professional/allpublicprofiledata
+// Used to get details of all professional users on the system.
 export const getAllProfessionals = () => {
   return Fetcher.init<TGetProfessionalUsers>(
     "GET",
@@ -52,6 +59,8 @@ export const getAllProfessionals = () => {
     .newFetchData()
 }
 
+// Function for calling API route /api/professional/profiledata/public
+// Used to get public profile data of a professional user
 export const apiGetProfessionalById = (
   data: TProfessionalById["requestType"],
 ) => {
@@ -61,17 +70,5 @@ export const apiGetProfessionalById = (
   )
     .withCurrentToken()
     .withParams(data)
-    .newFetchData()
-}
-
-export const apiProjectRequestRespond = (
-  data: TProjectRequestRespond["requestType"],
-) => {
-  return Fetcher.init<TProjectRequestRespond>(
-    "POST",
-    "/api/project/request/respond",
-  )
-    .withCurrentToken()
-    .withJsonPaylad(data)
     .newFetchData()
 }

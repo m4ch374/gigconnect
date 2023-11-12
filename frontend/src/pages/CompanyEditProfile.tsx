@@ -10,6 +10,7 @@ import { ExternalLink } from "types/general.types"
 const dummyData: CompanyProfileData = {
   companyName: "",
   abn: "",
+  profilePhoto: "",
   companyDescription: "",
   externalWebsites: [],
   verified: false,

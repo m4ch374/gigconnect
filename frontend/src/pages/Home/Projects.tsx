@@ -11,7 +11,7 @@ const Projects: React.FC = () => {
     ;(async () => {
       const resp = await getAllPublicProjects()
 
-      if (typeof resp === "undefined") return
+      if (!resp.ok) return
 
       setProjects(resp.data.projects)
     })()

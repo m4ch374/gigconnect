@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
+import { apiGetProfessionalById } from "services/professional.services"
 import {
-  apiGetProfessionalById,
   apiProjectRequestRespond,
-} from "services/professional.services"
-import { getProjectDetailsCompany } from "services/project.services"
+  getProjectDetailsCompany,
+} from "services/project.services"
 import { ProjectRequestData } from "types/project.types"
 
 const RequestRespond: React.FC = () => {

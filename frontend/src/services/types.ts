@@ -1,3 +1,7 @@
+// This file contains types for the request and response objects of API calls.
+// This file is used to facilitate type checking during frontend development
+// when dealing with API requests and responses.
+
 import { CompanyProfileData, CompanyUser } from "types/company.types"
 import { ProjectStatus, TUser } from "types/general.types"
 import {
@@ -214,7 +218,6 @@ export type TAllPublicProjects = TEndpoint<void, AllPublicProjectsRes>
 type ProjDetailsProfessionalReq = {
   projectId: string
 }
-
 type ProjDetailsProfessionalRes = {
   title: string
   companyId: string
@@ -234,10 +237,10 @@ export type TProjDetailsProfessional = TEndpoint<
 >
 // ===================================================
 
+// /api/project/profiledata/company
 type ProjectDetailsCompanyReq = {
   projectId: string
 }
-
 type ProjectDetailsCompanyRes = {
   title: string
   companyId: string
@@ -251,13 +254,14 @@ type ProjectDetailsCompanyRes = {
   professionals: ProfessionalProfileData[]
   requests: ProjectRequestData[]
 }
-
 export type TProjectDetailsCompany = TEndpoint<
   ProjectDetailsCompanyReq,
   ProjectDetailsCompanyRes
 >
 
+// /api/project/update
 export type TEditProject = TEndpoint<EditProjectData, void>
+
 // /api/project/request
 type ProjectRequestReq = {
   projectId: string
@@ -265,27 +269,17 @@ type ProjectRequestReq = {
 }
 export type TProjectRequest = TEndpoint<ProjectRequestReq, void>
 
+// /api/project/request/respond
 type ProjectRequestRespondReq = {
   requestId: string
   accepted: boolean
 }
 export type TProjectRequestRespond = TEndpoint<ProjectRequestRespondReq, void>
 
+// /api/professional/profiledata/public
 type ProfessionalByIdReq = {
   userId: string
 }
-
-// type ProfessionalByIdRes = {
-//   firstName: string,
-//   lastName: string,
-//   description: string,
-//   skills: string[],
-//   qualifications: ExternalLink[],
-//   externalWebsites: ExternalLink[],
-//   verified: boolean,
-//   completedProjects: projects[],
-// }
-
 export type TProfessionalById = TEndpoint<
   ProfessionalByIdReq,
   ProfessionalProfileData
@@ -390,8 +384,5 @@ export type TUsserReviews = TEndpoint<
   }
 >
 
+// /api/user/onboarded
 export type TOnboarded = TEndpoint<void, { onboarded: boolean }>
-
-// ===================================================
-// .................. adding more ....................
-// ===================================================
