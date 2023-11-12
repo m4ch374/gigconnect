@@ -227,7 +227,7 @@ const companyDataPublic = async (userId: string) => {
     companyDescription: companyUser.description,
     externalWebsites: mapDBToExternalLinks(companyUser.companyLinks),
     verified: companyUser.verified,
-    completedProjects: cleanProjObj,
+    projects: cleanProjObj,
     hasReviews: companyUser.reviews.length > 0,
     reviewAvg: avgReviewScore(companyUser.reviews),
   }

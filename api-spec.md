@@ -287,7 +287,7 @@ type response200 = {
     qualifications: externalLink[],
     externalWebsites: externalLink[],
     verified: boolean,
-    completedProjects: projects[], // only return completed projects for public view
+    projects: projects[], // only return completed projects for public view
     hasReviews: boolean,
     reviewAvg: number
 }
@@ -304,7 +304,7 @@ type response200 = {
     companyDescription: string,
     externalWebsites: externalLink[],
     verified: boolean,
-    completedProjects: projects[], // only return completed projects for public view
+    projects: projects[], // only return completed projects for public view
     hasReviews: boolean,
     reviewAvg: number
 }
