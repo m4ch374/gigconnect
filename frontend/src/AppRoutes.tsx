@@ -1,11 +1,11 @@
-import React from "react"
+import React, { useEffect, useMemo } from "react"
 import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 import Login from "pages/Auth/Login"
 import ProtectedRoutes from "components/ProtectedRoutes"
-import CompanyMyProfile from "pages/CompanyMyProfile"
-import ProfessionalMyProfile from "pages/ProfessionalMyProfile"
+import CompanyMyProfile from "pages/Profile/Company/CompanyMyProfile"
+import ProfessionalMyProfile from "pages/Profile/Professional/ProfessionalMyProfile"
 import AdminDashboard from "pages/AdminDashboard"
-import CompanyEditProfile from "pages/CompanyEditProfile"
+import CompanyEditProfile from "pages/Profile/Company/CompanyEditProfile"
 import ProfessionalEditProfile from "pages/ProfessionalEditProfile"
 import CreateProject from "pages/CreateProject"
 import RequestProject from "pages/RequestProject"
@@ -14,28 +14,42 @@ import Landing from "pages/Landing"
 import ProjectDetails from "pages/ProjectDetails"
 import RequestRespond from "pages/RequestRespond"
 import EditProject from "pages/EditProject"
-import ProfessionalProfile from "pages/ProfessionalProfile"
-import ProjectDetailsCompany from "pages/ProjectDetailsCompany"
+import ProfessionalProfile from "pages/Profile/Professional/ProfessionalProfile"
 import useToken from "hooks/Token.hooks"
 import PreSignUp from "pages/Auth/PreSignUp"
 import SignUpProfessional from "pages/Auth/SignUpProfessional"
 import SignUpCompany from "pages/Auth/SignUpCompany"
-import useUserType from "hooks/UserType.hooks"
 import Projects from "pages/Home/Projects"
 import Companies from "pages/Home/Companies"
 import Talents from "pages/Home/Talents"
 import { AnimatePresence } from "framer-motion"
+import CompanyProfile from "pages/Profile/Company/CompanyProfile"
 
 const AppRoutes: React.FC = () => {
   const token = useToken().token
-  const userType = useUserType().userType
 
   const location = useLocation()
+
+  useEffect(() => {
+    console.log(location.pathname.split("/"))
+  }, [location])
+
+  // TODO: fix issue with rerendering parents
+  // NOTE: issue happnes bc of keys
+  // Current band-aid fix
+  const routeKey = useMemo(() => {
+    const splitted = location.pathname.split("/")
+
+    const targetRouteFragment = ["details"]
+    const contains = targetRouteFragment.some(frag => splitted.includes(frag))
+
+    return contains ? location.key : undefined
+  }, [location.key, location.pathname])
 
   // Define routes for pages on the web app.
   return (
     <AnimatePresence>
-      <Routes location={location} key={location.pathname}>
+      <Routes location={location} key={routeKey}>
         {/* Auth */}
         {!token && (
           <>
@@ -55,44 +69,29 @@ const AppRoutes: React.FC = () => {
         />
         <Route path="/" element={<ProtectedRoutes />}>
           <Route path="home" element={<Home />}>
-            <Route
-              index
-              element={userType === "professional" ? <Projects /> : <Talents />}
-            />
-            {userType === "professional" && (
-              <>
-                <Route path="projects" element={<Projects />}>
-                  <Route
-                    path="details/:projectId"
-                    element={<ProjectDetails />}
-                  />
-                </Route>
-                <Route path="companies" element={<Companies />} />
-              </>
-            )}
-            {userType === "company" && (
-              <Route path="talents" element={<Talents />} />
-            )}
+            <Route index element={<Projects />} />
+            <Route path="projects" element={<Projects />}>
+              <Route path="details/:projectId" element={<ProjectDetails />} />
+            </Route>
+            <Route path="companies" element={<Companies />} />
+            <Route path="talents" element={<Talents />} />
           </Route>
 
           {/* Company Profile */}
-          <Route path="company-myprofile" element={<CompanyMyProfile />}>
-            <Route
-              path="details/:projectId"
-              element={<ProjectDetailsCompany />}
-            />
+          <Route path="company">
+            <Route index element={<CompanyMyProfile />} />
+            <Route path="edit" element={<CompanyEditProfile />} />
+            <Route path=":userId" element={<CompanyProfile />} />
           </Route>
-          <Route
-            path="company-myprofile/edit"
-            element={<CompanyEditProfile />}
-          />
 
           {/* Professional Profile */}
-          <Route path="professional-myprofile">
+          <Route path="professional">
             <Route index element={<ProfessionalMyProfile />} />
             <Route path="edit" element={<ProfessionalEditProfile />} />
+            <Route path=":userId" element={<ProfessionalProfile />} />
           </Route>
 
+          {/* Dumps */}
           <Route path="admin-dashboard" element={<AdminDashboard />} />
           <Route path="create-project" element={<CreateProject />} />
           <Route path="project/:projectId/edit" element={<EditProject />} />
@@ -103,10 +102,6 @@ const AppRoutes: React.FC = () => {
           <Route
             path="project/:projectId/request/:requestId"
             element={<RequestRespond />}
-          />
-          <Route
-            path="professional/:userId"
-            element={<ProfessionalProfile />}
           />
         </Route>
       </Routes>

@@ -1,7 +1,7 @@
 import useUserType from "hooks/UserType.hooks"
 import React, { useContext } from "react"
-import ProfessionalSetupContext from "./Professional/ProfessionalSetupContext"
-import CompanySetupContext from "./Company/CompanySetupContext"
+import ProfessionalSetupContext from "../../Profile/Professional/ProfessionalProfileContext"
+import CompanySetupContext from "../../Profile/Company/CompanyProfileContext"
 
 const SetupDescription: React.FC = () => {
   const userType = useUserType().userType

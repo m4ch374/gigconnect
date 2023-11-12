@@ -1,13 +1,13 @@
 import CheckCircle from "assets/icons/CheckCircle"
 import React, { useCallback, useContext, useEffect } from "react"
 import { motion } from "framer-motion"
-import ProfessionalSetupContext from "./Professional/ProfessionalSetupContext"
+import ProfessionalSetupContext from "../../Profile/Professional/ProfessionalProfileContext"
 import {
   getProfessionalProfile,
   updateProfessionalProfile,
 } from "services/professional.services"
 import toast from "react-hot-toast"
-import CompanySetupContext from "./Company/CompanySetupContext"
+import CompanySetupContext from "../../Profile/Company/CompanyProfileContext"
 import useUserType from "hooks/UserType.hooks"
 import {
   getCompanyProfile,

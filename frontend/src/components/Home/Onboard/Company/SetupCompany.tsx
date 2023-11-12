@@ -8,7 +8,7 @@ import SetupExternalLinks from "../SetupExternalLinks"
 import FinishSetup from "../FinishSetup"
 import useObject from "hooks/UseObject.hooks"
 import { CompanyProfileData } from "types/company.types"
-import CompanySetupContext from "./CompanySetupContext"
+import CompanySetupContext from "../../../Profile/Company/CompanyProfileContext"
 import { putOnboarded } from "services/auth.services"
 
 type TSetupCompany = {

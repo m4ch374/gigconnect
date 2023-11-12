@@ -5,6 +5,7 @@ import {
   TCompanyProfile,
   TCompanyProfileUpdate,
   TGetCompanyUsers,
+  TPublicCompanyProfile,
 } from "./types"
 
 // Function for calling API route /api/company/profiledata
@@ -36,6 +37,18 @@ export const getAllCompanies = () => {
     "GET",
     "/api/company/allpublicprofiledata",
   )
+    .withCurrentToken()
+    .newFetchData()
+}
+
+export const getPublicCompanyProfile = (
+  data: TPublicCompanyProfile["requestType"],
+) => {
+  return Fetcher.init<TPublicCompanyProfile>(
+    "GET",
+    "/api/company/profiledata/public",
+  )
+    .withParams(data)
     .withCurrentToken()
     .newFetchData()
 }

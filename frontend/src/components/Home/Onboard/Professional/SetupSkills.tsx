@@ -2,7 +2,7 @@ import Cross from "assets/icons/Cross"
 import useArray from "hooks/UseArray.hooks"
 import React, { useContext, useEffect, useState } from "react"
 import toast from "react-hot-toast"
-import ProfessionalSetupContext from "./ProfessionalSetupContext"
+import ProfessionalSetupContext from "../../../Profile/Professional/ProfessionalProfileContext"
 
 const SkillItem: React.FC<{
   skill: string

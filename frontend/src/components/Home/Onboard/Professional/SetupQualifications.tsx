@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react"
 import SetupLinksTemplate from "../SetupLinksTemplate"
 import useArray from "hooks/UseArray.hooks"
 import { ExternalLink } from "types/general.types"
-import ProfessionalSetupContext from "./ProfessionalSetupContext"
+import ProfessionalSetupContext from "../../../Profile/Professional/ProfessionalProfileContext"
 
 const SetupQualifications: React.FC = () => {
   const [setupData, setSetupData] = useContext(ProfessionalSetupContext)

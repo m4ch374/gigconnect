@@ -2,7 +2,7 @@ import useObject from "hooks/UseObject.hooks"
 import { createContext } from "react"
 import { CompanyProfileData } from "types/company.types"
 
-const CompanySetupContext = createContext<
+const CompanyProfileContext = createContext<
   ReturnType<typeof useObject<CompanyProfileData>>
 >([
   {
@@ -16,6 +16,7 @@ const CompanySetupContext = createContext<
   },
   () => {},
   () => {},
+  () => {},
 ])
 
-export default CompanySetupContext
+export default CompanyProfileContext

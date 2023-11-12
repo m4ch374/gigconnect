@@ -7,7 +7,6 @@ import { ProjectStatus, TUser } from "types/general.types"
 import {
   ProfessionalProfileData,
   ProfessionalUser,
-  ViewedProfessionalProfileData,
 } from "types/professional.types"
 import {
   CreateProjectData,
@@ -143,7 +142,7 @@ export type TProfessionalProfile = TEndpoint<void, ProfessionalProfileData>
 // ===================================================
 export type TPublicProfessionalProfile = TEndpoint<
   { userId: string },
-  ViewedProfessionalProfileData
+  ProfessionalProfileData
 >
 // ===================================================
 
@@ -180,6 +179,15 @@ export type TCompanyProfile = TEndpoint<void, CompanyProfileData>
 // /api/company/profiledata/update
 // ===================================================
 export type TCompanyProfileUpdate = TEndpoint<CompanyProfileData, void>
+// ===================================================
+
+// ===================================================
+// /api/company/profiledata/public
+// ===================================================
+export type TPublicCompanyProfile = TEndpoint<
+  { userId: string },
+  CompanyProfileData
+>
 // ===================================================
 
 // ===================================================

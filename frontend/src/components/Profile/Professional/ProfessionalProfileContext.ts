@@ -2,7 +2,7 @@ import useObject from "hooks/UseObject.hooks"
 import { createContext } from "react"
 import { ProfessionalProfileData } from "types/professional.types"
 
-const ProfessionalSetupContext = createContext<
+const ProfessionalProfileContext = createContext<
   ReturnType<typeof useObject<ProfessionalProfileData>>
 >([
   {
@@ -18,6 +18,7 @@ const ProfessionalSetupContext = createContext<
   },
   () => {},
   () => {},
+  () => {},
 ])
 
-export default ProfessionalSetupContext
+export default ProfessionalProfileContext

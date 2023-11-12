@@ -63,7 +63,7 @@ const ProtectedRoutes: React.FC = () => {
         </div>
       </div>
 
-      <div className="mt-[70px]">
+      <div className="pt-[70px]">
         <Outlet />
       </div>
     </div>

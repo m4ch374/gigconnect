@@ -1,9 +1,9 @@
 import useArray from "hooks/UseArray.hooks"
 import React, { useContext, useEffect } from "react"
-import ProfessionalSetupContext from "./Professional/ProfessionalSetupContext"
+import ProfessionalSetupContext from "../../Profile/Professional/ProfessionalProfileContext"
 import { ExternalLink } from "types/general.types"
 import SetupLinksTemplate from "./SetupLinksTemplate"
-import CompanySetupContext from "./Company/CompanySetupContext"
+import CompanySetupContext from "../../Profile/Company/CompanyProfileContext"
 import useUserType from "hooks/UserType.hooks"
 
 const SetupExternalLinks: React.FC = () => {

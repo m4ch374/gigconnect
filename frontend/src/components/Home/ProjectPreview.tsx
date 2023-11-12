@@ -6,9 +6,13 @@ import { ListedProjectData } from "types/project.types"
 
 type TProjectPreview = {
   projectDetail: ListedProjectData
+  navRoute: string
 }
 
-const ProjectPreview: React.FC<TProjectPreview> = ({ projectDetail }) => {
+const ProjectPreview: React.FC<TProjectPreview> = ({
+  projectDetail,
+  navRoute,
+}) => {
   const {
     companyName,
     creationDate,
@@ -17,7 +21,6 @@ const ProjectPreview: React.FC<TProjectPreview> = ({ projectDetail }) => {
     tags,
     title,
     location,
-    projectId,
   } = projectDetail
 
   const navigate = useNavigate()
@@ -42,7 +45,7 @@ const ProjectPreview: React.FC<TProjectPreview> = ({ projectDetail }) => {
   return (
     <div
       className="p-4 group hover:bg-sky-300/10 cursor-pointer"
-      onClick={() => navigate(`/home/projects/details/${projectId}`)}
+      onClick={() => navigate(navRoute)}
     >
       <h3 className="group-hover:text-sky-300 font-semibold text-lg truncate my-2">
         {title}
