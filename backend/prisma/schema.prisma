@@ -29,10 +29,9 @@ model Company {
   verified       Boolean              @default(false)
   onboarded      Boolean              @default(false)
   name           String
-  address        String?
-  description    String?
+  description    String               @default("")
   abn            String
-  profilePic     String? // Encoded as base64
+  profilePic     String               @default("") // Encoded as base64
   projects       Project[]
   companyLinks   CompanyLink[]
   reviews        CompanyReview[]
@@ -50,7 +49,7 @@ model CompanyLink {
 model CompanyReview {
   id        Int          @id @default(autoincrement())
   score     Int
-  message   String?
+  message   String       @default("")
   author    Professional @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  Int
   subject   Company      @relation(fields: [subjectId], references: [id], onDelete: Cascade)
@@ -67,9 +66,9 @@ model Professional {
   onboarded      Boolean              @default(false)
   firstName      String
   lastName       String
-  description    String?
+  description    String               @default("")
   skills         String[]
-  profilePic     String? // Encoded as base64
+  profilePic     String               @default("") // Encoded as base64
   socialLinks    SocialLink[]
   certLinks      CertLink[]
   projects       Project[]
@@ -97,7 +96,7 @@ model CertLink {
 model ProfessionalReview {
   id        Int          @id @default(autoincrement())
   score     Int
-  message   String?
+  message   String       @default("")
   author    Company      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  Int
   subject   Professional @relation(fields: [subjectId], references: [id], onDelete: Cascade)
@@ -109,12 +108,12 @@ model ProfessionalReview {
 model Project {
   id                     Int                  @id @default(autoincrement())
   title                  String
-  publicDescription      String?
-  privateDescription     String?
+  publicDescription      String               @default("")
+  privateDescription     String               @default("")
   creationDate           DateTime             @default(now())
   tags                   String[]
   inPerson               Boolean
-  location               String? // Set this if inPerson is true
+  location               String               @default("") // Set this if inPerson is true
   status                 ProjectStatus        @default(OPEN)
   company                Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId              Int
