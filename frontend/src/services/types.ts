@@ -308,6 +308,24 @@ export type TProjectChangeStatus = TEndpoint<
   { newStatus: ProjectStatus }
 >
 
+// /api/project/data
+export type TProjectData = TEndpoint<
+  { projectId: string },
+  {
+    title: string
+    companyId: string
+    companyName: string
+    description: string
+    tags: string[]
+    inPerson: boolean
+    location: string
+    creationDate: string
+    status: ProjectStatus
+    professionals: ProfessionalUser[]
+    requests: Request[]
+  }
+>
+
 // /api/project/editdata
 export type TProjectEditData = TEndpoint<
   { projectId: string },

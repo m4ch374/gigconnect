@@ -5,6 +5,7 @@ import {
   TEditProject,
   TProjDetailsProfessional,
   TProjectChangeStatus,
+  TProjectData,
   TProjectDelete,
   TProjectDetailsCompany,
   TProjectEditData,
@@ -121,6 +122,15 @@ export const apiProjectChangeStatus = (
   return Fetcher.init<TProjectChangeStatus>("POST", "/api/project/changestatus")
     .withCurrentToken()
     .withJsonPaylad(data)
+    .newFetchData()
+}
+
+// Function for calling API route /api/project/data
+// Used to get information about a project.
+export const apiProjectData = (data: TProjectData["requestType"]) => {
+  return Fetcher.init<TProjectData>("GET", "/api/project/data")
+    .withCurrentToken()
+    .withParams(data)
     .newFetchData()
 }
 
