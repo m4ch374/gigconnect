@@ -4,13 +4,15 @@ import { twMerge } from "tailwind-merge"
 type TInputField = {
   placeholder?: string
   className?: string
-  onChange?: ChangeEventHandler<HTMLInputElement> | undefined
+  onChange?: ChangeEventHandler<HTMLInputElement>
+  value?: string
 }
 
 const InputField: React.FC<TInputField> = ({
   placeholder = "",
   className = "",
   onChange,
+  value,
 }) => {
   return (
     <input
@@ -20,6 +22,7 @@ const InputField: React.FC<TInputField> = ({
       )}
       placeholder={placeholder}
       onChange={onChange}
+      value={value}
       type="text"
     />
   )
