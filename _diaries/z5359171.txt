@@ -28,3 +28,6 @@ I did the projectCreate and projectUpdate function and also updated the original
 
 Week 8
 I manually tested the project functions and the project requesting and viewing projects for company and professional users on the Arc client API. I also tested edge cases for these functions and checked the returns given to see if they updated correctly and provided appropriate error messages.
+
+Week 9
+I worked on the overview component in the report which involved designing the system architecture and explaining how the layers interact and what each layer does. This includes explaining the components within the layer.

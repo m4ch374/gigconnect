@@ -33,4 +33,7 @@ Week 8
     - added format for final project report.
 
 Week 9
+    - made progress in project final report doc ~ formatting, stub info, tabulation etc.
+    - implemented email functionalities in the backend
+Week 10
     - 

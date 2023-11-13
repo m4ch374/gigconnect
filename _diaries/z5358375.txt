@@ -56,3 +56,12 @@ bugs and did some manual testing using the frontend. I also
 updated the Prisma schema for Sprint 3 data. Next week we
 will begin implementing Sprint 3 stories and work on the
 project report.
+
+Week 9
+We continued implementing Sprint 3 user stories. I
+updated the Prisma schema for Sprint 3 data including
+profile pictures and reviews. I implemented the new api routes
+on the backend and fixed some bugs. I added some sample data
+for testing. Also I completed the 3rd party libraries section
+in the report for backend libraries. Next week we will finish
+off the project!

@@ -49,3 +49,8 @@ WEEK 8
 - Created pages for comapnies to accept/reject requests
 - Held our second demo and retrospective, which went fairly well
 - Wrote some updated to the code to prepare for the next sprint
+
+WEEK 9
+- Wrote the specification for new API routes for sprint 3
+- Wrote functions on the frontend for calling these new API routes
+- Fixed some error checking related issues on the frontend

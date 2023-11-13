@@ -40,3 +40,9 @@ WEEK 8
 * finished showing companies
 * finished showing talents
 * finished showing details
+
+WEEK 9
+* Did a redesign of the website
+* Literally rewrote the whole frontend
+* Added animations to most components
+* See Contributors in the insights tab for more info
