@@ -5,6 +5,7 @@ import {
   professionalInProject,
   checkCompanyIsProjectOwner,
   UserType,
+  getTransporterForEmail,
 } from "./helper"
 
 /*
@@ -267,6 +268,39 @@ const projectChangeStatus = async (companyId: string, projectId: string) => {
     })
   }
 
+  // If status changed to project "CLOSED", then email all profesh's about this change.
+  if (status === ProjectStatus.CLOSED) {
+    // call helper fnc in a for loop feeding different emails/names each time
+    const thisProject = await prisma.project.findUnique({
+      where: { id: parseInt(projectId, 10) },
+      include: {
+        professionals: true,
+        company: true,
+      },
+    })
+    const professionals = thisProject?.professionals
+    const profeshEmails = professionals?.map(profesh => profesh.email)
+    const transporter = getTransporterForEmail()
+    if (professionals) {
+      // Now Setup the stuff for sending email (we setup envi before emailing each profesh to avoid throttling issues?)
+      const header = `Congrats! Your project '${thisProject.title}' has been completed!`
+      const body = `Hello there!\n\n${thisProject.company.name} has marked your project, '${thisProject.title}', as completed!\n\nPlease leave a review about your experience working on the project :)\n\nKind regards,\nGigConnect.`
+      const mailOptions = {
+        from: "acockatoos3900f11@outlook.com",
+        to: profeshEmails?.toString(), // send emails as a batch, mitigating concurrency limit issues
+        subject: header,
+        text: body,
+      }
+      try {
+        await transporter.sendMail(mailOptions)
+        console.log(`Batch emails sent successfully, upon project closure`)
+      } catch (error) {
+        console.error(`ERROR sending to batch emails:`, error)
+        // throw error // Rethrow the error to handle it in the calling function
+      }
+    }
+    transporter.close()
+  }
   return { newStatus: status.valueOf().toLowerCase() }
 }
 

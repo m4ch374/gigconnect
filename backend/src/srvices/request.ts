@@ -1,6 +1,6 @@
 import HTTPError from "http-errors"
 import { ProjectStatus } from "@prisma/client"
-import { prisma, professionalInProject } from "./helper"
+import { prisma, professionalInProject, getTransporterForEmail } from "./helper"
 
 /**
  * Return a promise that resolves true if the project has status OPEN,
@@ -94,10 +94,67 @@ const requestRespond = async (
       throw HTTPError(400, "professionalId or projectId does not exist.")
     }
   }
+
+  // Email the professional about the status of the Request
+  const info = await prisma.request.findUnique({
+    where: { id: parseInt(requestId, 10) },
+    select: {
+      professional: {
+        select: {
+          firstName: true,
+          email: true,
+        },
+      },
+      project: {
+        select: {
+          title: true,
+          company: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  })
+  // now finally delete the request itself
   await prisma.request.delete({
     where: { id: parseInt(requestId, 10) },
   })
-
+  // const companyInfo = await prisma.company.findUnique({
+  //   where: { id: info?.project.companyId },
+  //   select: {
+  //     name: true,
+  //   },
+  // })
+  // gather email related info
+  const projectTitle = info?.project.title
+  const profeshName = info?.professional.firstName
+  const profeshEmail = info?.professional.email
+  const companyName = info?.project.company.name
+  const header = accepted
+    ? `Project request for ${projectTitle} is accepted!`
+    : `Project request for ${projectTitle} is declined`
+  const body = accepted
+    ? `Hi ${profeshName}!\n\nCongrats, your request to join the project, '${projectTitle}', has been accepted by ${companyName}!\n\nGet to it and make your mark!\n\nKind regards,\nGigConnect.`
+    : `Hi ${profeshName},\n\nUnfortunately, your request to join the project, '${projectTitle}', has been declined by ${companyName}.\n\nBut don't let that stop you from making your mark, keep at it!\n\nKind regards,\nGigConnect.`
+  const mailOptions = {
+    from: "acockatoos3900f11@outlook.com",
+    to: profeshEmail,
+    subject: header,
+    text: body,
+  }
+  const transporter = getTransporterForEmail()
+  try {
+    await transporter.sendMail(mailOptions)
+    console.log(`Email to ${profeshEmail} about Requests, sent successfully`)
+  } catch (error) {
+    console.error(
+      `ERROR sending to email ${profeshEmail} about Requests\n:`,
+      error,
+    )
+  }
+  transporter.close()
   return { success: true }
 }
 

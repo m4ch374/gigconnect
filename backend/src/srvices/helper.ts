@@ -2,6 +2,7 @@ import HTTPError from "http-errors"
 import * as jwt from "jsonwebtoken"
 import { randomBytes, scrypt, timingSafeEqual } from "crypto"
 import { PrismaClient, ProjectStatus } from "@prisma/client"
+import nodemailer from "nodemailer"
 
 const prisma = new PrismaClient()
 const hashKeyLen = 32
@@ -259,6 +260,26 @@ const checkCompanyIsProjectOwner = async (
   return false
 }
 
+// Create and return a transporter for mailing
+//  to mitigate failed email calls after using transport.close(), but we need to close to avoid timeout shit??
+const getTransporterForEmail = () => {
+  const transporter = nodemailer.createTransport({
+    // host: "smtp-mail.outlook.com",
+    pool: true,
+    service: "outlook",
+    // secureConnection: false, // TLS requires secureConnection to be false
+    // port: 587, // port for secure SMTP
+    auth: {
+      user: "acockatoos3900f11@outlook.com",
+      pass: "3900f11acockatoos",
+    },
+    // tls: {
+    //   ciphers: "SSLv3",
+    // },
+  })
+  return transporter
+}
+
 export {
   UserType,
   ExternalLink,
@@ -278,4 +299,5 @@ export {
   getProfeshUserEntry,
   professionalInProject,
   checkCompanyIsProjectOwner,
+  getTransporterForEmail,
 }
