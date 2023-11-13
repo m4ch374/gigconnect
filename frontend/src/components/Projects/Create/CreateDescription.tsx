@@ -58,10 +58,6 @@ const CreateDescription: React.FC = () => {
             <textarea
               className="bg-transparent border border-zinc-400 rounded-md w-full h-[150px] p-2"
               placeholder="Add a private description"
-              value={projData.privateDescription}
-              onChange={e =>
-                setProj("privateDescription", e.currentTarget.value)
-              }
             />
           </div>
         </div>
