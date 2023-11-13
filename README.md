@@ -61,7 +61,7 @@ Few things to note are:
 * Floating promises: forbidden except for IIFE
 * Trailing commas: yes
 
-* Function paranthesis: avoids
+* Function parentheses: avoids
 
 i.e.
 // normal
