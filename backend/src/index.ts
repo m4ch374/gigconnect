@@ -8,29 +8,29 @@ import {
   returnHi,
   returnPassword,
   returnTestData,
-} from "srvices/hello"
-import { ExternalLink, UserType, verifyToken } from "srvices/helper"
+} from "./srvices/hello"
+import { ExternalLink, UserType, verifyToken } from "./srvices/helper"
 import {
   authLogin,
   authLogout,
   onboardedData,
   onboardedUpdate,
-} from "srvices/auth"
+} from "./srvices/auth"
 import {
   companyCreate,
   companyData,
   companyUpdate,
   allCompanyPublicData,
   companyDataPublic,
-} from "srvices/company"
+} from "./srvices/company"
 import {
   professionalCreate,
   professionalData,
   professionalUpdate,
   allProfessionalPublicData,
   professionalDataPublic,
-} from "srvices/professional"
-import { adminDashboard, adminSetVerified } from "srvices/admin"
+} from "./srvices/professional"
+import { adminDashboard, adminSetVerified } from "./srvices/admin"
 import {
   projectChangeStatus,
   projectCreate,
@@ -42,14 +42,14 @@ import {
   projectData,
   projectDataEdit,
   projectDelete,
-} from "srvices/project"
-import { requestCreate, requestData, requestRespond } from "srvices/request"
+} from "./srvices/project"
+import { requestCreate, requestData, requestRespond } from "./srvices/request"
 import {
   reviewCandidates,
   reviewCreate,
   reviewData,
   reviewInput,
-} from "srvices/review"
+} from "./srvices/review"
 
 interface ReqQuery<T> extends Express.Request {
   query: T
