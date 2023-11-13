@@ -2,6 +2,7 @@ import CompanyProfileContext from "components/Profile/Company/CompanyProfileCont
 import CompanyProfileIntro from "components/Profile/Company/CompanyProfileIntro"
 import PastProjects from "components/Profile/PastProjects"
 import useObject from "hooks/UseObject.hooks"
+import useUserType from "hooks/UserType.hooks"
 import React, { useEffect } from "react"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
@@ -10,6 +11,7 @@ import { CompanyProfileData } from "types/company.types"
 
 const CompanyMyProfile: React.FC = () => {
   const navigate = useNavigate()
+  const { userType } = useUserType()
   const profileController = useObject<CompanyProfileData>({
     abn: "",
     companyDescription: "",
@@ -21,6 +23,11 @@ const CompanyMyProfile: React.FC = () => {
   })
 
   useEffect(() => {
+    if (userType === "professional") {
+      navigate("/professional")
+      return
+    }
+
     ;(async () => {
       const res = await getCompanyProfile()
 

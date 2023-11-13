@@ -5,7 +5,7 @@ import useObject from "hooks/UseObject.hooks"
 import React, { FormEvent, useCallback, useMemo } from "react"
 import toast from "react-hot-toast"
 import { ExternalLink } from "types/general.types"
-import LinkItem from "./LinkItem"
+import LinkItem from "../../Home/Onboard/LinkItem"
 
 type TSetupLinksTemplate = {
   inputNamePlaceholder: string
@@ -13,7 +13,7 @@ type TSetupLinksTemplate = {
   arrayController: ReturnType<typeof useArray<ExternalLink>>
 }
 
-const SetupLinksTemplate: React.FC<TSetupLinksTemplate> = ({
+const EditLinksTemplate: React.FC<TSetupLinksTemplate> = ({
   inputNamePlaceholder,
   inputLinkPlaceholder,
   arrayController,
@@ -120,4 +120,4 @@ const SetupLinksTemplate: React.FC<TSetupLinksTemplate> = ({
   )
 }
 
-export default SetupLinksTemplate
+export default EditLinksTemplate

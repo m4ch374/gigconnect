@@ -1,8 +1,26 @@
-import React, { useContext, useMemo, useState } from "react"
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 import ProfessionalProfileContext from "./Professional/ProfessionalProfileContext"
 import CompanyProfileContext from "./Company/CompanyProfileContext"
+import useIsMyProfile from "hooks/UseIsMyProfile"
+import ProfileEditButton from "./Edit/ProfileEditButton"
+import ProfileEditContainer from "./Edit/ProfileEditContainer"
+import { AnimatePresence } from "framer-motion"
+import EditDescription from "./Edit/EditDescription"
+import { updateProfessionalProfile } from "services/professional.services"
+import toast from "react-hot-toast"
+import { updateCompanyProfile } from "services/company.services"
+import useUserType from "hooks/UserType.hooks"
 
 const ProfileDescription: React.FC = () => {
+  const isMyProfile = useIsMyProfile()
+  const { userType } = useUserType()
+
   const professionalProfileContext = useContext(ProfessionalProfileContext)
   const companyProfileContext = useContext(CompanyProfileContext)
 
@@ -21,9 +39,55 @@ const ProfileDescription: React.FC = () => {
 
   const [showMore, setShowMore] = useState(false)
 
+  const [editModal, setEditModal] = useState(false)
+  const [editItem, setEditItem] = useState(description)
+
+  useEffect(() => {
+    setEditItem(description)
+  }, [description])
+
+  const editProfessionalDescription = useCallback(() => {
+    ;(async () => {
+      const resp = await updateProfessionalProfile({
+        ...professionalProfileContext[0],
+        description: editItem,
+      })
+
+      if (!resp.ok) {
+        toast.error(resp.error)
+        return
+      }
+
+      professionalProfileContext[1]("description", editItem)
+      setEditModal(false)
+    })()
+  }, [editItem, professionalProfileContext])
+
+  const editCompanyDescription = useCallback(() => {
+    ;(async () => {
+      const resp = await updateCompanyProfile({
+        ...companyProfileContext[0],
+        companyDescription: editItem,
+      })
+
+      if (!resp.ok) {
+        toast.error(resp.error)
+        return
+      }
+
+      companyProfileContext[1]("companyDescription", editItem)
+      setEditModal(false)
+    })()
+  }, [companyProfileContext, editItem])
+
   return (
     <div className="p-4">
-      <h3 className="font-semibold text-2xl">Description</h3>
+      <div className="flex gap-4 items-center">
+        <h3 className="font-semibold text-2xl">Description</h3>
+        {isMyProfile && (
+          <ProfileEditButton onButtonClick={() => setEditModal(true)} />
+        )}
+      </div>
       <div className="p-4 font-thin">
         {description ? (
           <p>
@@ -44,6 +108,31 @@ const ProfileDescription: React.FC = () => {
           </div>
         )}
       </div>
+
+      <AnimatePresence>
+        {editModal && (
+          <ProfileEditContainer
+            onCloseButton={() => setEditModal(false)}
+            onBackdropClick={() => setEditModal(false)}
+            containerTitle="Edit Description"
+            onConfirmClick={() => {
+              if (userType === "professional") {
+                editProfessionalDescription()
+                return
+              }
+              editCompanyDescription()
+            }}
+          >
+            <div className="px-4 pt-4">
+              <h1>Change your description:</h1>
+              <EditDescription
+                textValue={editItem}
+                textOnChange={e => setEditItem(e.currentTarget.value)}
+              />
+            </div>
+          </ProfileEditContainer>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

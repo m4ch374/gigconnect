@@ -5,8 +5,6 @@ import ProtectedRoutes from "components/ProtectedRoutes"
 import CompanyMyProfile from "pages/Profile/Company/CompanyMyProfile"
 import ProfessionalMyProfile from "pages/Profile/Professional/ProfessionalMyProfile"
 import AdminDashboard from "pages/AdminDashboard"
-import CompanyEditProfile from "pages/Profile/Company/CompanyEditProfile"
-import ProfessionalEditProfile from "pages/Profile/Professional/ProfessionalEditProfile"
 import CreateProject from "pages/Projects/CreateProject"
 import RequestProject from "pages/Projects/RequestProject"
 import Home from "pages/Home/Home"
@@ -80,14 +78,12 @@ const AppRoutes: React.FC = () => {
           {/* Company Profile */}
           <Route path="company">
             <Route index element={<CompanyMyProfile />} />
-            <Route path="edit" element={<CompanyEditProfile />} />
             <Route path=":userId" element={<CompanyProfile />} />
           </Route>
 
           {/* Professional Profile */}
           <Route path="professional">
             <Route index element={<ProfessionalMyProfile />} />
-            <Route path="edit" element={<ProfessionalEditProfile />} />
             <Route path=":userId" element={<ProfessionalProfile />} />
           </Route>
 

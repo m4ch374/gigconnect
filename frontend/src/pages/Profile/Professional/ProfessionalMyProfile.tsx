@@ -8,9 +8,11 @@ import ProfileCertifications from "components/Profile/Professional/ProfileCertif
 import { useNavigate } from "react-router-dom"
 import ProfessionalProfileContext from "components/Profile/Professional/ProfessionalProfileContext"
 import useObject from "hooks/UseObject.hooks"
+import useUserType from "hooks/UserType.hooks"
 
 const ProfessionalMyProfile: React.FC = () => {
   const navigate = useNavigate()
+  const { userType } = useUserType()
 
   const profileController = useObject<ProfessionalProfileData>({
     description: "",
@@ -25,6 +27,11 @@ const ProfessionalMyProfile: React.FC = () => {
   })
 
   useEffect(() => {
+    if (userType === "company") {
+      navigate("/company")
+      return
+    }
+
     ;(async () => {
       const resp = await getProfessionalProfile()
 

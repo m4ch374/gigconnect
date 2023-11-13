@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from "react"
-import SetupLinksTemplate from "../SetupLinksTemplate"
 import useArray from "hooks/UseArray.hooks"
 import { ExternalLink } from "types/general.types"
 import ProfessionalSetupContext from "../../../Profile/Professional/ProfessionalProfileContext"
+import EditLinksTemplate from "../../../Profile/Edit/EditLinksTemplate"
 
 const SetupQualifications: React.FC = () => {
   const [setupData, setSetupData] = useContext(ProfessionalSetupContext)
@@ -18,7 +18,7 @@ const SetupQualifications: React.FC = () => {
     <div className="w-full h-full overflow-auto p-4">
       <h1>Add qualifications to support your experiences!</h1>
 
-      <SetupLinksTemplate
+      <EditLinksTemplate
         inputNamePlaceholder="Qualifications"
         inputLinkPlaceholder="Certification Link"
         arrayController={arrayController}

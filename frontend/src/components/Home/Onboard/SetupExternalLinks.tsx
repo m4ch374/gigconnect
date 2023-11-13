@@ -2,7 +2,7 @@ import useArray from "hooks/UseArray.hooks"
 import React, { useContext, useEffect } from "react"
 import ProfessionalSetupContext from "../../Profile/Professional/ProfessionalProfileContext"
 import { ExternalLink } from "types/general.types"
-import SetupLinksTemplate from "./SetupLinksTemplate"
+import EditLinksTemplate from "../../Profile/Edit/EditLinksTemplate"
 import CompanySetupContext from "../../Profile/Company/CompanyProfileContext"
 import useUserType from "hooks/UserType.hooks"
 
@@ -32,7 +32,7 @@ const SetupExternalLinks: React.FC = () => {
     <div className="w-full h-full overflow-auto p-4">
       <h1>Add external websites!</h1>
 
-      <SetupLinksTemplate
+      <EditLinksTemplate
         inputNamePlaceholder="Website"
         inputLinkPlaceholder="Website Link"
         arrayController={arrayController}
