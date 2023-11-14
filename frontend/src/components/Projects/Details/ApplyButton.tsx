@@ -1,6 +1,6 @@
 import { AnimatePresence } from "framer-motion"
 import React, { useState } from "react"
-import ApplyProjectModal from "../ApplyProjectModal"
+import ApplyProjectModal from "./ApplyProjectModal"
 
 type TApplyButton = {
   projectId: string

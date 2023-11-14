@@ -35,7 +35,7 @@ const ProjectMeta: React.FC<TProjectMeta> = ({ projDetail, projectId }) => {
             {userType === "professional" && (
               <ApplyButton projectId={projectId} />
             )}
-            {userId === projDetail.companyId && (
+            {userType === "company" && userId === projDetail.companyId && (
               <RemoveButton projectId={projectId} />
             )}
           </div>
@@ -63,13 +63,15 @@ const ProjectMeta: React.FC<TProjectMeta> = ({ projDetail, projectId }) => {
         </div>
       </div>
 
-      {userId === projDetail.companyId && projDetail.status !== "closed" && (
-        <ChangeStatusButton
-          projectId={projectId}
-          setStatus={setCurrStatus}
-          status={currStatus}
-        />
-      )}
+      {userId === projDetail.companyId &&
+        projDetail.status !== "closed" &&
+        userType === "company" && (
+          <ChangeStatusButton
+            projectId={projectId}
+            setStatus={setCurrStatus}
+            status={currStatus}
+          />
+        )}
 
       <hr className="border-zinc-400 my-4" />
 

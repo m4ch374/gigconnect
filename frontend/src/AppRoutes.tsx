@@ -9,7 +9,6 @@ import CreateProject from "pages/Projects/CreateProject"
 import Home from "pages/Home/Home"
 import Landing from "pages/Landing"
 import ProjectDetailsModal from "pages/Projects/ProjectDetailsModal"
-import RequestRespond from "pages/Projects/RequestRespond"
 import EditProject from "pages/Projects/EditProject"
 import ProfessionalProfile from "pages/Profile/Professional/ProfessionalProfile"
 import useToken from "hooks/Token.hooks"
@@ -96,7 +95,6 @@ const AppRoutes: React.FC = () => {
             <Route path=":projectId">
               <Route index element={<ProjectDetails />} />
               <Route path="edit" element={<EditProject />} />
-              <Route path="request/:requestId" element={<RequestRespond />} />
             </Route>
           </Route>
 

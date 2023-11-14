@@ -322,7 +322,7 @@ export type TProjectData = TEndpoint<
     creationDate: string
     status: ProjectStatus
     professionals: ProfessionalUser[]
-    requests: Request[]
+    requests: ProjectRequestData[]
   }
 >
 
