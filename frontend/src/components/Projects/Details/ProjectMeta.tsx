@@ -1,12 +1,15 @@
 import Building from "assets/icons/Building"
 import MapPin from "assets/icons/MapPin"
-import React from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import { TProjectData } from "services/types"
 import ApplyButton from "./ApplyButton"
 import useUserType from "hooks/UserType.hooks"
 import RemoveButton from "./RemoveButton"
 import useUserId from "hooks/UseUserId.hoosk"
+import ChangeStatusButton from "./ChangeStatusButton"
+import ShowProjectStats from "./ShowProjectStatus"
+import { ProjectStatus } from "types/general.types"
 
 type TProjectMeta = {
   projDetail: TProjectData["responseType"]
@@ -18,16 +21,21 @@ const ProjectMeta: React.FC<TProjectMeta> = ({ projDetail, projectId }) => {
 
   const userId = useUserId()
 
+  const [currStatus, setCurrStatus] = useState<ProjectStatus>(projDetail.status)
+
   return (
     <div className="border border-zinc-400 rounded-xl mb-10">
       <div className="p-4">
         <div className="flex my-2 justify-between">
-          <h1 className="font-bold text-2xl">{projDetail.title}</h1>
+          <div>
+            <ShowProjectStats status={currStatus} />
+            <h1 className="font-bold text-2xl">{projDetail.title}</h1>
+          </div>
           <div>
             {userType === "professional" && (
               <ApplyButton projectId={projectId} />
             )}
-            {userType === "company" && userId === projDetail.companyId && (
+            {userId === projDetail.companyId && (
               <RemoveButton projectId={projectId} />
             )}
           </div>
@@ -43,7 +51,7 @@ const ProjectMeta: React.FC<TProjectMeta> = ({ projDetail, projectId }) => {
           </Link>
           <h3>-</h3>
           <h3>
-            Posted at: {new Date(projDetail.creationDate).toLocaleDateString()}
+            Posted on: {new Date(projDetail.creationDate).toLocaleDateString()}
           </h3>
         </div>
 
@@ -54,6 +62,14 @@ const ProjectMeta: React.FC<TProjectMeta> = ({ projDetail, projectId }) => {
           <h3>{projDetail.inPerson ? "In-Person" : "Remote"}</h3>
         </div>
       </div>
+
+      {userId === projDetail.companyId && projDetail.status !== "closed" && (
+        <ChangeStatusButton
+          projectId={projectId}
+          setStatus={setCurrStatus}
+          status={currStatus}
+        />
+      )}
 
       <hr className="border-zinc-400 my-4" />
 
