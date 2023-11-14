@@ -16,7 +16,7 @@ const TalentPreview: React.FC<TTalentPreview> = ({ talent }) => {
       onClick={() => navigate(`/professional/${talent.userId}`)}
     >
       <div className="flex items-center gap-2">
-        <ProfileIcon verified={talent.verified} />
+        <ProfileIcon verified={talent.verified} srcUrl={talent.profilePhoto} />
         <h1 className="text-lg font-semibold truncate">
           {talent.firstName} {talent.lastName}
         </h1>

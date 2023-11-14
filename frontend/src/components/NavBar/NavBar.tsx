@@ -92,6 +92,15 @@ const NavBar: React.FC = () => {
     userType,
   ])
 
+  const srcUrl = useMemo(() => {
+    if (userType === "company") return companyProfileData.profilePhoto
+    return professionalProfileData.profilePhoto
+  }, [
+    companyProfileData.profilePhoto,
+    professionalProfileData.profilePhoto,
+    userType,
+  ])
+
   return (
     <>
       <div
@@ -119,7 +128,11 @@ const NavBar: React.FC = () => {
           </button>
 
           <button onClick={() => setShowModal(true)}>
-            <ProfileIcon verified={false} className="w-10 h-10" />
+            <ProfileIcon
+              verified={false}
+              className="w-10 h-10"
+              srcUrl={srcUrl}
+            />
           </button>
         </div>
       </div>
@@ -130,7 +143,7 @@ const NavBar: React.FC = () => {
             onBackdropClick={() => setShowModal(false)}
             className="flex items-center justify-end backdrop-blur-sm"
           >
-            <SlideMenu name={userName} setShow={setShowModal} />
+            <SlideMenu name={userName} setShow={setShowModal} srcUrl={srcUrl} />
           </ModalBackdrop>
         )}
       </AnimatePresence>

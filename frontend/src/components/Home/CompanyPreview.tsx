@@ -16,7 +16,10 @@ const CompanyPreview: React.FC<TCompanyPreview> = ({ company }) => {
       onClick={() => navigate(`/company/${company.userId}`)}
     >
       <div className="flex items-center gap-2">
-        <ProfileIcon verified={company.verified} />
+        <ProfileIcon
+          verified={company.verified}
+          srcUrl={company.profilePhoto}
+        />
         <h1 className="text-lg font-semibold truncate">
           {company.companyName}
         </h1>

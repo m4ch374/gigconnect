@@ -50,41 +50,37 @@ const UserSkills: React.FC = () => {
           })
         )}
       </div>
-      {editModal && (
-        <AnimatePresence>
-          {editModal && (
-            <ProfileEditContainer
-              onCloseButton={() => setEditModal(false)}
-              onBackdropClick={() => setEditModal(false)}
-              containerTitle="Add or remove skills"
-              onConfirmClick={() => {
-                ;(async () => {
-                  const resp = await updateProfessionalProfile({
-                    ...professionalProfileController[0],
-                    skills: skillsController.arr,
-                  })
 
-                  if (!resp.ok) {
-                    toast.error(resp.error)
-                    return
-                  }
+      <AnimatePresence>
+        {editModal && (
+          <ProfileEditContainer
+            onCloseButton={() => setEditModal(false)}
+            onBackdropClick={() => setEditModal(false)}
+            containerTitle="Add or remove skills"
+            onConfirmClick={() => {
+              ;(async () => {
+                const resp = await updateProfessionalProfile({
+                  ...professionalProfileController[0],
+                  skills: skillsController.arr,
+                })
 
-                  professionalProfileController[1](
-                    "skills",
-                    skillsController.arr,
-                  )
-                  setEditModal(false)
-                })()
-              }}
-            >
-              <div className="p-4">
-                <h1 className="mb-2">Edit your skills:</h1>
-                <EditSkills skillsArrayController={skillsController} />
-              </div>
-            </ProfileEditContainer>
-          )}
-        </AnimatePresence>
-      )}
+                if (!resp.ok) {
+                  toast.error(resp.error)
+                  return
+                }
+
+                professionalProfileController[1]("skills", skillsController.arr)
+                setEditModal(false)
+              })()
+            }}
+          >
+            <div className="p-4">
+              <h1 className="mb-2">Edit your skills:</h1>
+              <EditSkills skillsArrayController={skillsController} />
+            </div>
+          </ProfileEditContainer>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

@@ -12,10 +12,11 @@ import { logout } from "services/auth.services"
 
 type TSideMenu = {
   name: string
+  srcUrl: string
   setShow: Dispatch<SetStateAction<boolean>>
 }
 
-const SlideMenu: React.FC<TSideMenu> = ({ name, setShow }) => {
+const SlideMenu: React.FC<TSideMenu> = ({ name, srcUrl, setShow }) => {
   useDisableScroll()
 
   const navigate = useNavigate()
@@ -33,7 +34,7 @@ const SlideMenu: React.FC<TSideMenu> = ({ name, setShow }) => {
       className="max-w-[300px] w-[100%] h-full bg-stone-700 rounded-l-xl drop-shadow-2xl cursor-default text-zinc-200/90 px-4"
     >
       <div className="flex flex-col items-center justify-center my-10 gap-4 w-full">
-        <ProfileIcon verified={false} className="w-24 h-24" />
+        <ProfileIcon verified={false} className="w-24 h-24" srcUrl={srcUrl} />
         <h1 className="text-3xl font-semibold truncate">{name}</h1>
       </div>
 

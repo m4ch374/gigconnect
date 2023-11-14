@@ -1,16 +1,19 @@
-import React, { useContext, useEffect } from "react"
+import React, { useCallback, useContext, useEffect } from "react"
 import { motion } from "framer-motion"
 import CheckCircle from "assets/icons/CheckCircle"
 import { apiCreateProject } from "services/project.services"
 import CreateProjectContext from "./CreateProjectContext"
 import toast from "react-hot-toast"
 import { useNavigate } from "react-router-dom"
+import useDisableScroll from "hooks/DisableScroll"
 
 const CreateFinished: React.FC = () => {
+  useDisableScroll()
+
   const createData = useContext(CreateProjectContext)[0]
   const navigate = useNavigate()
 
-  useEffect(() => {
+  const createProject = useCallback(() => {
     ;(async () => {
       const resp = await apiCreateProject(createData)
 
@@ -20,6 +23,15 @@ const CreateFinished: React.FC = () => {
       }
     })()
   }, [createData, navigate])
+
+  // To prevent double project creation due to strict mode
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      createProject()
+    }, 10)
+
+    return () => clearTimeout(timeout)
+  }, [createProject])
 
   return (
     <div className="w-full h-full flex items-center justify-center">

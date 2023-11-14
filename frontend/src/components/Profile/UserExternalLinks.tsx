@@ -110,7 +110,7 @@ const UserExternalLinks: React.FC = () => {
           <ProfileEditContainer
             onCloseButton={() => setEditModal(false)}
             onBackdropClick={() => setEditModal(false)}
-            containerTitle="Edit Description"
+            containerTitle="Add or remove external links"
             onConfirmClick={() => {
               if (userType === "professional") {
                 editProfessional()
@@ -119,7 +119,7 @@ const UserExternalLinks: React.FC = () => {
               editCompany()
             }}
           >
-            <div className="px-4 pt-4">
+            <div className="px-4 pt-4 overflow-auto">
               <h1>Change your description:</h1>
               <EditLinksTemplate
                 inputLinkPlaceholder="Website"
