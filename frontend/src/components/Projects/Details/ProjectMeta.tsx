@@ -1,10 +1,12 @@
 import Building from "assets/icons/Building"
 import MapPin from "assets/icons/MapPin"
-import { AnimatePresence } from "framer-motion"
-import React, { useState } from "react"
+import React from "react"
 import { Link } from "react-router-dom"
 import { TProjectData } from "services/types"
-import ApplyProjectModal from "../ApplyProjectModal"
+import ApplyButton from "./ApplyButton"
+import useUserType from "hooks/UserType.hooks"
+import RemoveButton from "./RemoveButton"
+import useUserId from "hooks/UseUserId.hoosk"
 
 type TProjectMeta = {
   projDetail: TProjectData["responseType"]
@@ -12,20 +14,23 @@ type TProjectMeta = {
 }
 
 const ProjectMeta: React.FC<TProjectMeta> = ({ projDetail, projectId }) => {
-  const [applyModal, setApplyModal] = useState(false)
+  const { userType } = useUserType()
+
+  const userId = useUserId()
 
   return (
     <div className="border border-zinc-400 rounded-xl mb-10">
       <div className="p-4">
         <div className="flex my-2 justify-between">
           <h1 className="font-bold text-2xl">{projDetail.title}</h1>
-          <button
-            className="bg-sky-500 px-4 py-1 rounded-full place-self-start"
-            type="button"
-            onClick={() => setApplyModal(true)}
-          >
-            Apply
-          </button>
+          <div>
+            {userType === "professional" && (
+              <ApplyButton projectId={projectId} />
+            )}
+            {userType === "company" && userId === projDetail.companyId && (
+              <RemoveButton projectId={projectId} />
+            )}
+          </div>
         </div>
 
         <div className="mt-8 text-zinc-300 flex gap-2 items-center text-sm font-thin">
@@ -71,15 +76,6 @@ const ProjectMeta: React.FC<TProjectMeta> = ({ projDetail, projectId }) => {
           ))}
         </div>
       </div>
-
-      <AnimatePresence>
-        {applyModal && (
-          <ApplyProjectModal
-            setShowModal={setApplyModal}
-            projectId={projectId}
-          />
-        )}
-      </AnimatePresence>
     </div>
   )
 }

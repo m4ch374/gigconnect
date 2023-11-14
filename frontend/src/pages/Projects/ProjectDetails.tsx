@@ -29,7 +29,9 @@ const ProjectDetails: React.FC = () => {
 
   return (
     <div className="w-full flex justify-center mt-4">
-      <ProjectMeta projDetail={projDetail} projectId={projectId as string} />
+      <div className="max-w-[1000px] w-full flex flex-col gap-4">
+        <ProjectMeta projDetail={projDetail} projectId={projectId as string} />
+      </div>
     </div>
   )
 }
