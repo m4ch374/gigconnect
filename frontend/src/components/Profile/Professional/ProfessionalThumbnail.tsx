@@ -67,7 +67,7 @@ const ProfessionalThumbnail: React.FC = () => {
                   ...profileData,
                   profilePhoto: imgStr,
                   firstName: tmpFirstName,
-                  lastName: tmpFirstName,
+                  lastName: tmpLastName,
                 })
 
                 if (!resp.ok) {

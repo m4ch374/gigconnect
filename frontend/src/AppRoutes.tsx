@@ -6,10 +6,9 @@ import CompanyMyProfile from "pages/Profile/Company/CompanyMyProfile"
 import ProfessionalMyProfile from "pages/Profile/Professional/ProfessionalMyProfile"
 import AdminDashboard from "pages/AdminDashboard"
 import CreateProject from "pages/Projects/CreateProject"
-import RequestProject from "pages/Projects/RequestProject"
 import Home from "pages/Home/Home"
 import Landing from "pages/Landing"
-import ProjectDetails from "pages/Projects/ProjectDetails"
+import ProjectDetailsModal from "pages/Projects/ProjectDetailsModal"
 import RequestRespond from "pages/Projects/RequestRespond"
 import EditProject from "pages/Projects/EditProject"
 import ProfessionalProfile from "pages/Profile/Professional/ProfessionalProfile"
@@ -22,6 +21,7 @@ import Companies from "pages/Home/Companies"
 import Talents from "pages/Home/Talents"
 import { AnimatePresence } from "framer-motion"
 import CompanyProfile from "pages/Profile/Company/CompanyProfile"
+import ProjectDetails from "pages/Projects/ProjectDetails"
 
 const AppRoutes: React.FC = () => {
   const token = useToken().token
@@ -69,7 +69,10 @@ const AppRoutes: React.FC = () => {
           <Route path="home" element={<Home />}>
             <Route index element={<Projects />} />
             <Route path="projects" element={<Projects />}>
-              <Route path="details/:projectId" element={<ProjectDetails />} />
+              <Route
+                path="details/:projectId"
+                element={<ProjectDetailsModal />}
+              />
             </Route>
             <Route path="companies" element={<Companies />} />
             <Route path="talents" element={<Talents />} />
@@ -87,18 +90,18 @@ const AppRoutes: React.FC = () => {
             <Route path=":userId" element={<ProfessionalProfile />} />
           </Route>
 
+          {/* Projects */}
+          <Route path="project">
+            <Route path="create" element={<CreateProject />} />
+            <Route path=":projectId">
+              <Route index element={<ProjectDetails />} />
+              <Route path="edit" element={<EditProject />} />
+              <Route path="request/:requestId" element={<RequestRespond />} />
+            </Route>
+          </Route>
+
           {/* Dumps */}
           <Route path="admin-dashboard" element={<AdminDashboard />} />
-          <Route path="create-project" element={<CreateProject />} />
-          <Route path="project/:projectId/edit" element={<EditProject />} />
-          <Route
-            path="project-request/:projectId"
-            element={<RequestProject />}
-          />
-          <Route
-            path="project/:projectId/request/:requestId"
-            element={<RequestRespond />}
-          />
         </Route>
       </Routes>
     </AnimatePresence>

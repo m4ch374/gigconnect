@@ -9,6 +9,7 @@ import Logout from "assets/icons/Logout"
 import useToken from "hooks/Token.hooks"
 import useUserType from "hooks/UserType.hooks"
 import { logout } from "services/auth.services"
+import Cross from "assets/icons/Cross"
 
 type TSideMenu = {
   name: string
@@ -33,6 +34,15 @@ const SlideMenu: React.FC<TSideMenu> = ({ name, srcUrl, setShow }) => {
       }}
       className="max-w-[300px] w-[100%] h-full bg-stone-700 rounded-l-xl drop-shadow-2xl cursor-default text-zinc-200/90 px-4"
     >
+      <div className="w-full flex justify-end mt-6">
+        <button
+          type="button"
+          onClick={() => setShow(false)}
+          className="p-1.5 hover:bg-white/10 rounded-full"
+        >
+          <Cross />
+        </button>
+      </div>
       <div className="flex flex-col items-center justify-center my-10 gap-4 w-full">
         <ProfileIcon verified={false} className="w-24 h-24" srcUrl={srcUrl} />
         <h1 className="text-3xl font-semibold truncate">{name}</h1>
@@ -42,7 +52,7 @@ const SlideMenu: React.FC<TSideMenu> = ({ name, srcUrl, setShow }) => {
 
       {userType === "company" && (
         <Link
-          to={"/create-project"}
+          to={"/project/create"}
           className="flex items-center p-2 hover:bg-stone-500/30 transition-colors rounded-lg gap-2"
           onClick={() => setShow(false)}
         >

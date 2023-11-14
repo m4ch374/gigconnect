@@ -88,7 +88,8 @@ class Fetcher<T extends TEndpoint<any, any>> {
   }> {
     try {
       const res = await fetch(this.baseURL, this.requestConf)
-      if (res.status === 401 || res.status === 403) {
+      const whiteListedErrorCode = [400, 401, 403]
+      if (whiteListedErrorCode.some(c => c === res.status)) {
         const errObj = (await res.json()) as ErrorResponse
         return {
           ok: false,
