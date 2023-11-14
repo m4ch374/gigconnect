@@ -21,6 +21,7 @@ const ProjectDetails: React.FC = () => {
   const { arr, setArr, removeAt } = useArray<ProjectRequestData>([])
   const membersArray = useArray<ProfessionalUser>([])
   const memberSetArr = membersArray.setArr
+  const memberRemoveAt = membersArray.removeAt
 
   useEffect(() => {
     if (!projectId) return
@@ -48,7 +49,12 @@ const ProjectDetails: React.FC = () => {
 
         {userType === "company" && userId === projDetail.companyId && (
           <>
-            <DisplayMember className="mb-8" members={membersArray.arr} />
+            <DisplayMember
+              className="mb-8"
+              members={membersArray.arr}
+              projectId={projectId as string}
+              memberRemove={memberRemoveAt}
+            />
 
             <DisplayApplicants
               className="mb-8"

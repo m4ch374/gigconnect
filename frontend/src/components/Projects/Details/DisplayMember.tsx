@@ -6,11 +6,15 @@ import Member from "./Member"
 type TDisplayMember = {
   members: ProfessionalUser[]
   className?: string
+  projectId: string
+  memberRemove: (idx: number) => void
 }
 
 const DisplayMember: React.FC<TDisplayMember> = ({
   members,
   className = "",
+  projectId,
+  memberRemove,
 }) => {
   return (
     <div className={twMerge("rounded-xl border border-zinc-200/80", className)}>
@@ -32,7 +36,12 @@ const DisplayMember: React.FC<TDisplayMember> = ({
         ) : (
           <div>
             {members.map((member, idx) => (
-              <Member member={member} key={idx} />
+              <Member
+                member={member}
+                key={idx}
+                projectId={projectId}
+                onRemoveSuccess={() => memberRemove(idx)}
+              />
             ))}
           </div>
         )}
