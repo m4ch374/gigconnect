@@ -10,6 +10,7 @@ import useUserId from "hooks/UseUserId.hoosk"
 import ChangeStatusButton from "./ChangeStatusButton"
 import ShowProjectStats from "./ShowProjectStatus"
 import { ProjectStatus } from "types/general.types"
+import Pencil from "assets/icons/Pencil"
 
 type TProjectMeta = {
   projDetail: TProjectData["responseType"]
@@ -36,7 +37,15 @@ const ProjectMeta: React.FC<TProjectMeta> = ({ projDetail, projectId }) => {
               <ApplyButton projectId={projectId} />
             )}
             {userType === "company" && userId === projDetail.companyId && (
-              <RemoveButton projectId={projectId} />
+              <div className="flex flex-col sm:flex-row gap-2 items-center">
+                <Link
+                  className="p-1 border text-sky-400 border-sky-400 rounded-lg hover:bg-sky-400/20"
+                  to={`/project/${projectId}/edit`}
+                >
+                  <Pencil />
+                </Link>
+                <RemoveButton projectId={projectId} />
+              </div>
             )}
           </div>
         </div>

@@ -48,7 +48,7 @@ const ProjectDetailsModal: React.FC = () => {
       className="flex justify-end items-end w-full"
     >
       <motion.div
-        className="h-[90%] sm:h-full rounded-t-2xl bg-stone-700 w-full sm:w-[90%] max-w-[800px] cursor-default pt-10 px-6 overflow-auto sm:rounded-l-2xl sm:rounded-r-none"
+        className="min-h-[90%] max-h-full sm:h-full rounded-t-2xl bg-stone-700 w-full sm:w-[90%] max-w-[800px] cursor-default pt-10 px-6 overflow-auto sm:rounded-l-2xl sm:rounded-r-none"
         onClick={e => e.stopPropagation()}
         variants={variants}
         initial="enter"
@@ -66,13 +66,13 @@ const ProjectDetailsModal: React.FC = () => {
           <Link
             to={`/project/${projectId}`}
             target="_blank"
-            className="font-thin flex gap-1 items-center"
+            className="font-thin flex gap-1 items-center hover:underline"
           >
             <h1>Open on other page</h1>
             <Clipboard className="w-5 h-5" />
           </Link>
         </div>
-        <ProjectDetails />
+        <ProjectDetails useFullWidth={true} />
       </motion.div>
     </ModalBackdrop>
   )

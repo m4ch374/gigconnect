@@ -12,7 +12,9 @@ import { ProfessionalUser } from "types/professional.types"
 import useUserId from "hooks/UseUserId.hoosk"
 import useUserType from "hooks/UserType.hooks"
 
-const ProjectDetails: React.FC = () => {
+const ProjectDetails: React.FC<{ useFullWidth?: boolean }> = ({
+  useFullWidth = false,
+}) => {
   const { projectId } = useParams()
   const userId = useUserId()
   const { userType } = useUserType()
@@ -44,7 +46,11 @@ const ProjectDetails: React.FC = () => {
 
   return (
     <div className="w-full flex justify-center mt-4">
-      <div className="max-w-[1000px] w-full flex flex-col">
+      <div
+        className={`max-w-[1000px] flex flex-col ${
+          useFullWidth ? "w-full" : "w-[90%]"
+        }`}
+      >
         <ProjectMeta projDetail={projDetail} projectId={projectId as string} />
 
         {userType === "company" && userId === projDetail.companyId && (
