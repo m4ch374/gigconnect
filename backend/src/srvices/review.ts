@@ -28,7 +28,7 @@ const reviewCandidatesCompany = async (
     throw HTTPError(403, "Company user does not own this project.")
   }
 
-  const reviewed = project.reviewsOfProfessionals.map(r => r.id)
+  const reviewed = project.reviewsOfProfessionals.map(r => r.subjectId)
   const candidates = project.professionals.filter(p => !reviewed.includes(p.id))
   return {
     users: candidates.map(p => ({
@@ -138,7 +138,7 @@ const reviewCreateCompany = async (
       }
       if (
         project.reviewsOfProfessionals
-          .map(p => p.id)
+          .map(p => p.subjectId)
           .includes(parseInt(r.userId, 10))
       ) {
         throw HTTPError(400, "Company has already reviewed one or more users.")
