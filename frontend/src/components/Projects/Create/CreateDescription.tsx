@@ -1,11 +1,18 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import CreateProjectContext from "./CreateProjectContext"
+import DisablingContext from "./DisablingContext"
 
 const CreateDescription: React.FC = () => {
   const projContext = useContext(CreateProjectContext)
 
   const projData = projContext[0]
   const setProj = projContext[1]
+
+  const setDisabled = useContext(DisablingContext)[1]
+
+  useEffect(() => {
+    setDisabled(!projData.publicDescription || !projData.privateDescription)
+  }, [projData.privateDescription, projData.publicDescription, setDisabled])
 
   return (
     <div className="flex w-full h-full pt-10 px-4 md:items-center md:justify-center md:pt-0 md:px-20">
@@ -58,6 +65,10 @@ const CreateDescription: React.FC = () => {
             <textarea
               className="bg-transparent border border-zinc-400 rounded-md w-full h-[150px] p-2"
               placeholder="Add a private description"
+              value={projData.privateDescription}
+              onChange={e => {
+                setProj("privateDescription", e.currentTarget.value)
+              }}
             />
           </div>
         </div>

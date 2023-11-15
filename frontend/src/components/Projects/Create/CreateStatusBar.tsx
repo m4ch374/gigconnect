@@ -1,7 +1,8 @@
-import React, { useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { motion, useSpring } from "framer-motion"
 import useWindowDimensions from "hooks/WindowDimensions"
+import DisablingContext from "./DisablingContext"
 
 type TCreateStatusBar = {
   onContinueClick: () => void
@@ -18,6 +19,8 @@ const CreateStatusBar: React.FC<TCreateStatusBar> = ({
 }) => {
   const navigate = useNavigate()
   const progressValue = useSpring(0, { stiffness: 300, damping: 50, mass: 5 })
+
+  const disabled = useContext(DisablingContext)[0]
 
   const { width } = useWindowDimensions()
 
@@ -42,8 +45,14 @@ const CreateStatusBar: React.FC<TCreateStatusBar> = ({
           Back
         </button>
         <button
-          className="px-4 py-2 bg-sky-400 rounded-full"
+          className={`px-4 py-2 rounded-full ${
+            disabled
+              ? "bg-sky-700/40 cursor-default text-zinc-200/60"
+              : "bg-sky-400"
+          }`}
           onClick={() => {
+            if (disabled) return
+
             if (currStep === maxStep) {
               navigate("/home/projects")
               return

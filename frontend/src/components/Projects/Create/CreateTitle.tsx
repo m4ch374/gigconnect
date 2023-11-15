@@ -1,11 +1,18 @@
 import InputField from "components/InputField"
-import React, { useContext } from "react"
+import React, { useContext, useEffect } from "react"
 import CreateProjectContext from "./CreateProjectContext"
+import DisablingContext from "./DisablingContext"
 
 const CreateTitle: React.FC = () => {
   const createProjectController = useContext(CreateProjectContext)
   const { title } = createProjectController[0]
   const setObj = createProjectController[1]
+
+  const setDisabled = useContext(DisablingContext)[1]
+
+  useEffect(() => {
+    setDisabled(!title)
+  }, [setDisabled, title])
 
   return (
     <div className="flex w-full h-full pt-10 px-4 md:items-center md:justify-center md:pt-0 md:px-20">

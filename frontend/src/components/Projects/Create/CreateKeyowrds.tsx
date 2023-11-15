@@ -4,6 +4,7 @@ import useArray from "hooks/UseArray.hooks"
 import React, { FormEvent, useContext, useEffect, useState } from "react"
 import CreateProjectContext from "./CreateProjectContext"
 import Cross from "assets/icons/Cross"
+import DisablingContext from "./DisablingContext"
 
 const CreateKeywords: React.FC = () => {
   const createProjController = useContext(CreateProjectContext)
@@ -19,10 +20,13 @@ const CreateKeywords: React.FC = () => {
     setCurrSkill("")
   }
 
+  const setDisabled = useContext(DisablingContext)[1]
+
   useEffect(() => {
     createProjController[1]("tags", arr)
+    setDisabled(arr.length === 0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [arr])
+  }, [arr, setDisabled])
 
   return (
     <div className="flex w-full h-full pt-10 px-4 md:items-center md:justify-center md:pt-0 md:px-20">
