@@ -70,6 +70,10 @@ const onboardedData = async (userId: string, userType: UserType) => {
     return { onboarded: professional.onboarded }
   }
 
+  if (userType === UserType.Admin) {
+    return { onboarded: true }
+  }
+
   throw HTTPError(400, "Unsupported user type for getting onboarded data.")
 }
 
@@ -97,6 +101,10 @@ const onboardedUpdate = async (userId: string, userType: UserType) => {
       throw HTTPError(400, "professionalId does not exist.")
     }
 
+    return { onboarded: true }
+  }
+
+  if (userType === UserType.Admin) {
     return { onboarded: true }
   }
 
