@@ -38,7 +38,7 @@ const ProjectMeta: React.FC<TProjectMeta> = ({
             <h1 className="font-bold text-2xl">{projDetail.title}</h1>
           </div>
           <div>
-            {userType === "professional" && (
+            {userType === "professional" && currStatus === "open" && (
               <ApplyButton projectId={projectId} />
             )}
             {userType === "company" && userId === projDetail.companyId && (

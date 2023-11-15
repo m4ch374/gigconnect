@@ -12,6 +12,7 @@ import { ProfessionalUser } from "types/professional.types"
 import useUserId from "hooks/UseUserId.hoosk"
 import useUserType from "hooks/UserType.hooks"
 import { ProjectStatus } from "types/general.types"
+import UserReviewPrompt from "components/Projects/Details/UserReviewPrompt"
 
 const ProjectDetails: React.FC<{ useFullWidth?: boolean }> = ({
   useFullWidth = false,
@@ -54,6 +55,17 @@ const ProjectDetails: React.FC<{ useFullWidth?: boolean }> = ({
           useFullWidth ? "w-full" : "w-[90%]"
         }`}
       >
+        {currStatus === "closed" &&
+          userType === "professional" &&
+          membersArray.arr.map(m => m.userId).includes(userId) && (
+            <UserReviewPrompt
+              companyId={projDetail.companyId}
+              companyName={projDetail.companyName}
+              companyProfilePhoto={""}
+              projectId={projectId as string}
+            />
+          )}
+
         <ProjectMeta
           projDetail={projDetail}
           projectId={projectId as string}
