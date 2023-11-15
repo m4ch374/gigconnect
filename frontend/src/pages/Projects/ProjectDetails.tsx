@@ -11,6 +11,7 @@ import DisplayMember from "components/Projects/Details/DisplayMember"
 import { ProfessionalUser } from "types/professional.types"
 import useUserId from "hooks/UseUserId.hoosk"
 import useUserType from "hooks/UserType.hooks"
+import { ProjectStatus } from "types/general.types"
 
 const ProjectDetails: React.FC<{ useFullWidth?: boolean }> = ({
   useFullWidth = false,
@@ -20,6 +21,7 @@ const ProjectDetails: React.FC<{ useFullWidth?: boolean }> = ({
   const { userType } = useUserType()
 
   const [projDetail, setProjDetail] = useState<TProjectData["responseType"]>()
+  const [currStatus, setCurrStatus] = useState<ProjectStatus>("open")
   const { arr, setArr, removeAt } = useArray<ProjectRequestData>([])
   const membersArray = useArray<ProfessionalUser>([])
   const memberSetArr = membersArray.setArr
@@ -38,6 +40,7 @@ const ProjectDetails: React.FC<{ useFullWidth?: boolean }> = ({
       setProjDetail(res.data)
       setArr(res.data.requests)
       memberSetArr(res.data.professionals)
+      setCurrStatus(res.data.status)
     })()
   }, [memberSetArr, projectId, setArr])
 
@@ -51,7 +54,12 @@ const ProjectDetails: React.FC<{ useFullWidth?: boolean }> = ({
           useFullWidth ? "w-full" : "w-[90%]"
         }`}
       >
-        <ProjectMeta projDetail={projDetail} projectId={projectId as string} />
+        <ProjectMeta
+          projDetail={projDetail}
+          projectId={projectId as string}
+          currStatus={currStatus}
+          setCurrStatus={setCurrStatus}
+        />
 
         {userType === "company" && userId === projDetail.companyId && (
           <>
@@ -60,14 +68,17 @@ const ProjectDetails: React.FC<{ useFullWidth?: boolean }> = ({
               members={membersArray.arr}
               projectId={projectId as string}
               memberRemove={memberRemoveAt}
+              projStatus={currStatus}
             />
 
-            <DisplayApplicants
-              className="mb-8"
-              requests={arr}
-              removeAt={removeAt}
-              membersPush={membersArray.pushItem}
-            />
+            {currStatus !== "closed" && (
+              <DisplayApplicants
+                className="mb-8"
+                requests={arr}
+                removeAt={removeAt}
+                membersPush={membersArray.pushItem}
+              />
+            )}
           </>
         )}
       </div>

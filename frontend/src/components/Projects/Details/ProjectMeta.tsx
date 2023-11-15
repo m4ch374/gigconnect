@@ -1,6 +1,6 @@
 import Building from "assets/icons/Building"
 import MapPin from "assets/icons/MapPin"
-import React, { useState } from "react"
+import React, { Dispatch, SetStateAction } from "react"
 import { Link } from "react-router-dom"
 import { TProjectData } from "services/types"
 import ApplyButton from "./ApplyButton"
@@ -15,14 +15,19 @@ import Pencil from "assets/icons/Pencil"
 type TProjectMeta = {
   projDetail: TProjectData["responseType"]
   projectId: string
+  currStatus: ProjectStatus
+  setCurrStatus: Dispatch<SetStateAction<ProjectStatus>>
 }
 
-const ProjectMeta: React.FC<TProjectMeta> = ({ projDetail, projectId }) => {
+const ProjectMeta: React.FC<TProjectMeta> = ({
+  projDetail,
+  projectId,
+  currStatus,
+  setCurrStatus,
+}) => {
   const { userType } = useUserType()
 
   const userId = useUserId()
-
-  const [currStatus, setCurrStatus] = useState<ProjectStatus>(projDetail.status)
 
   return (
     <div className="border border-zinc-400 rounded-xl mb-10">
