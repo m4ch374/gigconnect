@@ -8,9 +8,13 @@ const App: React.FC = () => {
       <AppRoutes />
       <Toaster
         toastOptions={{
-          className: "bg-stone-700 text-white min-w-[100px]",
           position: "bottom-center",
           duration: 2000,
+          style: {
+            background: "rgb(68 64 60)",
+            color: "white",
+            minHeight: 70,
+          },
         }}
       />
     </>

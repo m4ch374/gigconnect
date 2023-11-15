@@ -78,7 +78,7 @@ const EditProject: React.FC = () => {
             <EditLocation />
           </div>
         </div>
-        <div className="h-[80px] w-full bottom-0 left-0 bg-stone-800 justify-self-end">
+        <div className="h-[80px] w-full bottom-0 left-0 justify-self-end">
           <hr className="border-sky-400 border-2" />
           <div className="w-full flex justify-end items-center h-full px-4 gap-2">
             <Link
