@@ -17,10 +17,12 @@ type TSetupProfessional = {
   setShow: Dispatch<SetStateAction<boolean>>
 }
 
+const MAX_STEP = 4
+
 const SetupProfessional: React.FC<TSetupProfessional> = ({ setShow }) => {
   useDisableScroll()
 
-  const stepController = useSteps(4)
+  const stepController = useSteps(MAX_STEP)
   const currStep = stepController.step
 
   const setupValues = useObject<ProfessionalProfileData>({
@@ -49,7 +51,11 @@ const SetupProfessional: React.FC<TSetupProfessional> = ({ setShow }) => {
     >
       <ProfessionalSetupContext.Provider value={setupValues}>
         <StepContext.Provider value={stepController}>
-          <ProfileSetupContainer onCloseButton={onModalClose}>
+          <ProfileSetupContainer
+            onCloseButton={onModalClose}
+            currStep={currStep}
+            maxStep={MAX_STEP}
+          >
             {currStep === 0 ? (
               <SetupDescription />
             ) : currStep === 1 ? (

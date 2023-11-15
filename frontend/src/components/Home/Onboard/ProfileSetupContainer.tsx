@@ -1,19 +1,34 @@
 import Cross from "assets/icons/Cross"
-import { motion } from "framer-motion"
+import { motion, useSpring, useTransform } from "framer-motion"
 import { StepContext } from "hooks/Steps.hooks"
-import React, { MouseEventHandler, useContext } from "react"
+import React, { MouseEventHandler, useContext, useEffect } from "react"
 
 type TProfileSetupContainer = {
   onCloseButton: MouseEventHandler<HTMLButtonElement>
   children?: string | JSX.Element | JSX.Element[]
+  maxStep: number
+  currStep: number
 }
 
 const ProfileSetupContainer: React.FC<TProfileSetupContainer> = ({
   onCloseButton,
   children,
+  currStep,
+  maxStep,
 }) => {
   const { step, maxReached, incrementStep, decrementStep } =
     useContext(StepContext)
+
+  const rawProgress = useSpring(0, { damping: 50, stiffness: 200 })
+
+  useEffect(() => {
+    rawProgress.set(currStep / maxStep)
+  }, [currStep, maxStep, rawProgress])
+
+  const percentProgress = useTransform(
+    rawProgress,
+    () => rawProgress.get() * 100 + "%",
+  )
 
   return (
     <motion.div
@@ -33,7 +48,12 @@ const ProfileSetupContainer: React.FC<TProfileSetupContainer> = ({
             <Cross />
           </button>
         </div>
-        <hr className="border-zinc-500" />
+        <div className="w-full bg-sky-900/60 h-[4px]">
+          <motion.div
+            className="h-full bg-sky-400"
+            style={{ width: percentProgress }}
+          />
+        </div>
       </div>
 
       <div className="w-full h-full">{children}</div>
