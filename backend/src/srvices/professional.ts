@@ -24,9 +24,6 @@ const professionalCreate = async (
   firstName: string,
   lastName: string,
 ) => {
-  // ####################
-  // #### TEST CASES ####
-  // ####################
   // Check email validity
   const regex: RegExp = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/
   const matched: boolean = regex.test(email)
@@ -48,9 +45,8 @@ const professionalCreate = async (
   if (password.length < 8) {
     throw HTTPError(400, "Password must be at least 8 characters")
   }
-  // #########################
-  // #### CREATE DB ENTRY ####
-  // #########################
+
+  // FINALLY Create an entry in the DB
   const hashedPass = await hashPassword(password)
   const user = await prisma.professional.create({
     data: {
@@ -61,10 +57,6 @@ const professionalCreate = async (
     },
   })
 
-  // #####################
-  // #### RETURN DICT ####
-  // #####################
-  // const uID = await getProfeshUserID(email)
   return {
     loginToken: createToken(user.id.toString(), UserType.Professional),
     userType: "professional", // UserType.Professional

@@ -192,7 +192,6 @@ app.get("/api/company/profiledata", (req, res, next) => {
 
 app.get(
   "/api/company/profiledata/public",
-  // tested via "?userId=2" in link, since its a GET req
   (req: ReqQuery<{ userId: string }>, res, next) => {
     checkAuth(req as unknown as Request, UserType.Any)
     const { userId } = req.query
@@ -281,7 +280,6 @@ app.get(
 )
 
 app.get("/api/professional/allpublicprofiledata", (req, res, next) => {
-  // viewer must still be logged in, but we don't need userId
   checkAuth(req, UserType.Any)
   allProfessionalPublicData()
     .then(result => res.json(result))

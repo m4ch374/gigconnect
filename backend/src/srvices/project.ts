@@ -22,16 +22,11 @@ const projectCreate = async (
   inPerson: boolean,
   location: string,
 ) => {
-  // ####################
-  // #### TEST CASES ####
-  // ####################
-  // check the title
+  // check the title length
   if (title.length === 0) {
     throw HTTPError(400, "Title must not be empty")
   }
-  // #######################
-  // ####  WRITE TO DB #####
-  // #######################
+
   const project = await prisma.project.create({
     data: {
       companyId: parseInt(userID, 10),
@@ -43,9 +38,7 @@ const projectCreate = async (
       location,
     },
   })
-  // #######################
-  // #### RETURN DICT ######
-  // #######################
+
   return {
     projectId: project.id.toString(),
   }
@@ -66,15 +59,11 @@ const projectUpdate = async (
   inPerson: boolean,
   location: string,
 ) => {
-  // #######################
-  // ###  TEST CASES    ####
-  // #######################
+  // check the title length
   if (title.length === 0) {
     throw HTTPError(400, "Title must not be empty")
   }
-  // #######################
-  // ####  WRITE TO DB #####
-  // #######################
+
   // Update rest of the project entry attributes
   const project = await prisma.project.findUnique({
     where: { id: parseInt(projectId, 10) },
@@ -93,9 +82,7 @@ const projectUpdate = async (
       location,
     },
   })
-  // #######################
-  // #### RETURN DICT ######
-  // #######################
+
   return {
     success: true,
   }
@@ -304,7 +291,6 @@ const projectChangeStatus = async (companyId: string, projectId: string) => {
 
   // If status changed to project "CLOSED", then email all profesh's about this change.
   if (status === ProjectStatus.CLOSED) {
-    // call helper fnc in a for loop feeding different emails/names each time
     const thisProject = await prisma.project.findUnique({
       where: { id: parseInt(projectId, 10) },
       include: {
@@ -316,7 +302,7 @@ const projectChangeStatus = async (companyId: string, projectId: string) => {
     const profeshEmails = professionals?.map(profesh => profesh.email)
     const transporter = getTransporterForEmail()
     if (professionals) {
-      // Now Setup the stuff for sending email (we setup envi before emailing each profesh to avoid throttling issues?)
+      // Now setup the stuff for sending email (we setup envi before emailing each profesh to avoid throttling issues)
       const header = `Congrats! Your project '${thisProject.title}' has been completed!`
       const body = `Hello there!\n\n${thisProject.company.name} has marked your project, '${thisProject.title}', as completed!\n\nPlease leave a review about your experience working on the project :)\n\nKind regards,\nGigConnect.`
       const mailOptions = {
@@ -330,7 +316,6 @@ const projectChangeStatus = async (companyId: string, projectId: string) => {
         console.log(`Batch emails sent successfully, upon project closure`)
       } catch (error) {
         console.error(`ERROR sending to batch emails:`, error)
-        // throw error // Rethrow the error to handle it in the calling function
       }
     }
     transporter.close()

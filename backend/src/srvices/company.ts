@@ -24,10 +24,6 @@ const companyCreate = async (
   companyName: string,
   abn: string,
 ) => {
-  // make a record and store company user to the database
-  // #######################
-  // ###  TEST CASES    ####
-  // #######################
   const regex: RegExp = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/
   const matched: boolean = regex.test(email)
   if (!matched) {
@@ -60,9 +56,7 @@ const companyCreate = async (
   if (companyName.length === 0) {
     throw HTTPError(400, "Company name must be at least one character")
   }
-  // #######################
-  // ####  WRITE TO DB #####
-  // #######################
+
   // FINALLY Create an entry in the DB
   const hashedPass = await hashPassword(password)
   const companyUser = await prisma.company.create({
@@ -73,9 +67,7 @@ const companyCreate = async (
       abn,
     },
   })
-  // #######################
-  // #### RETURN DICT ######
-  // #######################
+
   return {
     loginToken: createToken(companyUser.id.toString(), UserType.Company),
     userType: UserType.Company,
@@ -116,9 +108,6 @@ const companyUpdate = async (
   externalWebsites: ExternalLink[],
 ) => {
   // Check name lengths
-  // #######################
-  // ###  TEST CASES    ####
-  // #######################
   if (companyName.length === 0) {
     throw HTTPError(400, "Company name must be at least one character")
   }
@@ -130,10 +119,8 @@ const companyUpdate = async (
   if (abn.length !== 11) {
     throw HTTPError(400, "ABN must be exactly 11 digits")
   }
-  // #######################
-  // ####  WRITE TO DB #####
-  // #######################
-  // Update rest of the Company entry attributes
+
+  // Update the Company entry in the DB
   await prisma.company.update({
     where: { id: Number(userId) },
     data: {
@@ -158,16 +145,14 @@ const companyUpdate = async (
       })
     }),
   )
-  // #######################
-  // #### RETURN DICT ######
-  // #######################
+
   return {
     success: true,
   }
 }
 
 /**
- * @returns PUBLIC information of ALL existing companys
+ * @returns PUBLIC information of ALL existing companies
  * This is for basic view under search/list results
  */
 const allCompanyPublicData = async () => {

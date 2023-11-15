@@ -153,7 +153,6 @@ async function checkCompanyEmailExists(email: string) {
       email,
     },
   })
-  // await prisma.$disconnect()
   if (CompanyEmail) {
     // CompanyEmail is assigned an entry which contains said email
     return true
@@ -172,7 +171,6 @@ async function checkProfeshEmailExists(email: string) {
       email,
     },
   })
-  // await prisma.$disconnect()
   if (profesh) {
     // profesh is assigned an entry which contains said email
     return true
@@ -282,8 +280,8 @@ const checkCompanyIsProjectOwner = async (
  * @returns the nodemailer email transporter, which is the base used to send emails
  */
 const getTransporterForEmail = () => {
-  // this method  mitigates failed email calls after using transport.close(), but we need to close to
-  //    avoid timeout issues.
+  // this method mitigates failed email calls after using transport.close(),
+  // but we need to close to avoid timeout issues.
   const transporter = nodemailer.createTransport({
     // host: "smtp-mail.outlook.com",
     pool: true,

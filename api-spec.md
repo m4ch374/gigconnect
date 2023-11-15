@@ -121,7 +121,7 @@ type response200 = {
             companyName: string,
             companyId: string,
             inPerson: boolean,
-            location: string?,
+            location: string,
             tags: string[],
             creationDate: string,
             status: projectStatus,
@@ -180,7 +180,7 @@ type response = {
             companyName: string,
             companyId: string,
             inPerson: boolean,
-            location: string?,
+            location: string,
             tags: string[],
             creationDate: string,
             status: projectStatus,
@@ -313,11 +313,11 @@ type response200 = {
 // REQUEST - send LOGIN TOKEN in header, request as stringified JSON in body
 type request = {
     title: string,
-    publicDescription: string?,
-    privateDescription: string?,
+    publicDescription: string,
+    privateDescription: string,
     tags: string[],
     inPerson: boolean,
-    location: string?,
+    location: string,
 }
 type response400 = {
     message: string,
@@ -339,7 +339,7 @@ type response = {
     description: string, // ## EITHER concatenation of public+private, or just public
     tags: string[],
     inPerson: boolean,
-    location: string?,
+    location: string,
     creationDate: string,
     status: projectStatus,
     professionals: Professional[] || [], // # empty arr if profesh's not accepted
@@ -354,10 +354,10 @@ type response = {
     title: string,
     companyId: string,
     companyName: string,
-    description: string, // ## NOTE: was this concatenation of public + private descriptions???
+    description: string, // ## NOTE: concatenation of public + private descriptions
     tags: string[],
     inPerson: boolean,
-    location: string?,
+    location: string,
     creationDate: string,
     status: projectStatus,
     professionals: Professional[],
@@ -369,11 +369,11 @@ type response = {
 type request = {
     projectId: string,
     title: string,
-    publicDescription: string?,
-    privateDescription: string?,
-    tags: string[]?,
-    inPerson: boolean?,
-    location: string?,
+    publicDescription: string,
+    privateDescription: string,
+    tags: string[],
+    inPerson: boolean,
+    location: string,
 }
 type response400 = {
     message: string,
@@ -482,7 +482,7 @@ type response200 = {
             companyName: string,
             companyId: string,
             inPerson: boolean,
-            location: string?,
+            location: string,
             tags: string[],
             creationDate: string
             status: "open",
@@ -520,12 +520,12 @@ type response = {
     title: string,
     companyId: string,
     companyName: string,
-    description: string, // Concat public and private descriptons with \n
+    description: string, // Concat public and private descriptions with \n
                          // inbetween if user is part of the project, otherwise
                          // only public descriptoin.
     tags: string[],
     inPerson: boolean,
-    location: string?,
+    location: string,
     creationDate: string,
     status: projectStatus,
     professionals: Professional[], // Empty array if not part of the project
