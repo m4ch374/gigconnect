@@ -1,6 +1,10 @@
 import HTTPError from "http-errors"
 import { UserType, prisma } from "./helper"
 
+/**
+ * Can only be called by an admin user, to retrieve all existing users
+ * @returns basic info about all existing users
+ */
 const adminDashboard = async () => {
   const companyUsers = await prisma.company.findMany({
     select: {
@@ -37,6 +41,11 @@ const adminDashboard = async () => {
   }
 }
 
+/**
+ * Admin user sets a professional or company user, as verified
+ * Throws 400 error for input data issues.
+ * @returns success object with boolean value
+ */
 const adminSetVerified = async (
   userId: string,
   userType: string,

@@ -2,7 +2,7 @@ import HTTPError from "http-errors"
 import { UserType, createToken, prisma, verifyPassword } from "./helper"
 
 /**
- * Return a promise that resolves with the user object and userType that matches
+ * @returns a promise that resolves with the user object and userType that matches
  * the given email. If the email is not found, user is null and userType is
  * undefined.
  */
@@ -29,6 +29,10 @@ const findUserByEmail = async (email: string) => {
   return { user, userType }
 }
 
+/**
+ * Logs user in, given a correct pass+email combo
+ * @returns a token for that login session.
+ */
 const authLogin = async (email: string, password: string) => {
   const { user, userType } = await findUserByEmail(email)
 
@@ -45,8 +49,17 @@ const authLogin = async (email: string, password: string) => {
   throw HTTPError(401, "Incorrect email or password.")
 }
 
+/**
+ * Logs user out off that session
+ * @returns success object with boolean value.
+ */
 const authLogout = () => ({ success: true })
 
+/**
+ * Confirms if user has completed onboarding (initial details inputs)
+ * Throws 400 error if userId doesn't exist
+ * @returns success object with boolean value.
+ */
 const onboardedData = async (userId: string, userType: UserType) => {
   if (userType === UserType.Company) {
     const company = await prisma.company.findUnique({
@@ -77,6 +90,11 @@ const onboardedData = async (userId: string, userType: UserType) => {
   throw HTTPError(400, "Unsupported user type for getting onboarded data.")
 }
 
+/**
+ * Updates user's onboard completion status as true
+ * Throws 400 error if user Id doesn't exist
+ * @returns success object with boolean value.
+ */
 const onboardedUpdate = async (userId: string, userType: UserType) => {
   if (userType === UserType.Company) {
     try {

@@ -24,7 +24,10 @@ interface tokenPayload {
   userType: UserType
 }
 
-/** Return a promise that resolves with the hashed password as a string. */
+/**
+ * When given a plain-text password, function hash encodes the password (for security purposes)
+ * @returns a promise that resolves with the hashed password as a string.
+ */
 const hashPassword = (password: string): Promise<string> =>
   new Promise((resolve, reject) => {
     const normalized = password.normalize()
@@ -36,8 +39,8 @@ const hashPassword = (password: string): Promise<string> =>
   })
 
 /**
- * Return a promise that resolves with true if the password matches the hash,
- * false if not.
+ * Checks if plain-text password matches its hashed version
+ * @returns a promise that resolves with true if the password matches the hash, false if not.
  */
 const verifyPassword = (password: string, hash: string): Promise<boolean> =>
   new Promise((resolve, reject) => {
@@ -51,8 +54,8 @@ const verifyPassword = (password: string, hash: string): Promise<boolean> =>
   })
 
 /**
- * Return a valid JWT token as a string, encoding the userId and userType as the
- * payload.
+ * @returns a valid JWT token as a string, encoding the userId and userType as the payload.
+ * Token is used for that specific login session for the user
  */
 const createToken = (userId: string, userType: UserType) => {
   if (process.env.JWT_SECRET === undefined) {
@@ -62,8 +65,8 @@ const createToken = (userId: string, userType: UserType) => {
 }
 
 /**
- * Return the payload object literal if the token is valid,
- * otherwise throw error.
+ * Verifies if given token is valid
+ * @returns the payload object literal if the token is valid, otherwise throw error.
  */
 const verifyToken = (token: string) => {
   if (process.env.JWT_SECRET === undefined) {
@@ -77,7 +80,7 @@ const verifyToken = (token: string) => {
 }
 
 /**
- * Return the given array of database links in ExternalLink format.
+ * @returns the given array of database links, associated with a user, in the ExternalLink interface format.
  */
 const mapDBToExternalLinks = (
   links: { name: string; url: string }[],
@@ -87,6 +90,9 @@ const mapDBToExternalLinks = (
     websiteLink: link.url,
   }))
 
+/**
+ * @returns the company's name, given correct user id
+ */
 const getCompanyName = async (id: number) => {
   const user = await prisma.company.findUnique({
     where: { id },
@@ -95,6 +101,9 @@ const getCompanyName = async (id: number) => {
   return user?.name
 }
 
+/**
+ * @returns the given array of database projects, associated with a user, but in a object format with public information
+ */
 const mapDBToProjects = async (
   projectParams: {
     id: number
@@ -123,6 +132,9 @@ const mapDBToProjects = async (
     })),
   )
 
+/**
+ * @returns an average review score, given a list of reviews with score numbers
+ */
 const avgReviewScore = (reviews: { score: number }[]) => {
   if (reviews.length === 0) {
     return 0
@@ -132,6 +144,7 @@ const avgReviewScore = (reviews: { score: number }[]) => {
 
 /**
  * Checks whether given email already exists within the Company table entries in the DB
+ * @returns true if company email exists, else false
  */
 async function checkCompanyEmailExists(email: string) {
   // Read from DB via Prisma query
@@ -150,6 +163,7 @@ async function checkCompanyEmailExists(email: string) {
 
 /**
  * Checks whether given email already exists within the Professional table entries in the DB
+ * @returns true if Professional email exists, else false
  */
 async function checkProfeshEmailExists(email: string) {
   // Read from DB via Prisma query
@@ -167,7 +181,7 @@ async function checkProfeshEmailExists(email: string) {
 }
 
 /**
- * Returns company user entry, given email
+ * @returns company user's id, given correct email
  */
 const getCompanyUserID = async (email: string) => {
   const user = await prisma.company.findUnique({
@@ -178,7 +192,8 @@ const getCompanyUserID = async (email: string) => {
 }
 
 /**
- * Returns company user id, given email
+ * @returns the whole company user entry from the database (including Related nodes)
+ * throws 403 error if user id is nonexistent
  */
 const getCompanyUserEntry = async (uID: number) => {
   // if can't find a record with that id then return null
@@ -193,7 +208,8 @@ const getCompanyUserEntry = async (uID: number) => {
 }
 
 /**
- * Returns professional user id, given email
+ * @returns professional user id, given email
+ * throws 403 error if professional account with given email is nonexistent
  */
 const getProfeshUserID = async (email: string) => {
   const user = await prisma.professional.findUnique({
@@ -206,7 +222,8 @@ const getProfeshUserID = async (email: string) => {
 }
 
 /**
- * Returns the whole professional user entry (including Related nodes), given id
+ * @returns the whole professional user entry (including Related nodes)
+ * throws 403 error if user id is nonexistent
  */
 const getProfeshUserEntry = async (uID: number) => {
   const user = await prisma.professional.findUnique({
@@ -225,7 +242,7 @@ const getProfeshUserEntry = async (uID: number) => {
 }
 
 /**
- * Return a promise that resolves true if the professional is part of project,
+ * @returns a promise that resolves true if the professional is part of project,
  * false if not (or if project does not exist).
  */
 const professionalInProject = async (
@@ -245,6 +262,7 @@ const professionalInProject = async (
 
 /**
  * Checks if companyId is the project owner
+ * @returns true if so, else false
  */
 const checkCompanyIsProjectOwner = async (
   companyId: string,
@@ -260,9 +278,12 @@ const checkCompanyIsProjectOwner = async (
   return false
 }
 
-// Create and return a transporter for mailing
-//  to mitigate failed email calls after using transport.close(), but we need to close to avoid timeout shit??
+/**
+ * @returns the nodemailer email transporter, which is the base used to send emails
+ */
 const getTransporterForEmail = () => {
+  // this method  mitigates failed email calls after using transport.close(), but we need to close to
+  //    avoid timeout issues.
   const transporter = nodemailer.createTransport({
     // host: "smtp-mail.outlook.com",
     pool: true,

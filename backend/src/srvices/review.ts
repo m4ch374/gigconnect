@@ -8,6 +8,11 @@ interface reviewInput {
   comment: string
 }
 
+/**
+ * @returns all basic details of all the professionals apart of the project that the Company hasn't reviewed.
+ * Throws 400 error if project id is non existent
+ * Throws 403 error if company user doesn't own project
+ */
 const reviewCandidatesCompany = async (
   companyId: string,
   projectId: string,
@@ -34,6 +39,11 @@ const reviewCandidatesCompany = async (
   }
 }
 
+/**
+ * @returns the project's owner Company's basic details, IFF professional hasn't already reviewed.
+ * Throws 400 error if project id is non existent
+ * Throws 403 error if company user doesn't own project
+ */
 const reviewCandidatesProfessional = async (
   professionalId: string,
   projectId: string,
@@ -69,6 +79,17 @@ const reviewCandidatesProfessional = async (
   }
 }
 
+/**
+ * Super function that either allows requested Company user to review professionals associated with the project
+ *  whom haven't been reviewed (by the company)
+ * OR lets professional view details of company IFF he hasn't reviewed the company yet
+ * Ultimately, returns user/s who are able to be reviewed, from the POV of the caller.
+ * Throws 400 error if project id is non existent
+ * Throws 403 error if company user doesn't own project
+ * @returns either an empty array (if profesional has already reviewed the company)
+ * @returns an array with a single index of company's info, if Professional hasn't reviewed them yet
+ * @returns an array with all the users the company has reviewed, apart of that project.
+ */
 const reviewCandidates = async (
   userId: string,
   userType: UserType,
@@ -84,6 +105,13 @@ const reviewCandidates = async (
   }
 }
 
+/**
+ * Professional reviews a single Company user that owns the project at hand.
+ * Throws 400 error if projectid doesnt exist, project is not completed, one or more professional user is not part of the project
+ *  or company has already reviewed one or more of the professionals in the reviews array for this project.
+ * Throws 403 error if company doesn't own project
+ * @returns void. Since the super fnc (which calls this sub fnc) returns a success object with boolean value.
+ */
 const reviewCreateCompany = async (
   companyId: string,
   projectId: string,
@@ -129,6 +157,13 @@ const reviewCreateCompany = async (
   )
 }
 
+/**
+ * Professional reviews a single Company user that owns the project at hand.
+ * Throws 400 error if projectid doesnt exist, project is not completed, company doesn't own project
+ *  or professional already reviewed this company+project combo.
+ * Throws 403 error if Professional user is not part of the project
+ * @returns void. Since the super fnc (which calls this sub fnc) returns a success object with boolean value.
+ */
 const reviewCreateProfessional = async (
   professionalId: string,
   projectId: string,
@@ -170,6 +205,12 @@ const reviewCreateProfessional = async (
   })
 }
 
+/**
+ * Super function that either lets Company review one or more Professional's at once
+ *  OR lets professional review the single company of that specific project.
+ * Throws 400 error for unsupported user type
+ * @returns success object with boolean value
+ */
 const reviewCreate = async (
   userId: string,
   userType: UserType,
@@ -189,6 +230,10 @@ const reviewCreate = async (
   return { success: true }
 }
 
+/**
+ * @returns all the reviews made about the Company, across all owned CLOSED projects
+ * Throws 400 error if company id doesn't exist
+ */
 const reviewDataCompany = async (companyId: string) => {
   const company = await prisma.company.findUnique({
     where: { id: parseInt(companyId, 10) },
@@ -218,6 +263,10 @@ const reviewDataCompany = async (companyId: string) => {
   }
 }
 
+/**
+ * @returns all the reviews made about the Professional, across all participated CLOSED projects
+ * Throws 400 error if Professional id doesn't exist
+ */
 const reviewDataProfessional = async (professionalId: string) => {
   const professional = await prisma.professional.findUnique({
     where: { id: parseInt(professionalId, 10) },
@@ -247,6 +296,11 @@ const reviewDataProfessional = async (professionalId: string) => {
   }
 }
 
+/**
+ * Super function that delegates the returning of all reviews made about the user caller
+ *  utilises the two subfunctions starting with "reviewData" above.
+ * Throws 400 error if user type is unsupported
+ */
 const reviewData = async (userId: string, userType: string) => {
   switch (userType) {
     case "company":

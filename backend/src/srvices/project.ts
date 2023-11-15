@@ -8,10 +8,11 @@ import {
   getTransporterForEmail,
 } from "./helper"
 
-/*
-  Function creates projects by Company Users
-           returns respone 200 with all OPEN project's basic info
-*/
+/**
+ * Function creates projects by Company Users
+ * Throws 400 errors if input data has issues.
+ * @returns the new project's id
+ */
 const projectCreate = async (
   userID: string,
   title: string,
@@ -50,9 +51,11 @@ const projectCreate = async (
   }
 }
 
-/*
-  Function that updates project details by Company Users
-*/
+/**
+ * Function that updates project details by Company Users
+ * Throws 400 errors if input data has issues.
+ * @returns success object with boolean value
+ */
 const projectUpdate = async (
   projectId: string,
   companyId: string,
@@ -98,6 +101,12 @@ const projectUpdate = async (
   }
 }
 
+/**
+ * Function that retrieves a project's information for the viewing of a professional
+ * specific information is returned only if professional is apart of project (e.g. private description)
+ * Throws 400 errors if project or professional id doesnt exist.
+ * @returns majority of the specific project's information
+ */
 const projectDataProfessional = async (
   professionalId: string,
   projectId: string,
@@ -140,6 +149,12 @@ const projectDataProfessional = async (
   }
 }
 
+/**
+ * Function that retrieves a project's information for the viewing of a company
+ * specific information is returned only if the company is the owner of the project (e.g. private description, requests)
+ * Throws 400 errors if project or companyId id doesnt exist.
+ * @returns ALL or majority of the specific project's information
+ */
 const projectDataCompany = async (companyId: string, projectId: string) => {
   const project = await prisma.project.findUnique({
     where: { id: parseInt(projectId, 10) },
@@ -186,6 +201,11 @@ const projectDataCompany = async (companyId: string, projectId: string) => {
   }
 }
 
+/**
+ * Admin viewing of full information of a specific project
+ * Throws 400 errors if project id doesnt exist.
+ * @returns ALL or majority of the specific project's information
+ */
 const projectDataAdmin = async (projectId: string) => {
   const project = await prisma.project.findUnique({
     where: { id: parseInt(projectId, 10) },
@@ -197,6 +217,10 @@ const projectDataAdmin = async (projectId: string) => {
   return projectDataCompany(project.companyId.toString(), projectId)
 }
 
+/**
+ * Super function that calls one of the above 3 fncs to retrieve info on a project, dependent on user type
+ * @returns ALL or majority of the specific project's information
+ */
 const projectData = async (
   userId: string,
   userType: UserType,
@@ -214,6 +238,10 @@ const projectData = async (
   }
 }
 
+/**
+ * @returns the current project data for the purposes of editing
+ * specialty is that it returns private and public descritptions seperately, since they're usually concatenated
+ */
 const projectDataEdit = async (companyId: string, projectId: string) => {
   const project = await prisma.project.findUnique({
     where: { id: parseInt(projectId, 10) },
@@ -235,6 +263,12 @@ const projectDataEdit = async (companyId: string, projectId: string) => {
   }
 }
 
+/**
+ * Owner company can change the status of a project, in a one-way fashion (no going back)
+ * Additionally emails all associated professionals if project is changed to completed ("CLOSED")
+ * Throws 400 errors if project id doesnt exist or company id is not owner of project
+ * @returns the new status of the project
+ */
 const projectChangeStatus = async (companyId: string, projectId: string) => {
   const project = await prisma.project.findUnique({
     where: { id: parseInt(projectId, 10) },
@@ -304,10 +338,10 @@ const projectChangeStatus = async (companyId: string, projectId: string) => {
   return { newStatus: status.valueOf().toLowerCase() }
 }
 
-/*
-  Function READS all existing Projects entries from the database
-           returns respone 200 with all OPEN project's basic info
-*/
+/**
+ * @returns basic public data of every single existing project who's status is OPEN
+ * For search/list results
+ */
 const allProjectPublicData = async () => {
   const queriedInfo = await prisma.project.findMany({
     select: {
@@ -346,10 +380,11 @@ const allProjectPublicData = async () => {
   return { projects: basicInfo }
 }
 
-/*
-  Function REMOVES a professional from a project, as requested by the owner Company usert
-           returns respone 200 with either success true or false
-*/
+/**
+ * company removes a specific associated professional from the project that the company owns
+ * Throws 400 error if company, professional or project id is non existent
+ * @returns success object with boolean value
+ */
 const removeProfessional = async (
   companyId: string,
   professionalId: string,
@@ -381,6 +416,11 @@ const removeProfessional = async (
   }
 }
 
+/**
+ * company deletes a specific existing project
+ * Throws 400 error if company or project id is non existent
+ * @returns success object with boolean value
+ */
 const projectDelete = async (companyId: string, projectId: string) => {
   const project = await prisma.project.findUnique({
     where: { id: parseInt(projectId, 10) },

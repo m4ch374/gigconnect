@@ -14,8 +14,9 @@ import {
 } from "./helper"
 
 /**
- * Function CREATES a new Professional entry into the database
- * returns either response types 400 (specific fails) or 200 (pass) - from api-spec.md
+ * Given the bare minimum details, creates a Professional User
+ * Throws 400 errors if input details have issues.
+ * @returns new token for that login session and the user type, which is Professional
  */
 const professionalCreate = async (
   email: string,
@@ -70,10 +71,11 @@ const professionalCreate = async (
   }
 }
 
-/*
-  Function READS an existing Professional entry from the database
-           returns respone 200 with user info (since errors are alr handled)
-*/
+/**
+ * @returns all information about the specific professional
+ * Throws 403 error if professionalId doesn't exist
+ * This is for private view only (i.e. a professional views its own profile)
+ */
 const professionalData = async (userId: string) => {
   const user = await getProfeshUserEntry(Number(userId))
   return {
@@ -91,10 +93,11 @@ const professionalData = async (userId: string) => {
   }
 }
 
-/*
-  Function UPDATES an existing Professional entry in the database
-           returns either response types 400 (fails) or 200 (pass)
-*/
+/**
+ * Overwrites the professional's existing information with what's provided
+ * Throws 400 errors if update input values contains issues
+ * @returns success object with boolean value.
+ */
 const professionalUpdate = async (
   userId: string,
   firstName: string,
@@ -156,25 +159,16 @@ const professionalUpdate = async (
       })
     }),
   )
-  // for (const currQual of qualifications) {
-  //   await prisma.socialLink.create({
-  //     data: {
-  //       name: currQual.websiteName,
-  //       url: currQual.websiteLink,
-  //       professionalId: Number(userId),
-  //     },
-  //   })
-  // }
 
   return {
     success: true,
   }
 }
 
-/*
-  Function READS all existing Professional entries from the database
-           returns respone 200 with all basic users info
-*/
+/**
+ * @returns PUBLIC information of ALL existing Professionals
+ * This is for basic view under search/list results
+ */
 const allProfessionalPublicData = async () => {
   const queriedInfo = await prisma.professional.findMany({
     select: {
@@ -198,10 +192,11 @@ const allProfessionalPublicData = async () => {
   return { professionalUsers: basicInfo }
 }
 
-/*
-  Function READS gets all necessary Public info from curr Professional, for profile page public viewing
-           returns respone 200 with all basic users info
-*/
+/**
+ * @returns PUBLIC information about the specific professional
+ * Throws 403 error if professionalId doesn't exist
+ * This is for public view only (i.e. other users views another professional)
+ */
 const professionalDataPublic = async (userId: string) => {
   const user = await getProfeshUserEntry(Number(userId))
   // get list of all of this user's closed projects, with public info

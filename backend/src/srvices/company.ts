@@ -13,6 +13,11 @@ import {
   avgReviewScore,
 } from "./helper"
 
+/**
+ * Given the bare minimum details, creates a Company User
+ * Throws 400 error if input values contains issues
+ * @returns new token for that login session and the user type, which is Company
+ */
 const companyCreate = async (
   email: string,
   password: string,
@@ -77,6 +82,11 @@ const companyCreate = async (
   }
 }
 
+/**
+ * @returns all information about the specific company
+ * Throws 403 error if companyId doesn't exist
+ * This is for private view only (i.e. a company views its own profile)
+ */
 const companyData = async (userId: string) => {
   const companyUser = await getCompanyUserEntry(Number(userId))
   return {
@@ -92,6 +102,11 @@ const companyData = async (userId: string) => {
   }
 }
 
+/**
+ * Overwrites the company's existing information with what's provided
+ * Throws 400 errors if update input values contains issues
+ * @returns success object with boolean value.
+ */
 const companyUpdate = async (
   userId: string,
   companyName: string,
@@ -151,10 +166,10 @@ const companyUpdate = async (
   }
 }
 
-/*
-  Function READS all existing Company entries from the database
-           returns respone 200 with all basic company's info
-*/
+/**
+ * @returns PUBLIC information of ALL existing companys
+ * This is for basic view under search/list results
+ */
 const allCompanyPublicData = async () => {
   const queriedInfo = await prisma.company.findMany({
     select: {
@@ -176,10 +191,11 @@ const allCompanyPublicData = async () => {
   return { companyUsers: basicInfo }
 }
 
-/*
-  Function READS gets all necessary Public info from curr Company, for profile page public viewing
-           returns respone 200 with all basic users info
-*/
+/**
+ * @returns PUBLIC information about the specific company
+ * Throws 403 error if companyId doesn't exist
+ * This is for public view only (i.e. other users views another company)
+ */
 const companyDataPublic = async (userId: string) => {
   const companyUser = await getCompanyUserEntry(Number(userId))
   const closedProjects = await prisma.company.findUnique({

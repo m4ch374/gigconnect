@@ -3,8 +3,7 @@ import { ProjectStatus } from "@prisma/client"
 import { prisma, professionalInProject, getTransporterForEmail } from "./helper"
 
 /**
- * Return a promise that resolves true if the project has status OPEN,
- * false if not.
+ * @returns a promise that resolves true if the project has status OPEN, false if not.
  */
 const projectIsOpen = async (projectId: string) =>
   (
@@ -15,7 +14,7 @@ const projectIsOpen = async (projectId: string) =>
   )?.status === ProjectStatus.OPEN
 
 /**
- * Return a promise that resolves true if a request matching the given
+ * @returns a promise that resolves true if a request matching the given
  * professional and project already exists, false if not.
  */
 const requestExists = async (professionalId: string, projectId: string) =>
@@ -26,6 +25,11 @@ const requestExists = async (professionalId: string, projectId: string) =>
     },
   })) !== null
 
+/**
+ * Creates a request, made by a professional to an existing project, with an optional message
+ * Throws 400 errors if requests already exists, professional is already in project or project is not Open
+ * @returns success object with boolean value
+ */
 const requestCreate = async (
   professionalId: string,
   projectId: string,
@@ -56,6 +60,13 @@ const requestCreate = async (
   return { success: true }
 }
 
+/**
+ * Company either accepts/declines a request, made by a professional to an existing owned project
+ * Throws 400 errors if requests doesn't exist, either one of three id's doesn't exist, or company id
+ *  is not project owner's.
+ * Additionally the specific professional is emailed with the request repsonse.
+ * @returns success object with boolean value
+ */
 const requestRespond = async (
   companyId: string,
   requestId: string,
@@ -121,13 +132,7 @@ const requestRespond = async (
   await prisma.request.delete({
     where: { id: parseInt(requestId, 10) },
   })
-  // const companyInfo = await prisma.company.findUnique({
-  //   where: { id: info?.project.companyId },
-  //   select: {
-  //     name: true,
-  //   },
-  // })
-  // gather email related info
+  // now set up for emailing
   const projectTitle = info?.project.title
   const profeshName = info?.professional.firstName
   const profeshEmail = info?.professional.email
@@ -158,6 +163,11 @@ const requestRespond = async (
   return { success: true }
 }
 
+/**
+ * @returns all information on the request data, to company owner
+ * Throws 400 error if request id doesnt exist
+ * Throws 403 error if company user doesn't own the project associated with this request
+ */
 const requestData = async (companyId: string, requestId: string) => {
   const request = await prisma.request.findUnique({
     where: { id: parseInt(requestId, 10) },

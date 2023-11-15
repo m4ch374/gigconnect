@@ -4,6 +4,10 @@ import { companyCreate, companyUpdate } from "./company"
 import { professionalCreate, professionalUpdate } from "./professional"
 import { projectCreate } from "./project"
 
+/**
+ * This whole file is dedicated to populating a database with dummy data
+ */
+
 const returnHi = () => "Hi"
 
 const returnError = () => {
