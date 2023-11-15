@@ -12,7 +12,7 @@ const CompanyPreview: React.FC<TCompanyPreview> = ({ company }) => {
 
   return (
     <div
-      className="p-4 hover:bg-sky-300/10 cursor-pointer"
+      className="p-4 hover:bg-sky-300/10 cursor-pointer group"
       onClick={() => navigate(`/company/${company.userId}`)}
     >
       <div className="flex items-center gap-2">
@@ -20,9 +20,14 @@ const CompanyPreview: React.FC<TCompanyPreview> = ({ company }) => {
           verified={company.verified}
           srcUrl={company.profilePhoto}
         />
-        <h1 className="text-lg font-semibold truncate">
+        <h1 className="text-lg font-semibold truncate group-hover:text-sky-300 group-hover:underline">
           {company.companyName}
         </h1>
+      </div>
+      <div className="p-2">
+        <p className="line-clamp-6">
+          {company.description || "No description provided"}
+        </p>
       </div>
     </div>
   )

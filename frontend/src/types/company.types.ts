@@ -18,4 +18,5 @@ export type CompanyUser = {
   companyName: string
   profilePhoto: string
   verified: boolean
+  description: string
 }
