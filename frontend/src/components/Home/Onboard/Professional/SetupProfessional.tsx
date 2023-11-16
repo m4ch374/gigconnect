@@ -46,8 +46,8 @@ const SetupProfessional: React.FC<TSetupProfessional> = ({ setShow }) => {
 
   return (
     <ModalBackdrop
-      className="flex items-center justify-center"
-      onBackdropClick={onModalClose}
+      className="flex items-center justify-center cursor-default"
+      onBackdropClick={() => {}}
     >
       <ProfessionalSetupContext.Provider value={setupValues}>
         <StepContext.Provider value={stepController}>

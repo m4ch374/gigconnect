@@ -42,8 +42,8 @@ const SetupCompany: React.FC<TSetupCompany> = ({ setShow }) => {
 
   return (
     <ModalBackdrop
-      className="flex items-center justify-center"
-      onBackdropClick={onModalClose}
+      className="flex items-center justify-center cursor-default"
+      onBackdropClick={() => {}}
     >
       <CompanySetupContext.Provider value={setupValues}>
         <StepContext.Provider value={stepController}>

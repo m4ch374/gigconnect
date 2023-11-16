@@ -63,9 +63,8 @@ const ProfileSetupContainer: React.FC<TProfileSetupContainer> = ({
         <div className="flex gap-2 self-end m-4 mt-2">
           <button
             className="px-4 py-1 border border-zinc-400 rounded-full"
-            onClick={e => {
+            onClick={() => {
               if (!step) {
-                onCloseButton(e)
                 return
               }
               decrementStep()
