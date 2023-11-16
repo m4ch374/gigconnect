@@ -1,5 +1,5 @@
 import ProfileIcon from "components/ProfileIcon"
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { ProfessionalUser } from "types/professional.types"
 import RemoveUserButton from "./RemoveUserButton"
@@ -24,6 +24,12 @@ const Member: React.FC<TMembers> = ({
 }) => {
   const { profilePhoto, verified, firstName, lastName, userId } = member
 
+  const [isReviewed, setIsReviewed] = useState(reviewed)
+
+  useEffect(() => {
+    setIsReviewed(reviewed)
+  }, [reviewed])
+
   return (
     <div className="w-full hover:bg-sky-400/10 p-2 rounded-md flex justify-between">
       <div className="flex gap-2 items-center">
@@ -39,12 +45,13 @@ const Member: React.FC<TMembers> = ({
 
       {projStatus === "closed" ? (
         <>
-          {!reviewed ? (
+          {!isReviewed ? (
             <ReviewUserButton
               memberId={userId}
               memberName={firstName + " " + lastName}
               projectId={projectId}
               memberProfilePhoto={profilePhoto}
+              onReviewSuccess={() => setIsReviewed(true)}
             />
           ) : (
             <div className="flex gap-1 bg-sky-700/60 text-zinc-200/80 px-2 py-1 rounded-md cursor-not-allowed">

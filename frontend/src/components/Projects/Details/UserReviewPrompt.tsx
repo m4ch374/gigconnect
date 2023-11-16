@@ -45,6 +45,7 @@ const UserReviewPrompt: React.FC<TUserReviewPrompt> = ({
           memberName={company[0].userName}
           memberProfilePhoto={company[0].profilePhoto}
           projectId={projectId}
+          onReviewSuccess={() => setCompany([])}
         />
       ) : (
         <div className="flex gap-1 bg-sky-700/60 text-zinc-200/80 px-2 py-1 rounded-md cursor-not-allowed">

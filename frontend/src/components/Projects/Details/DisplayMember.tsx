@@ -62,7 +62,7 @@ const DisplayMember: React.FC<TDisplayMember> = ({
                 projectId={projectId}
                 onRemoveSuccess={() => memberRemove(idx)}
                 projStatus={projStatus}
-                reviewed={reviewed.includes(member.userId)}
+                reviewed={!reviewed.includes(member.userId)}
               />
             ))}
           </div>

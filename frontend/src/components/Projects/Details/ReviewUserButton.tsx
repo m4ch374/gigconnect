@@ -13,6 +13,7 @@ type TReviewUserButton = {
   memberId: string
   projectId: string
   memberProfilePhoto: string
+  onReviewSuccess?: () => void
 }
 
 const ReviewUserButton: React.FC<TReviewUserButton> = ({
@@ -20,6 +21,7 @@ const ReviewUserButton: React.FC<TReviewUserButton> = ({
   memberProfilePhoto,
   projectId,
   memberId,
+  onReviewSuccess,
 }) => {
   const [showModal, setShowModal] = useState(false)
 
@@ -109,6 +111,7 @@ const ReviewUserButton: React.FC<TReviewUserButton> = ({
                         return
                       }
 
+                      if (onReviewSuccess) onReviewSuccess()
                       toast.success("User reviewed successfully")
                       setShowModal(false)
                     })()
