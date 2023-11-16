@@ -50,16 +50,14 @@ const AppRoutes: React.FC = () => {
     <AnimatePresence>
       <Routes location={location} key={routeKey}>
         {/* Auth */}
-        {!token && (
-          <>
-            <Route path="/login" element={<Login />} />
-            <Route path="/sign-up">
-              <Route index element={<PreSignUp />} />
-              <Route path="company" element={<SignUpCompany />} />
-              <Route path="professional" element={<SignUpProfessional />} />
-            </Route>
-          </>
-        )}
+        <Route path="/" element={token && <Navigate to={"/"} />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/sign-up">
+            <Route index element={<PreSignUp />} />
+            <Route path="company" element={<SignUpCompany />} />
+            <Route path="professional" element={<SignUpProfessional />} />
+          </Route>
+        </Route>
 
         {/* Main */}
         <Route
