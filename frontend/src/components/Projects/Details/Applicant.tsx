@@ -1,6 +1,7 @@
 import Clipboard from "assets/icons/Clipboard"
 import Cross from "assets/icons/Cross"
 import ModalBackdrop from "components/ModalBackdrop"
+import MultiLine from "components/MultiLine"
 import ProfileIcon from "components/ProfileIcon"
 import { AnimatePresence, motion } from "framer-motion"
 import useObject from "hooks/UseObject.hooks"
@@ -161,9 +162,9 @@ const Applicant: React.FC<TApplicant> = ({
                     {firstName + " " + lastName}
                   </h3>
                 </div>
-                <p className="mt-4 rounded-md p-2 border border-zinc-400/80 min-h-[200px]">
-                  {applicationMsg}
-                </p>
+                <div className="mt-4 rounded-md p-2 border border-zinc-400/80 min-h-[200px]">
+                  <MultiLine text={applicationMsg} />
+                </div>
               </div>
 
               <hr className="border-zinc-400/50 mt-4" />

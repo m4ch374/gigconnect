@@ -11,6 +11,7 @@ import ChangeStatusButton from "./ChangeStatusButton"
 import ShowProjectStats from "./ShowProjectStatus"
 import { ProjectStatus } from "types/general.types"
 import Pencil from "assets/icons/Pencil"
+import MultiLine from "components/MultiLine"
 
 type TProjectMeta = {
   projDetail: TProjectData["responseType"]
@@ -89,9 +90,12 @@ const ProjectMeta: React.FC<TProjectMeta> = ({
 
       <hr className="border-zinc-400 my-4" />
 
-      <p className="text-zinc-300 font-thin p-4 break-words">
-        {projDetail.description}
-      </p>
+      <div className="p-4">
+        <MultiLine
+          text={projDetail.description}
+          className="text-zinc-300 font-thin break-words"
+        />
+      </div>
 
       <hr className="border-zinc-400 my-4" />
 

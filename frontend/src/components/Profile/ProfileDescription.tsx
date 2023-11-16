@@ -16,6 +16,7 @@ import { updateProfessionalProfile } from "services/professional.services"
 import toast from "react-hot-toast"
 import { updateCompanyProfile } from "services/company.services"
 import useUserType from "hooks/UserType.hooks"
+import MultiLine from "components/MultiLine"
 
 const ProfileDescription: React.FC = () => {
   const isMyProfile = useIsMyProfile()
@@ -90,17 +91,23 @@ const ProfileDescription: React.FC = () => {
       </div>
       <div className="p-4 font-thin">
         {description ? (
-          <p>
-            {showMore ? description : cappedDescription}
-            {cappedDescription.length < description.length && (
-              <button
-                className="font-bold text-sky-400 underline"
-                onClick={() => setShowMore(s => !s)}
-              >
-                {showMore ? "less" : "more"}
-              </button>
+          <>
+            {showMore ? (
+              <MultiLine text={description} />
+            ) : (
+              <MultiLine text={cappedDescription} />
             )}
-          </p>
+            <p>
+              {cappedDescription.length < description.length && (
+                <button
+                  className="font-bold text-sky-400 underline"
+                  onClick={() => setShowMore(s => !s)}
+                >
+                  {showMore ? "less" : "more"}
+                </button>
+              )}
+            </p>
+          </>
         ) : (
           <div className="flex flex-col items-center">
             <img src="/Trip.svg" className="w-40 h-40" />

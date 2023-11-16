@@ -1,5 +1,6 @@
 import StarFilled from "assets/icons/StarFilled"
 import StarOutline from "assets/icons/StarOutline"
+import MultiLine from "components/MultiLine"
 import { useContext, useEffect, useMemo, useState } from "react"
 import toast from "react-hot-toast"
 import { Link } from "react-router-dom"
@@ -86,7 +87,9 @@ const ProfileReviews: React.FC<ReviewProps> = ({ userId }) => {
                 {i.rating >= 4 ? <StarFilled /> : <StarOutline />}
                 {i.rating == 5 ? <StarFilled /> : <StarOutline />}
               </div>
-              <p className="mt-4">{i.comment}</p>
+              <div className="mt-4">
+                <MultiLine text={i.comment} />
+              </div>
             </div>
             {k < reviews.length - 1 && <hr className="border-zinc-200/80" />}
           </div>
