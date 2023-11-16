@@ -1,3 +1,4 @@
+import Verified from "assets/icons/Verified"
 import useUserType from "hooks/UserType.hooks"
 import React, { useEffect, useMemo, useState } from "react"
 import toast from "react-hot-toast"
@@ -40,9 +41,9 @@ const UserVerfifyItem: React.FC<TUserVerifyItem> = ({
         flex-row
         justify-between"
     >
-      <div className="flex flex-row items-center gap-4">
-        <div className="bg-white aspect-square w-10 rounded-full" />
+      <div className="flex flex-row items-center gap-2">
         <h2 className="text-xl font-semibold">{userName}</h2>
+        {localVerify && <Verified className="w-6 h-6" />}
       </div>
 
       <button
@@ -88,7 +89,7 @@ const Admin: React.FC = () => {
       const res = await getAdmin()
 
       if (!res.ok) {
-        toast.error(res.error)
+        // TODO: Display the error message in res.error on the UI.
         return
       }
 
@@ -100,29 +101,31 @@ const Admin: React.FC = () => {
   if (userType !== "admin") return <Navigate to={"/"} />
 
   return (
-    <div className="m-12">
-      <h1 className="text-4xl">Admin</h1>
+    <div className="flex justify-center my-10">
+      <div className="w-[90%] max-w-[1000px]">
+        <h1 className="text-4xl">Admin</h1>
 
-      <hr className="my-2 border-gray-400/80" />
+        <hr className="my-2 border-gray-400/80" />
 
-      {companyUsers.map(u => (
-        <UserVerfifyItem
-          key={u.userId}
-          userId={u.userId}
-          verified={u.verified}
-          companyName={u.companyName}
-        />
-      ))}
+        {companyUsers.map(u => (
+          <UserVerfifyItem
+            key={u.userId}
+            userId={u.userId}
+            verified={u.verified}
+            companyName={u.companyName}
+          />
+        ))}
 
-      {professionalUsers.map(u => (
-        <UserVerfifyItem
-          key={u.userId}
-          userId={u.userId}
-          verified={u.verified}
-          firstName={u.firstName}
-          lastName={u.lastName}
-        />
-      ))}
+        {professionalUsers.map(u => (
+          <UserVerfifyItem
+            key={u.userId}
+            userId={u.userId}
+            verified={u.verified}
+            firstName={u.firstName}
+            lastName={u.lastName}
+          />
+        ))}
+      </div>
     </div>
   )
 }
