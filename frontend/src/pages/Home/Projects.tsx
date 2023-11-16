@@ -22,7 +22,11 @@ const Projects: React.FC = () => {
     <>
       <div>
         {projects
-          .filter(proj => proj.title.includes(searches as string))
+          .filter(proj =>
+            proj.title
+              .toLowerCase()
+              .includes((searches as string).toLowerCase()),
+          )
           .map((proj, idx) => {
             return (
               <div key={idx}>
