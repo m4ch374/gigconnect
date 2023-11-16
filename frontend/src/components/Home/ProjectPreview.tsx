@@ -77,9 +77,9 @@ const ProjectPreview: React.FC<TProjectPreview> = ({
 
       <div className="flex items-center font-thin text-zinc-300 gap-1 text-xs">
         <MapPin className="w-4 h-4" />
-        <h3>{location || "No Location Provided"}</h3>
-        <h3>&#x2022;</h3>
-        <h3>{inPerson ? "In-Person" : "On-Site"}</h3>
+        {inPerson ? <h3>{location || "No Location Provided"}</h3> : <></>}
+        {inPerson ? <h3>&#x2022;</h3> : <></>}
+        <h3>{inPerson ? "In-Person" : "Remote"}</h3>
       </div>
     </div>
   )

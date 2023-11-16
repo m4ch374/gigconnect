@@ -67,7 +67,7 @@ const EditTags: React.FC = () => {
                 setCurrSkill("")
               }}
             >
-              <h1>Change tags and keyword:</h1>
+              <h1>Change tags and keywords:</h1>
               <div className="w-full border border-zinc-400 rounded-md p-2 text-sm flex flex-wrap gap-2 focus-within:border-zinc-200">
                 {arr.map((skill, idx) => (
                   <div

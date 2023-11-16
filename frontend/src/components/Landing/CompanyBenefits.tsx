@@ -8,11 +8,10 @@ const CompanyBenefits: React.FC = () => {
         <div className="flex flex-col gap-10 lg:flex-row-reverse">
           <div className="flex flex-col gap-10 relative z-10">
             <h1 className="text-[3rem] leading-[3rem] font-bold">
-              Cutting costs, for all the right reasons!
+              Boost productivity and acheive your goals!
             </h1>
             <h3 className="text-2xl text-zinc-400">
-              Digging up the hard working, enthusiastic and under-valued talents
-              for your projects.
+              Find enthusiastic and hard-working talents for your projects!
             </h3>
           </div>
           <HoverSkewImage
@@ -25,10 +24,9 @@ const CompanyBenefits: React.FC = () => {
           <h3>Register as Company user to:</h3>
           <ul className="list-disc p-4 px-8">
             <li>Host interesting and exciting projects.</li>
-            <li>Find the top 1% talents.</li>
+            <li>Find the best talents to help do your projects.</li>
             <li>
-              Cut down cost because talents are very desperate so you could
-              under pay them!
+              Achieve your company&apos;s goals faster and make money sooner!
             </li>
           </ul>
         </div>

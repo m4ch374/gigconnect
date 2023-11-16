@@ -73,7 +73,7 @@ const SignUpCompany: React.FC = () => {
         onSubmit={handleSubmit}
       >
         <h1 className="text-3xl w-full text-center font-bold my-8">
-          Find talens you need.
+          Find talents for your projects.
         </h1>
 
         <hr className="border-zinc-400" />
@@ -109,7 +109,7 @@ const SignUpCompany: React.FC = () => {
             Create Account
           </button>
           <h3 className="text-center font-thin">
-            Register as Professional?{" "}
+            Register as a professional?{" "}
             <Link
               to={"/sign-up/professional"}
               className="text-sky-400 font-normal"

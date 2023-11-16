@@ -11,7 +11,8 @@ const ProductIntro: React.FC = () => {
               Find good company, with good companies.
             </h1>
             <h3 className="text-2xl text-zinc-200/80">
-              Search projects that you love, hosted by companies that you like.
+              Search for projects that you love, hosted by companies that you
+              like.
             </h3>
           </div>
           <HoverSkewImage src="/showcase1.png" />
@@ -19,9 +20,9 @@ const ProductIntro: React.FC = () => {
         <div className="text-xl mt-10 text-zinc-100 backdrop-blur-lg rounded-md p-4 bg-gradient-to-b from-gray-900/50 to-gray-600/80">
           <h3>Register as Professional user to:</h3>
           <ul className="list-disc p-4 pl-8 text-lg">
-            <li>Find Projects you like.</li>
-            <li>Apply to Projects you find interesting.</li>
-            <li>Browse other Professionals Profile.</li>
+            <li>Find projects you like.</li>
+            <li>Apply to projects which you find interesting.</li>
+            <li>Browse other companies and professionals on the site.</li>
             <li>Live the life you want!</li>
           </ul>
         </div>

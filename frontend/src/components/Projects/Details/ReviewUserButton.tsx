@@ -70,7 +70,7 @@ const ReviewUserButton: React.FC<TReviewUserButton> = ({
               </div>
 
               <div className="p-4">
-                <h3 className="text-xl">Drop a review for {memberName}!</h3>
+                <h3 className="text-xl">Add a review for {memberName}!</h3>
                 <div className="mt-4 flex gap-2 items-center">
                   <ProfileIcon srcUrl={memberProfilePhoto} verified={false} />
                   <h3 className="text-xl">{memberName}</h3>

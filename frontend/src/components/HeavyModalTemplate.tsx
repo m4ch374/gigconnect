@@ -74,7 +74,7 @@ const HeavyModalTemplate: React.FC<THeavyModalTemplate> = ({
             target="_blank"
             className="font-thin flex gap-1 items-center hover:underline"
           >
-            <h1>Open on other page</h1>
+            <h1>Open in new tab</h1>
             <Clipboard className="w-5 h-5" />
           </Link>
         </div>

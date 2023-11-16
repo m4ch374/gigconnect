@@ -28,7 +28,7 @@ const PreSignUp: React.FC = () => {
       >
         <div>
           <h1 className="mt-4 text-lg font-bold text-center sm:text-xl">
-            Join as Professional or Company
+            Join as a Professional or Company
           </h1>
 
           <div className="flex flex-col w-full gap-4 px-4 py-8 sm:flex-row sm:px-12">

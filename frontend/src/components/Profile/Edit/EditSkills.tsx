@@ -41,7 +41,7 @@ const EditSkills: React.FC<TEditSkills> = ({ skillsArrayController }) => {
         }
 
         if (arr.includes(currSkill)) {
-          toast.error("Cannot add 2 or more same skills")
+          toast.error("Cannot add the same skill twice.")
           return
         }
 

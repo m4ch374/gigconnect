@@ -21,10 +21,7 @@ const CreateTitle: React.FC = () => {
           <h1 className="text-4xl font-semibold text-sky-200">
             Let&apos;s start with a strong title.
           </h1>
-          <h3>
-            This helps professionals to join your project, make it sound and
-            make it eye catching!
-          </h3>
+          <h3>This helps get your project noticed by others!</h3>
         </div>
         <div className="w-full flex flex-col gap-2">
           <h3 className="text-lg">Write a title for your project!</h3>

@@ -108,7 +108,7 @@ const SignUpProfessional: React.FC = () => {
             Create Account
           </button>
           <h3 className="text-center font-thin">
-            Register as company?{" "}
+            Register as a company?{" "}
             <Link to={"/sign-up/company"} className="text-sky-400 font-normal">
               Click here
             </Link>

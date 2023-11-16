@@ -29,12 +29,11 @@ const ProfileCertifications: React.FC = () => {
     <div className="border border-zinc-400/80 rounded-lg">
       <div className="p-4">
         <div className="flex gap-4 items-center">
-          <h1 className="text-2xl font-semibold">Certifications</h1>
+          <h1 className="text-2xl font-semibold">Qualifications</h1>
           {isMyProfile && (
             <ProfileEditButton onButtonClick={() => setEditModal(true)} />
           )}
         </div>
-        <h3 className="text-zinc-400 font-thin">Qualifications achieved</h3>
       </div>
 
       <hr className="border-zinc-400/80" />
@@ -44,7 +43,7 @@ const ProfileCertifications: React.FC = () => {
           <div className="flex flex-col items-center w-full p-4">
             <img src="/Writer.svg" className="w-40 h-40 invert-[0.1]" />
             <h3 className="font-semibold text-xl">
-              No Certifications Provided
+              No Qualifications Provided
             </h3>
           </div>
         ) : (

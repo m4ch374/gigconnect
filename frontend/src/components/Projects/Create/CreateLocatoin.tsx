@@ -21,9 +21,10 @@ const CreateLocation: React.FC = () => {
           </h3>
         </div>
         <div className="w-full flex flex-col gap-2">
-          <h3 className="text-lg">Add a location of your project!</h3>
+          <h3 className="text-lg">Add a location for your project!</h3>
+          <h4 className="text-base">Leave empty for remote projects.</h4>
           <InputField
-            placeholder="Leave it empty for remote projects"
+            placeholder="Enter project location..."
             value={projectData.location}
             onChange={e => {
               const currValue = e.currentTarget.value

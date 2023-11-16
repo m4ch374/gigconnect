@@ -19,8 +19,8 @@ const SetupQualifications: React.FC = () => {
       <h1>Add qualifications to support your experiences!</h1>
 
       <EditLinksTemplate
-        inputNamePlaceholder="Qualifications"
-        inputLinkPlaceholder="Certification Link"
+        inputNamePlaceholder="Qualification"
+        inputLinkPlaceholder="Link to qualification or certificate"
         arrayController={arrayController}
       />
     </div>

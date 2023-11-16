@@ -13,7 +13,7 @@ const EditDescription: React.FC<TEditDescription> = ({
     <div className="flex items-center justify-center h-full p-4">
       <textarea
         className="bg-transparent border border-zinc-400 rounded-md w-full h-full p-2 outline-none min-h-[200px] focus:border-zinc-200"
-        placeholder="We would love to know you!"
+        placeholder="Enter a profile description here..."
         onChange={textOnChange}
         value={textValue}
       />

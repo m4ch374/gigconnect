@@ -30,7 +30,9 @@ const ApplyProjectModal: React.FC<TApplyProjectModal> = ({
       >
         <div>
           <div className="flex justify-between m-4 mb-1">
-            <h1 className="text-2xl font-semibold">Apply to Project!</h1>
+            <h1 className="text-2xl font-semibold">
+              Apply to Join the Project!
+            </h1>
             <button
               className="text-zinc-400 rounded-full hover:bg-white/10 p-1"
               onClick={() => setShowModal(false)}
@@ -42,7 +44,7 @@ const ApplyProjectModal: React.FC<TApplyProjectModal> = ({
         </div>
 
         <div className="p-4 flex flex-col gap-4">
-          <h1>Leave a message to the employer!</h1>
+          <h1>Leave a message for the company.</h1>
           <div className="px-4">
             <textarea
               className="bg-transparent border border-zinc-400 rounded-md w-full h-full p-2 outline-none min-h-[200px] focus:border-zinc-200"

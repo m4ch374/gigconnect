@@ -33,11 +33,10 @@ const CreateKeywords: React.FC = () => {
       <div className="flex flex-col gap-8 md:flex-row">
         <div className="flex flex-col gap-4">
           <h1 className="text-4xl font-semibold text-sky-200">
-            Add required skills for your project.
+            Add tags and keywords for your project
           </h1>
         </div>
         <div className="w-full flex flex-col gap-2">
-          <h3 className="text-lg">Add keywords for your project!</h3>
           <form className="flex gap-2 w-full" onSubmit={onFormSubmit}>
             <InputField
               className="w-full"
@@ -50,7 +49,7 @@ const CreateKeywords: React.FC = () => {
             </button>
           </form>
 
-          <h1 className="mt-10">Skills Added:</h1>
+          <h1 className="mt-10">Tags and Keywords Added:</h1>
           <div className="flex gap-2 flex-wrap">
             {arr.map((tag, idx) => (
               <div

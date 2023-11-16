@@ -88,9 +88,9 @@ const FinishSetup: React.FC = () => {
       >
         <CheckCircle className="w-32 h-32 text-green-500" />
       </motion.div>
-      <h3 className="font-thin">You have finished all profile setup!</h3>
+      <h3 className="font-thin">Your profile is all set up!</h3>
       <h3 className="font-thin text-zinc-400 text-sm">
-        Click Continue to close this popup
+        Click Continue to close this popup.
       </h3>
     </div>
   )

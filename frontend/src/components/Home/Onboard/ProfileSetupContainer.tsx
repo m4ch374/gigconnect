@@ -40,7 +40,7 @@ const ProfileSetupContainer: React.FC<TProfileSetupContainer> = ({
     >
       <div>
         <div className="flex justify-between m-4 mb-1">
-          <h1 className="text-2xl font-semibold">Setup your profile!</h1>
+          <h1 className="text-2xl font-semibold">Set up your profile!</h1>
           <button
             className="text-zinc-400 rounded-full hover:bg-white/10 p-1"
             onClick={onCloseButton}

@@ -21,7 +21,7 @@ const PastProjects: React.FC<TPastProjects> = ({
       <div className="p-4">
         <h1 className="text-2xl font-semibold">Past Projects</h1>
         <h3 className="font-thin text-zinc-400">
-          Past projects involved and participated
+          Projects completed by this professional in the past
         </h3>
       </div>
 

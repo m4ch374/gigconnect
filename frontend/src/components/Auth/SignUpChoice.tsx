@@ -26,7 +26,7 @@ const SignUpChoice: React.FC<TSignUpChoice> = ({
 
     return {
       imgSrc: "/Searching.svg",
-      heading: "I'm a company searching for talent.",
+      heading: "I'm a Company searching for talent.",
     }
   }, [userType])
 
