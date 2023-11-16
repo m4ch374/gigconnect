@@ -1,3 +1,4 @@
+// Generated with https://heroicons.com/
 import React from "react"
 
 const EyeSlash: React.FC = () => {

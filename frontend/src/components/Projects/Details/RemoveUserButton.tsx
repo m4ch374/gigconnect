@@ -1,3 +1,4 @@
+// A button to remove a professional from a project
 import Cross from "assets/icons/Cross"
 import ModalBackdrop from "components/ModalBackdrop"
 import { AnimatePresence, motion } from "framer-motion"

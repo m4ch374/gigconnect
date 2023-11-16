@@ -1,3 +1,4 @@
+// A component for onboarding professionals on sign up
 import ModalBackdrop from "components/ModalBackdrop"
 import useDisableScroll from "hooks/DisableScroll"
 import React, { Dispatch, SetStateAction, useCallback } from "react"

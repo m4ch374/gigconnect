@@ -1,3 +1,4 @@
+// General purpose component for editing descriptions
 import React, { ChangeEventHandler } from "react"
 
 type TEditDescription = {

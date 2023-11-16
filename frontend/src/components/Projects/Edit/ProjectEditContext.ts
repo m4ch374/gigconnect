@@ -1,3 +1,4 @@
+// A context that facilitates with the implementation of editing projects
 import useObject from "hooks/UseObject.hooks"
 import { createContext } from "react"
 import { TProjectEditData } from "services/types"

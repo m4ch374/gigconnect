@@ -1,3 +1,4 @@
+// A button to delete a project
 import Cross from "assets/icons/Cross"
 import Trash from "assets/icons/Trash"
 import ModalBackdrop from "components/ModalBackdrop"

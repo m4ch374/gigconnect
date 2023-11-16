@@ -1,3 +1,4 @@
+// A general purpose user thumbnail component
 import ProfileIcon from "components/ProfileIcon"
 import useIsMyProfile from "hooks/UseIsMyProfile"
 import React, { Dispatch, SetStateAction } from "react"

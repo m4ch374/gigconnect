@@ -1,3 +1,4 @@
+// Shows reviews of a profile
 import StarFilled from "assets/icons/StarFilled"
 import StarOutline from "assets/icons/StarOutline"
 import MultiLine from "components/MultiLine"

@@ -1,3 +1,4 @@
+// Component for user to add their skills
 import useArray from "hooks/UseArray.hooks"
 import React, { useContext, useEffect } from "react"
 import ProfessionalSetupContext from "../../../Profile/Professional/ProfessionalProfileContext"

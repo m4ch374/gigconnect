@@ -1,3 +1,4 @@
+// A button for user to apply the project
 import { AnimatePresence } from "framer-motion"
 import React, { useState } from "react"
 import ApplyProjectModal from "./ApplyProjectModal"

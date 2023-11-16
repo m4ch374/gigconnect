@@ -1,3 +1,4 @@
+// An atomic component used by setup qualifications and external links
 import ArrowUpDown from "assets/icons/ArrowsUpDown"
 import Cross from "assets/icons/Cross"
 import React from "react"

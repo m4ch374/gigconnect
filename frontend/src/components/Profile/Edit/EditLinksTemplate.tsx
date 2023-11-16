@@ -1,3 +1,4 @@
+// General components for editing links, used for both qualifications and external links
 import Plus from "assets/icons/Plus"
 import { AnimatePresence, LayoutGroup, Reorder, motion } from "framer-motion"
 import useArray from "hooks/UseArray.hooks"

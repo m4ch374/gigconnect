@@ -1,3 +1,4 @@
+// A very simple button with a pencil icon
 import Pencil from "assets/icons/Pencil"
 import React, { MouseEventHandler } from "react"
 

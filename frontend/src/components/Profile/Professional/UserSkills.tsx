@@ -1,3 +1,4 @@
+// Shows a professional user's skills
 import React, { useContext, useEffect, useState } from "react"
 import ProfessionalProfileContext from "./ProfessionalProfileContext"
 import { AnimatePresence } from "framer-motion"

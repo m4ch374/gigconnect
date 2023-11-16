@@ -1,3 +1,4 @@
+// The thumbnail of a professional
 import React, {
   useCallback,
   useContext,

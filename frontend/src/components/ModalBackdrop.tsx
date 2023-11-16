@@ -1,3 +1,4 @@
+// Modal backdrop for every single modal in this web app
 import React, { MouseEventHandler } from "react"
 import { twMerge } from "tailwind-merge"
 

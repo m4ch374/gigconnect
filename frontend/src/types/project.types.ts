@@ -1,3 +1,4 @@
+// Types for projects
 export type CreateProjectData = {
   title: string
   publicDescription: string

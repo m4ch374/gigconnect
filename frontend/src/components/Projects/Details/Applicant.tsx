@@ -1,3 +1,4 @@
+// Shows an applicant in a project
 import Clipboard from "assets/icons/Clipboard"
 import Cross from "assets/icons/Cross"
 import ModalBackdrop from "components/ModalBackdrop"

@@ -1,3 +1,4 @@
+// Add project with location
 import InputField from "components/InputField"
 import React, { useContext } from "react"
 import CreateProjectContext from "./CreateProjectContext"

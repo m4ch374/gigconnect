@@ -1,3 +1,5 @@
+// A general purpose modal container for both professional
+// and company users
 import Cross from "assets/icons/Cross"
 import { motion, useSpring, useTransform } from "framer-motion"
 import { StepContext } from "hooks/Steps.hooks"

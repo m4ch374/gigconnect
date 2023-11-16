@@ -1,3 +1,4 @@
+// Display all talents in the platform
 import React, { useEffect, useState } from "react"
 import { getAllProfessionals } from "services/professional.services"
 import { ProfessionalUser } from "types/professional.types"

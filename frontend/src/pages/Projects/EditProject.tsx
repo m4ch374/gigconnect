@@ -1,3 +1,4 @@
+// Edit project page
 import EditLocation from "components/Projects/Edit/EditLocation"
 import EditPrivateDescription from "components/Projects/Edit/EditPrivateDescription"
 import EditPublicDescription from "components/Projects/Edit/EditPublicDescription"

@@ -1,3 +1,4 @@
+// A modal after use clicks the apply button
 import ModalBackdrop from "components/ModalBackdrop"
 import React, { Dispatch, SetStateAction, useState } from "react"
 import { motion } from "framer-motion"

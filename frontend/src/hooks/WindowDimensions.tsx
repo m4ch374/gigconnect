@@ -1,3 +1,4 @@
+// Provides the width and height of the client's window
 import { useCallback, useEffect, useState } from "react"
 
 type WindowDimension = {

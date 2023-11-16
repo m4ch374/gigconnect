@@ -1,3 +1,4 @@
+// Professional profile context for storing profile data
 import useObject from "hooks/UseObject.hooks"
 import { createContext } from "react"
 import { ProfessionalProfileData } from "types/professional.types"

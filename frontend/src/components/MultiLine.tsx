@@ -1,3 +1,4 @@
+// A multi line tool to display new lines
 const MultiLine: React.FC<{ text: string; className?: string }> = ({
   // eslint-disable-next-line react/prop-types
   text,

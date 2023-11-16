@@ -1,3 +1,4 @@
+// Edits the title of a project
 import React, { useContext, useEffect, useState } from "react"
 import ProfileEditButton from "components/Profile/Edit/ProfileEditButton"
 import { AnimatePresence } from "framer-motion"

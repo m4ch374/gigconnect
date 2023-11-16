@@ -1,3 +1,4 @@
+// Create project page
 import React, { useMemo, useState } from "react"
 import useWindowDimensions from "hooks/WindowDimensions"
 import CreateStatusBar from "components/Projects/Create/CreateStatusBar"

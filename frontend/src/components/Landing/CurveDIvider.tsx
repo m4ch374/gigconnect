@@ -1,3 +1,4 @@
+// A curve divider
 import React from "react"
 
 const CurveDivider: React.FC = () => {

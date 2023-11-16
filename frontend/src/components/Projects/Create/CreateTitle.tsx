@@ -1,3 +1,4 @@
+// Add title to project
 import InputField from "components/InputField"
 import React, { useContext, useEffect } from "react"
 import CreateProjectContext from "./CreateProjectContext"

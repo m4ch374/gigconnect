@@ -1,3 +1,4 @@
+// A 404 not found page
 import { Link } from "react-router-dom"
 
 const NotFound: React.FC = () => {

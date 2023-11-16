@@ -1,3 +1,4 @@
+// The home page
 import AnimatedBlob from "assets/AnimatedBlob"
 import HomeSearchBar from "components/Home/HomeSearchBar"
 import useUserType from "hooks/UserType.hooks"

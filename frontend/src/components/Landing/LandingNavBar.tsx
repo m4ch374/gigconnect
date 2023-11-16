@@ -1,3 +1,5 @@
+// A purpose built nav bar for landing page that is different
+// than the one that is in the main app
 import Wifi from "assets/icons/Wifi"
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"

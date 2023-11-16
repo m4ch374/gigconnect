@@ -1,3 +1,4 @@
+// The first part of any company profile
 import React from "react"
 import ProfileDescription from "../ProfileDescription"
 import UserExternalLinks from "../UserExternalLinks"

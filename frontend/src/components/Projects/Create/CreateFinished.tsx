@@ -1,3 +1,4 @@
+// Last page of creating project flow
 import React, { useCallback, useContext, useEffect } from "react"
 import { motion } from "framer-motion"
 import CheckCircle from "assets/icons/CheckCircle"

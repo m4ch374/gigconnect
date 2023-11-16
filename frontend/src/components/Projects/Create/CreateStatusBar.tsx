@@ -1,3 +1,5 @@
+// A status bar to indicate the current progress of creating project
+// status bar is animated
 import React, { useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { motion, useSpring } from "framer-motion"

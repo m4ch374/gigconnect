@@ -1,3 +1,4 @@
+// General purpose component for editing thumbnails
 import Clipboard from "assets/icons/Clipboard"
 import ProfileIcon from "components/ProfileIcon"
 import React, { ChangeEventHandler } from "react"

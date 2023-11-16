@@ -1,3 +1,4 @@
+// A star button for adding review scores
 import StarFilled from "assets/icons/StarFilled"
 import StarOutline from "assets/icons/StarOutline"
 import React, { Dispatch, SetStateAction } from "react"

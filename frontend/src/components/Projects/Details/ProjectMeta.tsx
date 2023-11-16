@@ -1,3 +1,4 @@
+// Provides information of a project such as title, description etc..
 import Building from "assets/icons/Building"
 import MapPin from "assets/icons/MapPin"
 import React, { Dispatch, SetStateAction } from "react"

@@ -1,3 +1,4 @@
+// A general purpose Input field used in various components
 import React, { ChangeEventHandler } from "react"
 import { twMerge } from "tailwind-merge"
 

@@ -1,3 +1,4 @@
+// General purpose component for editing professional names
 import InputField from "components/InputField"
 import React, { ChangeEventHandler } from "react"
 

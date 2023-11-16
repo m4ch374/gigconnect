@@ -1,3 +1,4 @@
+// The first section in the landing page
 import React from "react"
 import { Link } from "react-router-dom"
 

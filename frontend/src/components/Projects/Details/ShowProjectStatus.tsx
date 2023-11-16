@@ -1,3 +1,5 @@
+// Shows the project status on the top left coner
+// Referenced in ProjectMeta.tsx
 import CheckCircle from "assets/icons/CheckCircle"
 import Clock from "assets/icons/Clock"
 import Wifi from "assets/icons/Wifi"

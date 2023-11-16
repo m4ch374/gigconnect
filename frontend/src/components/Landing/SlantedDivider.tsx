@@ -1,3 +1,4 @@
+// A slanted divider
 import React from "react"
 import "./Landing.css"
 

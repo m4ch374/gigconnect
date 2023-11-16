@@ -1,3 +1,4 @@
+// The first part of any professional profiles
 import React from "react"
 import ProfileDescription from "../ProfileDescription"
 import UserSkills from "./UserSkills"

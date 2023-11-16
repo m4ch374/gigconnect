@@ -1,3 +1,4 @@
+// Login page
 import Lock from "assets/icons/Lock"
 import User from "assets/icons/User"
 import LoginInput from "components/Auth/LoginInput"

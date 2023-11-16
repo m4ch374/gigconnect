@@ -1,3 +1,4 @@
+// A modal for onboarding company on sign up
 import ModalBackdrop from "components/ModalBackdrop"
 import useDisableScroll from "hooks/DisableScroll"
 import React, { Dispatch, SetStateAction, useCallback } from "react"

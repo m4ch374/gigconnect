@@ -1,3 +1,4 @@
+// A general purpose modal for editing projects
 import Cross from "assets/icons/Cross"
 import ModalBackdrop from "components/ModalBackdrop"
 import { motion } from "framer-motion"

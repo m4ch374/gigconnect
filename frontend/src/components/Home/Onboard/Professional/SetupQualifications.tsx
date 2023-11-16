@@ -1,3 +1,4 @@
+// Component for user to edit their qualification details
 import React, { useContext, useEffect } from "react"
 import useArray from "hooks/UseArray.hooks"
 import { ExternalLink } from "types/general.types"

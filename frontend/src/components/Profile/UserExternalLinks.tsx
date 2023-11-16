@@ -1,3 +1,4 @@
+// Shows external links for both professional and company users
 import React, {
   useCallback,
   useContext,

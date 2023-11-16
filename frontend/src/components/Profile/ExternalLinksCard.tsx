@@ -1,3 +1,4 @@
+// An atomized component for showing external link
 import React from "react"
 import { ExternalLink } from "types/general.types"
 

@@ -1,3 +1,4 @@
+// Profile icon component that is being used in all relating components
 import User from "assets/icons/User"
 import Verified from "assets/icons/Verified"
 import React from "react"

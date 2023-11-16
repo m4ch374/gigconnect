@@ -1,3 +1,5 @@
+// Shows the past project that a company user has hosted or a
+// professional use has joined
 import ProjectPreview from "components/Home/ProjectPreview"
 import React, { useCallback } from "react"
 import { ListedProjectData } from "types/project.types"

@@ -1,3 +1,4 @@
+// A general purpose modal container for editing profiles
 import Cross from "assets/icons/Cross"
 import ModalBackdrop from "components/ModalBackdrop"
 import { motion } from "framer-motion"

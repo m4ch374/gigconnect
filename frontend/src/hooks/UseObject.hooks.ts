@@ -1,3 +1,5 @@
+// A use state wrapper that provides additional type safe controls
+// for manipulating objects
 import { Dispatch, SetStateAction, useCallback, useState } from "react"
 
 const useObject = <T>(

@@ -1,3 +1,4 @@
+// A button to review users
 import Bolt from "assets/icons/Bolt"
 import Cross from "assets/icons/Cross"
 import ModalBackdrop from "components/ModalBackdrop"

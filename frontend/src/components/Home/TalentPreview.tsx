@@ -1,3 +1,4 @@
+// Used by home page, a thumbnail for previewing professionals
 import ProfileIcon from "components/ProfileIcon"
 import React from "react"
 import { useNavigate } from "react-router-dom"

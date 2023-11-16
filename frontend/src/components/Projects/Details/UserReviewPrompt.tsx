@@ -1,3 +1,5 @@
+// A prompt for professional to leave reviews to companies
+// Appears on top of a project description when project is closed
 import React, { useEffect, useState } from "react"
 import ReviewUserButton from "./ReviewUserButton"
 import { apiProjectReviewUserInfo } from "services/project.services"

@@ -1,3 +1,4 @@
+// Shows user's profile if the user is a professional user
 import ProfessionalProfielIntro from "components/Profile/Professional/ProfessionalProfileIntro"
 import React, { useEffect } from "react"
 import toast from "react-hot-toast"

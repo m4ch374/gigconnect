@@ -1,3 +1,4 @@
+// A component for users to leave review scores
 import React, { Dispatch, SetStateAction } from "react"
 import { twMerge } from "tailwind-merge"
 import StarButton from "./StarButton"

@@ -1,3 +1,4 @@
+// Shows a Company profile
 import CompanyProfileContext from "components/Profile/Company/CompanyProfileContext"
 import CompanyProfileIntro from "components/Profile/Company/CompanyProfileIntro"
 import PastProjects from "components/Profile/PastProjects"
@@ -60,7 +61,7 @@ const CompanyProfile: React.FC<TCompanyProfile> = ({
             }`}
           >
             <CompanyProfileIntro />
-          
+
             <PastProjects
               projects={projects}
               useStaticLink={useProjectsStaticLink}

@@ -1,3 +1,5 @@
+// Check if the current page is a myProfile page
+// based on the routing
 import { useMemo } from "react"
 import { useLocation } from "react-router-dom"
 import useUserType from "./UserType.hooks"

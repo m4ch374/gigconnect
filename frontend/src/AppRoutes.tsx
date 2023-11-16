@@ -1,3 +1,4 @@
+// All the routing in the application
 import React, { useEffect, useMemo } from "react"
 import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 import Login from "pages/Auth/Login"

@@ -1,3 +1,4 @@
+// Used by the home page a thumbnail for browsing companies
 import ProfileIcon from "components/ProfileIcon"
 import React from "react"
 import { useNavigate } from "react-router-dom"

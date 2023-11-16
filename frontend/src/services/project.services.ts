@@ -1,3 +1,4 @@
+// Project related endopints
 import Fetcher from "utils/fetcher"
 import {
   TAllPublicProjects,

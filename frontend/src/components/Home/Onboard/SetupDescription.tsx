@@ -1,3 +1,4 @@
+// Contents for setting up descriptions
 import useUserType from "hooks/UserType.hooks"
 import React, { useContext } from "react"
 import ProfessionalSetupContext from "../../Profile/Professional/ProfessionalProfileContext"

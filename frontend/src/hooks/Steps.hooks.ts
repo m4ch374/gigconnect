@@ -1,3 +1,5 @@
+// A hook for counting steps, generally used in components that require
+// the tracking of stepts, e.g. create project, onboarding, etc...
 import { createContext, useCallback, useMemo, useState } from "react"
 
 const useSteps = (maxSteps: number, start: number = 0) => {

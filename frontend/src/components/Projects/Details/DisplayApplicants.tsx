@@ -1,3 +1,4 @@
+// A component to display all applicants, used in conjunction with Applicant.tsx
 import React from "react"
 import Applicant from "./Applicant"
 import { ProjectRequestData } from "types/project.types"

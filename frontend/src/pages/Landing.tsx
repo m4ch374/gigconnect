@@ -1,3 +1,4 @@
+// The ladning page
 import CompanyBenefits from "components/Landing/CompanyBenefits"
 import CurveDivider from "components/Landing/CurveDIvider"
 import HeaderBanner from "components/Landing/HeaderBanner"

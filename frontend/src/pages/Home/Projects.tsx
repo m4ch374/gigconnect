@@ -1,3 +1,4 @@
+// Display all open projects in the platform
 import React, { useEffect, useState } from "react"
 import { getAllPublicProjects } from "services/project.services"
 import { ListedProjectData } from "types/project.types"

@@ -1,3 +1,4 @@
+// Nav bar for the main web app
 import Wifi from "assets/icons/Wifi"
 import React, { useCallback, useEffect, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"

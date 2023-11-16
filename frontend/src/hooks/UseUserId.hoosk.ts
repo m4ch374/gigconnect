@@ -1,3 +1,5 @@
+// Takes and decode the jwt token from the local storage
+// returns the client's userId
 import { useMemo } from "react"
 import useToken from "./Token.hooks"
 

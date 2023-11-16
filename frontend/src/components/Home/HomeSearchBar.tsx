@@ -1,3 +1,4 @@
+// General purpose search bar, used in home page
 import Magnifier from "assets/icons/Magnifier"
 import React, { Dispatch, SetStateAction, useState } from "react"
 

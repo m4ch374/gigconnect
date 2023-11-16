@@ -1,3 +1,4 @@
+// A component for user to choose which type of user to sign up
 import React, { Dispatch, SetStateAction, useMemo } from "react"
 import { TUser } from "types/general.types"
 

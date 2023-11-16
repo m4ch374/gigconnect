@@ -1,3 +1,4 @@
+// Pre sign up page for users to choose which type of users to sign up
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import SignUpChoice from "../../components/Auth/SignUpChoice"

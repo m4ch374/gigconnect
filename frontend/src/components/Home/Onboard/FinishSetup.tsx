@@ -1,3 +1,4 @@
+// The last page for onboarding
 import CheckCircle from "assets/icons/CheckCircle"
 import React, { useCallback, useContext, useEffect } from "react"
 import { motion } from "framer-motion"

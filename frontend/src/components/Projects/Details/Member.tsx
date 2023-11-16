@@ -1,3 +1,4 @@
+// A component to display a single project member
 import ProfileIcon from "components/ProfileIcon"
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"

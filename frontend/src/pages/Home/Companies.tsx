@@ -1,3 +1,4 @@
+// Display all companies in the platform
 import React, { useEffect, useState } from "react"
 import { getAllCompanies } from "services/company.services"
 import { CompanyUser } from "types/company.types"

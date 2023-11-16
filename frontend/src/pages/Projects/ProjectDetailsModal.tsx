@@ -1,3 +1,4 @@
+// A modal wrapper for showing project details
 import React from "react"
 import { useParams } from "react-router-dom"
 import ProjectDetails from "./ProjectDetails"

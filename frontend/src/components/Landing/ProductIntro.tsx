@@ -1,3 +1,4 @@
+// The second section in the landing page
 import React from "react"
 import HoverSkewImage from "./HoverSkewImage"
 

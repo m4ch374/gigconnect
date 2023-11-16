@@ -1,3 +1,4 @@
+// Use by home page, a thumbnail for previewing projects
 import Building from "assets/icons/Building"
 import MapPin from "assets/icons/MapPin"
 import React, { useMemo } from "react"

@@ -1,3 +1,5 @@
+// A password input field component that toggles between redacted and unredacted
+// password displays
 import EyeSlash from "assets/icons/EyeSlash"
 import React, { ChangeEventHandler, useState } from "react"
 

@@ -1,3 +1,4 @@
+// A wrapper of useState that provides additional controls for arrays
 import { useCallback, useState } from "react"
 
 const useArray = <T>(defaultItem: T[] = []) => {

@@ -1,3 +1,4 @@
+// The thumbnail of a company
 import React, { useCallback, useContext, useEffect, useState } from "react"
 import UserThumbnail from "../UserThumbnail"
 import CompanyProfileContext from "./CompanyProfileContext"

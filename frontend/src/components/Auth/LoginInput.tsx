@@ -1,3 +1,4 @@
+// Component for login inputs
 import React, { ChangeEventHandler, HTMLInputTypeAttribute } from "react"
 
 type TLoginInput = {

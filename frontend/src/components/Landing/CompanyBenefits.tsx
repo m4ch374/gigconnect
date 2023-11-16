@@ -1,3 +1,4 @@
+// A section for showing company benefits
 import React from "react"
 import HoverSkewImage from "./HoverSkewImage"
 

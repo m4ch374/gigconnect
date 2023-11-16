@@ -1,3 +1,4 @@
+// Side menu pop up when clicking on the profile image
 import React, { Dispatch, SetStateAction } from "react"
 import { motion } from "framer-motion"
 import useDisableScroll from "hooks/DisableScroll"

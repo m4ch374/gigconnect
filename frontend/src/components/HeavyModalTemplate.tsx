@@ -1,3 +1,5 @@
+// A general purpose sliding modal template used in home page and profile pages
+// comes with a lot of logic, hence the name HeavyModal
 import { Variants, motion } from "framer-motion"
 import useDisableScroll from "hooks/DisableScroll"
 import useWindowDimensions from "hooks/WindowDimensions"

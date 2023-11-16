@@ -1,3 +1,5 @@
+// A component to display all members in a project, used in conjuction
+// with Member.tsx
 import React, { useEffect, useState } from "react"
 import { twMerge } from "tailwind-merge"
 import { ProfessionalUser } from "types/professional.types"

@@ -1,3 +1,4 @@
+// Shows the certifications and qualifications that a professional user has achieved
 import React, { useContext, useEffect, useState } from "react"
 import ExternalLinksCard from "../ExternalLinksCard"
 import ProfessionalProfileContext from "./ProfessionalProfileContext"

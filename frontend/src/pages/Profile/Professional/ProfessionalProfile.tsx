@@ -1,3 +1,4 @@
+// Shows any professional profile
 import PastProjects from "components/Profile/PastProjects"
 import ProfileCertifications from "components/Profile/Professional/ProfileCertifications"
 import ProfessionalProfileIntro from "components/Profile/Professional/ProfessionalProfileIntro"

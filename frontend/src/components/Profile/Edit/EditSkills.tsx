@@ -1,3 +1,4 @@
+// General purpose components for editing skills
 import Cross from "assets/icons/Cross"
 import useArray from "hooks/UseArray.hooks"
 import React, { useState } from "react"

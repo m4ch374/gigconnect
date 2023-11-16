@@ -1,3 +1,5 @@
+// A useState wrapper that provides additional controls for converting
+// file blobs to base64 text
 import { useCallback, useState } from "react"
 import toast from "react-hot-toast"
 

@@ -1,3 +1,4 @@
+// Shows the description of a profile
 import React, {
   useCallback,
   useContext,

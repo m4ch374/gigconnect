@@ -1,3 +1,4 @@
+// A modal wrapper for showing professional profiles
 import HeavyModalTemplate from "components/HeavyModalTemplate"
 import React from "react"
 import { useParams } from "react-router-dom"

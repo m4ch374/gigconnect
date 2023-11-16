@@ -1,3 +1,4 @@
+// An admin dashboard, only accessible to admins
 import Verified from "assets/icons/Verified"
 import useUserType from "hooks/UserType.hooks"
 import React, { useEffect, useMemo, useState } from "react"

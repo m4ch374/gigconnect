@@ -1,3 +1,4 @@
+// Shows the project details
 import ProjectMeta from "components/Projects/Details/ProjectMeta"
 import React, { useEffect, useState } from "react"
 import toast from "react-hot-toast"
