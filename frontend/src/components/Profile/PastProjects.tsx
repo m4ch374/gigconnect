@@ -1,12 +1,21 @@
 import ProjectPreview from "components/Home/ProjectPreview"
-import React from "react"
+import React, { useCallback } from "react"
 import { ListedProjectData } from "types/project.types"
 
 type TPastProjects = {
   projects: ListedProjectData[]
+  useStaticLink?: boolean
 }
 
-const PastProjects: React.FC<TPastProjects> = ({ projects }) => {
+const PastProjects: React.FC<TPastProjects> = ({
+  projects,
+  useStaticLink = true,
+}) => {
+  const route = useCallback(
+    (id: string) => (useStaticLink ? `/project/${id}` : `details/${id}`),
+    [useStaticLink],
+  )
+
   return (
     <div className="border border-zinc-400 rounded-lg">
       <div className="p-4">
@@ -34,7 +43,7 @@ const PastProjects: React.FC<TPastProjects> = ({ projects }) => {
                 <div key={idx}>
                   <ProjectPreview
                     projectDetail={p}
-                    navRoute={`/home/projects/details/${p.projectId}`}
+                    navRoute={route(p.projectId)}
                   />
                   {idx !== projects.length - 1 && (
                     <hr className="border-zinc-400/80" />

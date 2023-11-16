@@ -4,11 +4,22 @@ import PastProjects from "components/Profile/PastProjects"
 import useObject from "hooks/UseObject.hooks"
 import React, { useEffect } from "react"
 import toast from "react-hot-toast"
-import { useParams } from "react-router-dom"
+import { Outlet, useParams } from "react-router-dom"
 import { getPublicCompanyProfile } from "services/company.services"
+import { twMerge } from "tailwind-merge"
 import { CompanyProfileData } from "types/company.types"
 
-const CompanyProfile: React.FC = () => {
+type TCompanyProfile = {
+  useFullWidth?: boolean
+  useProjectsStaticLink?: boolean
+  className?: string
+}
+
+const CompanyProfile: React.FC<TCompanyProfile> = ({
+  useFullWidth = false,
+  className = "",
+  useProjectsStaticLink = true,
+}) => {
   const { userId } = useParams()
 
   const profileController = useObject<CompanyProfileData>({
@@ -39,15 +50,25 @@ const CompanyProfile: React.FC = () => {
   const { projects } = profileController[0]
 
   return (
-    <CompanyProfileContext.Provider value={profileController}>
-      <div className="w-full h-full flex justify-center py-10">
-        <div className="max-w-[1000px] w-[90%] flex flex-col gap-4">
-          <CompanyProfileIntro />
+    <>
+      <CompanyProfileContext.Provider value={profileController}>
+        <div className={twMerge("w-full flex justify-center py-10", className)}>
+          <div
+            className={`max-w-[1000px] flex flex-col gap-4 ${
+              useFullWidth ? "w-full" : "w-[90%]"
+            }`}
+          >
+            <CompanyProfileIntro />
 
-          <PastProjects projects={projects} />
+            <PastProjects
+              projects={projects}
+              useStaticLink={useProjectsStaticLink}
+            />
+          </div>
         </div>
-      </div>
-    </CompanyProfileContext.Provider>
+      </CompanyProfileContext.Provider>
+      <Outlet />
+    </>
   )
 }
 

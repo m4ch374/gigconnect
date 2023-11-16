@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { getAllCompanies } from "services/company.services"
 import { CompanyUser } from "types/company.types"
 import CompanyPreview from "../../components/Home/CompanyPreview"
-import { useOutletContext } from "react-router-dom"
+import { Outlet, useOutletContext } from "react-router-dom"
 
 const Companies: React.FC = () => {
   const searches = useOutletContext()
@@ -19,18 +19,21 @@ const Companies: React.FC = () => {
   }, [])
 
   return (
-    <div>
-      {companies
-        .filter(comp => comp.companyName.includes(searches as string))
-        .map((company, idx) => {
-          return (
-            <div key={idx}>
-              <CompanyPreview company={company} />
-              <hr className="border-zinc-400" />
-            </div>
-          )
-        })}
-    </div>
+    <>
+      <div>
+        {companies
+          .filter(comp => comp.companyName.includes(searches as string))
+          .map((company, idx) => {
+            return (
+              <div key={idx}>
+                <CompanyPreview company={company} />
+                <hr className="border-zinc-400" />
+              </div>
+            )
+          })}
+      </div>
+      <Outlet />
+    </>
   )
 }
 

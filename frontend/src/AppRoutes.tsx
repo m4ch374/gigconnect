@@ -21,6 +21,8 @@ import Talents from "pages/Home/Talents"
 import { AnimatePresence } from "framer-motion"
 import CompanyProfile from "pages/Profile/Company/CompanyProfile"
 import ProjectDetails from "pages/Projects/ProjectDetails"
+import CompanyProfileModal from "pages/Profile/Company/CompanyProfileModal"
+import ProfessionalProfileModal from "pages/Profile/Professional/ProfessionalProfileModal"
 
 const AppRoutes: React.FC = () => {
   const token = useToken().token
@@ -73,20 +75,43 @@ const AppRoutes: React.FC = () => {
                 element={<ProjectDetailsModal />}
               />
             </Route>
-            <Route path="companies" element={<Companies />} />
-            <Route path="talents" element={<Talents />} />
+            <Route path="companies" element={<Companies />}>
+              <Route path="details/:userId" element={<CompanyProfileModal />} />
+            </Route>
+            <Route path="talents" element={<Talents />}>
+              <Route
+                path="details/:userId"
+                element={<ProfessionalProfileModal />}
+              />
+            </Route>
           </Route>
 
           {/* Company Profile */}
           <Route path="company">
             <Route index element={<CompanyMyProfile />} />
-            <Route path=":userId" element={<CompanyProfile />} />
+            <Route
+              path=":userId"
+              element={<CompanyProfile useProjectsStaticLink={false} />}
+            >
+              <Route
+                path="details/:projectId"
+                element={<ProjectDetailsModal />}
+              />
+            </Route>
           </Route>
 
           {/* Professional Profile */}
           <Route path="professional">
             <Route index element={<ProfessionalMyProfile />} />
-            <Route path=":userId" element={<ProfessionalProfile />} />
+            <Route
+              path=":userId"
+              element={<ProfessionalProfile useProjectsStaticLink={false} />}
+            >
+              <Route
+                path="details/:projectId"
+                element={<ProjectDetailsModal />}
+              />
+            </Route>
           </Route>
 
           {/* Projects */}

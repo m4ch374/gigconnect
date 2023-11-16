@@ -13,7 +13,7 @@ const CompanyPreview: React.FC<TCompanyPreview> = ({ company }) => {
   return (
     <div
       className="p-4 hover:bg-sky-300/10 cursor-pointer group"
-      onClick={() => navigate(`/company/${company.userId}`)}
+      onClick={() => navigate(`/home/companies/details/${company.userId}`)}
     >
       <div className="flex items-center gap-2">
         <ProfileIcon

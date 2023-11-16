@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import { getAllProfessionals } from "services/professional.services"
 import { ProfessionalUser } from "types/professional.types"
 import TalentPreview from "../../components/Home/TalentPreview"
-import { useOutletContext } from "react-router-dom"
+import { Outlet, useOutletContext } from "react-router-dom"
 
 const Talents: React.FC = () => {
   const searches = useOutletContext()
@@ -19,22 +19,25 @@ const Talents: React.FC = () => {
   }, [])
 
   return (
-    <div>
-      {talents
-        .filter(talent =>
-          (talent.firstName + " " + talent.lastName).includes(
-            searches as string,
-          ),
-        )
-        .map((talent, idx) => {
-          return (
-            <div key={idx}>
-              <TalentPreview talent={talent} />
-              <hr className="border-zinc-400" />
-            </div>
+    <>
+      <div>
+        {talents
+          .filter(talent =>
+            (talent.firstName + " " + talent.lastName).includes(
+              searches as string,
+            ),
           )
-        })}
-    </div>
+          .map((talent, idx) => {
+            return (
+              <div key={idx}>
+                <TalentPreview talent={talent} />
+                <hr className="border-zinc-400" />
+              </div>
+            )
+          })}
+      </div>
+      <Outlet />
+    </>
   )
 }
 

@@ -13,7 +13,7 @@ const TalentPreview: React.FC<TTalentPreview> = ({ talent }) => {
   return (
     <div
       className="p-4 hover:bg-sky-300/10 cursor-pointer group"
-      onClick={() => navigate(`/professional/${talent.userId}`)}
+      onClick={() => navigate(`/home/talents/details/${talent.userId}`)}
     >
       <div className="flex items-center gap-2">
         <ProfileIcon verified={talent.verified} srcUrl={talent.profilePhoto} />

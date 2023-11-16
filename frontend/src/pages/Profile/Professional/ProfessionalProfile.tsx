@@ -3,13 +3,24 @@ import ProfileCertifications from "components/Profile/Professional/ProfileCertif
 import ProfessionalProfileIntro from "components/Profile/Professional/ProfessionalProfileIntro"
 import React, { useEffect } from "react"
 import toast from "react-hot-toast"
-import { useNavigate, useParams } from "react-router-dom"
+import { Outlet, useNavigate, useParams } from "react-router-dom"
 import { getProfessionalPublicProfile } from "services/professional.services"
 import { ProfessionalProfileData } from "types/professional.types"
 import ProfessionalProfileContext from "components/Profile/Professional/ProfessionalProfileContext"
 import useObject from "hooks/UseObject.hooks"
+import { twMerge } from "tailwind-merge"
 
-const ProfessionalProfile: React.FC = () => {
+type TProfessionalProfile = {
+  useFullWidth?: boolean
+  useProjectsStaticLink?: boolean
+  className?: string
+}
+
+const ProfessionalProfile: React.FC<TProfessionalProfile> = ({
+  useFullWidth = false,
+  className = "",
+  useProjectsStaticLink = true,
+}) => {
   const navigate = useNavigate()
   const profileController = useObject<ProfessionalProfileData>({
     description: "",
@@ -48,17 +59,27 @@ const ProfessionalProfile: React.FC = () => {
   const { projects } = profileController[0]
 
   return (
-    <ProfessionalProfileContext.Provider value={profileController}>
-      <div className="w-full h-full flex justify-center py-10">
-        <div className="max-w-[1000px] w-[90%] flex flex-col gap-4">
-          <ProfessionalProfileIntro />
+    <>
+      <ProfessionalProfileContext.Provider value={profileController}>
+        <div className={twMerge("w-full flex justify-center py-10", className)}>
+          <div
+            className={`max-w-[1000px] flex flex-col gap-4 ${
+              useFullWidth ? "w-full" : "w-[90%]"
+            }`}
+          >
+            <ProfessionalProfileIntro />
 
-          <PastProjects projects={projects} />
+            <PastProjects
+              projects={projects}
+              useStaticLink={useProjectsStaticLink}
+            />
 
-          <ProfileCertifications />
+            <ProfileCertifications />
+          </div>
         </div>
-      </div>
-    </ProfessionalProfileContext.Provider>
+      </ProfessionalProfileContext.Provider>
+      <Outlet />
+    </>
   )
 }
 
