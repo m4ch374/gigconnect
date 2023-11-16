@@ -39,7 +39,11 @@ const CreateStatusBar: React.FC<TCreateStatusBar> = ({
 
       <div className="w-full flex gap-2 justify-end place-items-center h-full pr-8">
         <button
-          className="px-4 py-2 border border-zinc-200 rounded-full text-zinc-200"
+          className={`px-4 py-2 border ${
+            !currStep
+              ? "border-zinc-400 text-zinc-400 cursor-default"
+              : "border-zinc-200 text-zinc-200"
+          }  rounded-full`}
           onClick={onBackClick}
         >
           Back

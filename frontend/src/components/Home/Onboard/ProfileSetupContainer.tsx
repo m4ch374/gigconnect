@@ -62,7 +62,11 @@ const ProfileSetupContainer: React.FC<TProfileSetupContainer> = ({
         <hr className="border-zinc-500" />
         <div className="flex gap-2 self-end m-4 mt-2">
           <button
-            className="px-4 py-1 border border-zinc-400 rounded-full"
+            className={`px-4 py-1 border ${
+              !step
+                ? "border-zinc-400 text-zinc-400 cursor-default"
+                : "border-zinc-200"
+            } rounded-full`}
             onClick={() => {
               if (!step) {
                 return
