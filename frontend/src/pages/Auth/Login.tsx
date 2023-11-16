@@ -33,7 +33,7 @@ const Login: React.FC = () => {
       setUserType(resp.data.userType)
       setToken(resp.data.loginToken)
 
-      navigate("/home")
+      navigate("/")
     })()
   }
 

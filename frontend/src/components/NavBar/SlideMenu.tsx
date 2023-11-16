@@ -45,7 +45,9 @@ const SlideMenu: React.FC<TSideMenu> = ({ name, srcUrl, setShow }) => {
       </div>
       <div className="flex flex-col items-center justify-center my-10 gap-4 w-full">
         <ProfileIcon verified={false} className="w-24 h-24" srcUrl={srcUrl} />
-        <h1 className="text-3xl font-semibold truncate">{name}</h1>
+        <h1 className="text-3xl font-semibold truncate">
+          {userType === "admin" ? "Admin" : name}
+        </h1>
       </div>
 
       <hr className="border-zinc-500/80 mb-4" />
@@ -61,15 +63,16 @@ const SlideMenu: React.FC<TSideMenu> = ({ name, srcUrl, setShow }) => {
         </Link>
       )}
 
-      <Link
-        to={`/${userType}`}
-        className="flex items-center p-2 hover:bg-stone-500/30 transition-colors rounded-lg gap-2"
-        onClick={() => setShow(false)}
-      >
-        <User />
-        <h3>View your Profile</h3>
-      </Link>
-
+      {userType !== "admin" && (
+        <Link
+          to={`/${userType}`}
+          className="flex items-center p-2 hover:bg-stone-500/30 transition-colors rounded-lg gap-2"
+          onClick={() => setShow(false)}
+        >
+          <User />
+          <h3>View your Profile</h3>
+        </Link>
+      )}
       <button
         className="w-full flex items-center p-2 hover:bg-stone-500/30 transition-colors rounded-lg gap-2 text-red-500"
         onClick={() => {

@@ -69,6 +69,8 @@ const NavBar: React.FC = () => {
   }, [])
 
   useEffect(() => {
+    if (userType === "admin") return
+
     if (userType === "professional") {
       fetchProfessionalData()
       return

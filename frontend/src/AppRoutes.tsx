@@ -23,9 +23,11 @@ import CompanyProfile from "pages/Profile/Company/CompanyProfile"
 import ProjectDetails from "pages/Projects/ProjectDetails"
 import CompanyProfileModal from "pages/Profile/Company/CompanyProfileModal"
 import ProfessionalProfileModal from "pages/Profile/Professional/ProfessionalProfileModal"
+import useUserType from "hooks/UserType.hooks"
 
 const AppRoutes: React.FC = () => {
   const token = useToken().token
+  const { userType } = useUserType()
 
   const location = useLocation()
 
@@ -62,7 +64,15 @@ const AppRoutes: React.FC = () => {
         {/* Main */}
         <Route
           index
-          element={!token ? <Landing /> : <Navigate to={"/home"} />}
+          element={
+            !token ? (
+              <Landing />
+            ) : (
+              <Navigate
+                to={userType === "admin" ? "/admin-dashboard" : "/home"}
+              />
+            )
+          }
         />
         <Route path="/" element={<ProtectedRoutes />}>
           <Route path="home" element={<Home />}>

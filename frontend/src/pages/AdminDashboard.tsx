@@ -88,7 +88,7 @@ const Admin: React.FC = () => {
       const res = await getAdmin()
 
       if (!res.ok) {
-        // TODO: Display the error message in res.error on the UI.
+        toast.error(res.error)
         return
       }
 
