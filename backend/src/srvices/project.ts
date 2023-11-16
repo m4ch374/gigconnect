@@ -300,8 +300,8 @@ const projectChangeStatus = async (companyId: string, projectId: string) => {
     })
     const professionals = thisProject?.professionals
     const profeshEmails = professionals?.map(profesh => profesh.email)
-    const transporter = getTransporterForEmail()
     if (professionals) {
+      const transporter = getTransporterForEmail()
       // Now setup the stuff for sending email (we setup envi before emailing each profesh to avoid throttling issues)
       const header = `Congrats! Your project '${thisProject.title}' has been completed!`
       const body = `Hello there!\n\n${thisProject.company.name} has marked your project, '${thisProject.title}', as completed!\n\nPlease leave a review about your experience working on the project :)\n\nKind regards,\nGigConnect.`
@@ -311,14 +311,14 @@ const projectChangeStatus = async (companyId: string, projectId: string) => {
         subject: header,
         text: body,
       }
-      try {
-        await transporter.sendMail(mailOptions)
-        console.log(`Batch emails sent successfully, upon project closure`)
-      } catch (error) {
-        console.error(`ERROR sending to batch emails:`, error)
-      }
+      transporter
+        .sendMail(mailOptions)
+        .then(() =>
+          console.log(`Batch emails sent successfully, upon project closure`),
+        )
+        .catch(err => console.error(`ERROR sending to batch emails:`, err))
+        .finally(() => transporter.close())
     }
-    transporter.close()
   }
   return { newStatus: status.valueOf().toLowerCase() }
 }

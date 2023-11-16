@@ -150,16 +150,18 @@ const requestRespond = async (
     text: body,
   }
   const transporter = getTransporterForEmail()
-  try {
-    await transporter.sendMail(mailOptions)
-    console.log(`Email to ${profeshEmail} about Requests, sent successfully`)
-  } catch (error) {
-    console.error(
-      `ERROR sending to email ${profeshEmail} about Requests\n:`,
-      error,
+  transporter
+    .sendMail(mailOptions)
+    .then(() =>
+      console.log(`Email to ${profeshEmail} about Requests, sent successfully`),
     )
-  }
-  transporter.close()
+    .catch(err =>
+      console.error(
+        `ERROR sending to email ${profeshEmail} about Requests:`,
+        err,
+      ),
+    )
+    .finally(() => transporter.close())
   return { success: true }
 }
 
