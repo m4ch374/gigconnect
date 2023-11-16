@@ -1,4 +1,7 @@
+import useUserType from "hooks/UserType.hooks"
 import React, { useEffect, useMemo, useState } from "react"
+import toast from "react-hot-toast"
+import { Navigate } from "react-router-dom"
 import { getAdmin, setVerify } from "services/admin.services"
 import { TGetAdmin } from "services/types"
 
@@ -55,11 +58,12 @@ const UserVerfifyItem: React.FC<TUserVerifyItem> = ({
             })
 
             if (!res.ok) {
-              // TODO: Display the error message in res.error on the UI.
+              toast.error(res.error)
               return
             }
 
             if (res.data.success) setLocalVerify(state => !state)
+            toast.success("User verification changed successfully")
           })()
         }}
       >
@@ -70,6 +74,7 @@ const UserVerfifyItem: React.FC<TUserVerifyItem> = ({
 }
 
 const Admin: React.FC = () => {
+  const { userType } = useUserType()
   const [companyUsers, setCompanyUsers] = useState<
     TGetAdmin["responseType"]["companyUsers"]
   >([])
@@ -91,6 +96,8 @@ const Admin: React.FC = () => {
       setProfessionalUsers(res.data.professionalUsers)
     })()
   }, [])
+
+  if (userType !== "admin") return <Navigate to={"/"} />
 
   return (
     <div className="m-12">
