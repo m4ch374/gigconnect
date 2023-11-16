@@ -23,6 +23,7 @@ import CompanyProfile from "pages/Profile/Company/CompanyProfile"
 import ProjectDetails from "pages/Projects/ProjectDetails"
 import CompanyProfileModal from "pages/Profile/Company/CompanyProfileModal"
 import ProfessionalProfileModal from "pages/Profile/Professional/ProfessionalProfileModal"
+import NotFound from "pages/NotFound"
 import useUserType from "hooks/UserType.hooks"
 
 const AppRoutes: React.FC = () => {
@@ -134,6 +135,7 @@ const AppRoutes: React.FC = () => {
           {/* Dumps */}
           <Route path="admin-dashboard" element={<AdminDashboard />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </AnimatePresence>
   )
