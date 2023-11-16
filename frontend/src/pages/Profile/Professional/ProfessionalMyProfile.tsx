@@ -9,9 +9,12 @@ import { useNavigate } from "react-router-dom"
 import ProfessionalProfileContext from "components/Profile/Professional/ProfessionalProfileContext"
 import useObject from "hooks/UseObject.hooks"
 import useUserType from "hooks/UserType.hooks"
+import ProfileReviews from "components/Profile/ProfileReviews"
+import useUserId from "hooks/UseUserId.hoosk"
 
 const ProfessionalMyProfile: React.FC = () => {
   const navigate = useNavigate()
+  const userId = useUserId()
   const { userType } = useUserType()
 
   const profileController = useObject<ProfessionalProfileData>({
@@ -59,6 +62,7 @@ const ProfessionalMyProfile: React.FC = () => {
           <PastProjects projects={projects} />
 
           <ProfileCertifications />
+          <ProfileReviews userId={userId} />
         </div>
       </div>
     </ProfessionalProfileContext.Provider>

@@ -36,8 +36,7 @@ const Home: React.FC = () => {
 
       if (!resp.ok) return
 
-      // setShowSetup(!resp.data.onboarded)
-      setShowSetup(true)
+      setShowSetup(!resp.data.onboarded)
     })()
   }, [])
 

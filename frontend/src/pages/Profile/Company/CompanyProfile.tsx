@@ -1,6 +1,7 @@
 import CompanyProfileContext from "components/Profile/Company/CompanyProfileContext"
 import CompanyProfileIntro from "components/Profile/Company/CompanyProfileIntro"
 import PastProjects from "components/Profile/PastProjects"
+import ProfileReviews from "components/Profile/ProfileReviews"
 import useObject from "hooks/UseObject.hooks"
 import React, { useEffect } from "react"
 import toast from "react-hot-toast"
@@ -59,11 +60,12 @@ const CompanyProfile: React.FC<TCompanyProfile> = ({
             }`}
           >
             <CompanyProfileIntro />
-
+          
             <PastProjects
               projects={projects}
               useStaticLink={useProjectsStaticLink}
             />
+            <ProfileReviews userId={userId || ""} />
           </div>
         </div>
       </CompanyProfileContext.Provider>

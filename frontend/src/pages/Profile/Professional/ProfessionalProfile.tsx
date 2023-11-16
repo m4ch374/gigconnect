@@ -8,6 +8,7 @@ import { getProfessionalPublicProfile } from "services/professional.services"
 import { ProfessionalProfileData } from "types/professional.types"
 import ProfessionalProfileContext from "components/Profile/Professional/ProfessionalProfileContext"
 import useObject from "hooks/UseObject.hooks"
+import ProfileReviews from "components/Profile/ProfileReviews"
 import { twMerge } from "tailwind-merge"
 
 type TProfessionalProfile = {
@@ -75,6 +76,7 @@ const ProfessionalProfile: React.FC<TProfessionalProfile> = ({
             />
 
             <ProfileCertifications />
+            <ProfileReviews userId={userId || ""} />
           </div>
         </div>
       </ProfessionalProfileContext.Provider>
