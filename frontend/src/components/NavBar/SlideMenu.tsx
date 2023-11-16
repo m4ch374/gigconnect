@@ -74,10 +74,9 @@ const SlideMenu: React.FC<TSideMenu> = ({ name, srcUrl, setShow }) => {
         className="w-full flex items-center p-2 hover:bg-stone-500/30 transition-colors rounded-lg gap-2 text-red-500"
         onClick={() => {
           ;(async () => logout())()
-          navigate("/login")
-
           setToken("")
           setUserType("unknown")
+          navigate("/")
         }}
       >
         <Logout />
