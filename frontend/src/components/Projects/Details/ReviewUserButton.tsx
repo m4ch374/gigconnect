@@ -100,6 +100,13 @@ const ReviewUserButton: React.FC<TReviewUserButton> = ({
                 <button
                   className="px-4 py-1 bg-sky-400 text-sky-100 hover:bg-sky-500 rounded-full"
                   onClick={() => {
+                    if (!comment) {
+                      toast.error(
+                        "Comment cannot be empty for leaving reviews.",
+                      )
+                      return
+                    }
+
                     ;(async () => {
                       const resp = await apiProjectReviewData({
                         projectId,
