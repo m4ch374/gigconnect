@@ -56,7 +56,9 @@ const ChangeStatusButton: React.FC<TChangeStatusButton> = ({
             >
               <div>
                 <div className="flex justify-between m-4 mb-1">
-                  <h1 className="text-2xl font-semibold">Complete Project</h1>
+                  <h1 className="text-2xl font-semibold">
+                    Change project status to {nextStatus}
+                  </h1>
                   <button
                     className="text-zinc-400 rounded-full hover:bg-white/10 p-1"
                     onClick={() => setShowModal(false)}
