@@ -79,7 +79,7 @@ const ProjectMeta: React.FC<TProjectMeta> = ({
       </div>
 
       {userId === projDetail.companyId &&
-        projDetail.status !== "closed" &&
+        currStatus !== "closed" &&
         userType === "company" && (
           <ChangeStatusButton
             projectId={projectId}
