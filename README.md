@@ -4,7 +4,7 @@ GigConnect is a web platform that connects professionals with companies offering
 projects.
 
 The following installation instructions assume a Debian-based Linux environment
-with access to sudo permissions. Run all commands from the root of the project
+with access to the internet and sudo permissions. Run all commands from the root of the project
 folder (i.e. inside the `capstone-project-3900f11acockatoos-main` folder).
 
 ## How to Setup the Project
