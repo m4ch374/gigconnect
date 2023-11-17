@@ -54,3 +54,10 @@ WEEK 9
 - Wrote the specification for new API routes for sprint 3
 - Wrote functions on the frontend for calling these new API routes
 - Fixed some error checking related issues on the frontend
+
+WEEK 10
+- Helped to test and review setup and run project scripts
+- Wrote code for showing reviews on user profiles
+- Added a "404" page for invalid URLs
+- Contributed to writing report sections on third party functionality for 
+  the frontend, and implementation challenges for the frontend.

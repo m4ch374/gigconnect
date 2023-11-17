@@ -46,3 +46,8 @@ WEEK 9
 * Literally rewrote the whole frontend
 * Added animations to most components
 * See Contributors in the insights tab for more info
+
+WEEK 10
+* Finished development of all frontend components
+* Commented every single component
+* Added additional fixes to make the UX more seamless

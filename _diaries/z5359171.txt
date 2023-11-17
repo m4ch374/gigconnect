@@ -15,7 +15,7 @@ and agreed on which User Stories should be assigned to the first sprint. Discuss
 be able to verify professionals. 
 
 Week 4
-Discussed the database schema and decided the relevant attributes and types for company, professional, and admin users and links. From there we delegated  Gabriel to implement the Prisma code. I have been tasked to be part of the backend team for this project.
+Discussed the database schema and decided the relevant attributes and types for company, professional, and admin users and links. From there we delegated Gabriel to implement the Prisma code. I have been tasked to be part of the backend team for this project.
 
 Week 5
 I was tasked with the company functions implementation which I did the company create account function, company profile data function, and company update function. I also did the manual testing for these functions and did error handling.
@@ -24,10 +24,13 @@ Week 6
 I added the external links component for company functions so that a company can display its website link and update its website link alongside updating the index.ts to accommodate for external links. I also added a new model called CompanyLink into the schema.prisma to handle the external links feature. Afterward, I fixed the error messages for both company and professional functions to be more descriptive for a better user experience so that they know why they can't log in or insert their ABN and other errors when using the functions. 
 
 Week 7
-I did the projectCreate and projectUpdate function and also updated the original company and professional profiledata function to return Projects. I tested out some of the other project functions including projectCreate and will test out projectUpdate soon.
+I did the projectCreate and projectUpdate function and also updated the original company and professional profile data function to return Projects. I tested out some of the other project functions including projectCreate and will test out projectUpdate soon.
 
 Week 8
 I manually tested the project functions and the project requesting and viewing projects for company and professional users on the Arc client API. I also tested edge cases for these functions and checked the returns given to see if they updated correctly and provided appropriate error messages.
 
 Week 9
 I worked on the overview component in the report which involved designing the system architecture and explaining how the layers interact and what each layer does. This includes explaining the components within the layer.
+
+Week 10
+I worked on the overview, functionalities, project objectives, and user manual components of the project report. I also performed manual testing for the different pages of the website to find any possible bugs that would be addressed in this sprint.
