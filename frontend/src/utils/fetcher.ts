@@ -1,3 +1,4 @@
+import "dotenv/config"
 import { TEndpoint } from "services/types"
 
 type Method = "GET" | "POST" | "PUT" | "DELETE"
@@ -12,7 +13,7 @@ type ErrorResponse = {
 // Create the Fetcher class which acts as a wrapper around fetch() calls
 // with some conveniances for fetching data from the backend API
 class Fetcher<T extends TEndpoint<any, any>> {
-  private baseURL = "http://localhost:8080"
+  private baseURL = process.env.BACKEND_URL!
 
   private requestConf: RequestInit | undefined
 
