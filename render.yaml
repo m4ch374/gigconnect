@@ -5,7 +5,7 @@ services:
   rootDir: frontend
   buildCommand: npm run build
   staticPublishPath: ./dist
-  envVar:
+  envVars:
     - key: BACKEND_URL
       value: https://gigconnect-backend.onrender.com
 - type: web
@@ -15,7 +15,7 @@ services:
   region: singapore
   buildCommand: npm install; npm run build
   startCommand: npx prisma migrate deploy; node ./dist/index.js
-  envVar:
+  envVars:
     - key: DATABASE_URL
       value: postgres://gigconnect_user:mJ7BHyv9sCc2FrTMsR6NrbRQP1CQPS02@dpg-cmfbd8ol5elc73csu8b0-a/gigconnect
     - key: JWT_SECRET
